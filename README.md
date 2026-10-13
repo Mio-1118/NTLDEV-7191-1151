@@ -34,7 +34,7 @@ For self-study, read the **Lab HTML** and run the accompanying **R script** one 
 | Week 3 | Sep 25 | **Mid-Autumn Festival** |  |
 | Week 4 | Oct 2 | [![PDF](https://img.shields.io/badge/PDF-E53935?style=flat-square)](W4/slide/week4.pdf) · [![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=html5&logoColor=white)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W4/slide/week4.html) · [Source ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W4/downloads/week4-student-source.zip) | [Lab HTML](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W4/lab/Lab_Session_W4.html) · [R script](W4/lab/Lab_Session_W4.R) · [Lab ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W4/downloads/week4-lab.zip) · [Instructions](W4/lab/README.md) |
 | Week 5 | Oct 9 | **Compensation Holiday for Happy Double 10th Day** |  |
-| Week 6 | Oct 16 |  |  |
+| Week 6 | Oct 16 | [HTML](W6/slide/week6.html) · [PDF](W6/slide/week6.pdf) | [Lab HTML](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W6/lab/Lab_Session_W6.html) · [R script](W6/lab/Lab_Session_W6.R) · [Lab ZIP](W6/downloads/week6-lab.zip) · [Instructions](W6/lab/README.md) |
 | Week 7 | Oct 23 |  |  |
 | Week 8 | Oct 30 |  |  |
 | Week 9 | Nov 6 |  |  |
