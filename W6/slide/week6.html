@@ -931,9 +931,11 @@ text-align: center;
 .reveal .workflow-tablist button[aria-selected="true"] { background: #eef6f0; border: 2px solid var(--course-green); font-weight: 600; }
 .reveal .gillion-tablist button:focus-visible,
 .reveal .workflow-tablist button:focus-visible { outline: 3px solid var(--course-blue); outline-offset: 2px; }
-.reveal .gillion-sequence { min-height: 350px; }
-.reveal .gillion-sequence > .gillion-step { align-self: start; justify-self: stretch; width: 100%; margin: 0; transition: none; }
-.reveal .gillion-step > p { font-size: 32px; line-height: 1.35; margin: 20px 0; }
+
+.reveal .gillion-sequence { display: block; }
+.reveal .gillion-sequence > .gillion-step { width: 100%; margin: 0 0 12px; transition: none; }
+.reveal .gillion-step > p { font-size: 28px; line-height: 1.28; margin: 0; }
+.reveal .gillion-step > p + p { margin-top: 6px; }
 .reveal .gillion-interpretation li { font-size: 30px; line-height: 1.35; margin: 0.6em 0; }
 .reveal .title-banner img { max-height: 180px; }
 .reveal .crowd-title img { max-height: 210px; }
@@ -1546,7 +1548,7 @@ Yen-Chieh Liao 廖彥傑
 </div>
 </div>
 
-  <p class="date">2026-10-16<span class="compile-time">Fall 2026 (115-1) · National Taiwan University (GIND)<br>NTLDEV 7191 · Fri. 16:30–18:20 · 國發 204<br>Last compiled: 2026-10-15 20:19:47 (Asia/Taipei)</span></p>
+  <p class="date">2026-10-16<span class="compile-time">Fall 2026 (115-1) · National Taiwan University (GIND)<br>NTLDEV 7191 · Fri. 16:30–18:20 · 國發 204<br>Last compiled: 2026-10-15 20:30:41 (Asia/Taipei)</span></p>
 </section>
 <section id="learning-objectives-from-w4-to-w6" class="slide level2">
 <h2>Learning objectives: from W4 to W6</h2>
@@ -1701,18 +1703,18 @@ Yen-Chieh Liao 廖彥傑
 <button type="button" role="tab" id="gillion-tab-3" aria-controls="gillion-panel-3" aria-selected="false" tabindex="-1">Coding rule</button>
 <button type="button" role="tab" id="gillion-tab-4" aria-controls="gillion-panel-4" aria-selected="false" tabindex="-1">Agreement</button>
 </div>
-<div class="gillion-sequence r-stack">
-<div id="gillion-panel-1" class="gillion-step fragment fade-out" role="tabpanel" aria-labelledby="gillion-tab-1" data-fragment-index="0">
+<div class="gillion-sequence">
+<div id="gillion-panel-1" class="gillion-step" role="region" aria-labelledby="gillion-tab-1">
 <p><strong>Unit:</strong> paragraphs; exclude written bills and procedural material.</p>
 </div>
-<div id="gillion-panel-2" class="gillion-step fragment current-visible" role="tabpanel" aria-labelledby="gillion-tab-2" data-fragment-index="0">
+<div id="gillion-panel-2" class="gillion-step fragment" role="region" aria-labelledby="gillion-tab-2" data-fragment-index="0">
 <p><strong>Training labels:</strong> two assistants code random samples: 300 paragraphs per presidential administration and 1,000 per congressional session.</p>
 </div>
-<div id="gillion-panel-3" class="gillion-step fragment current-visible" role="tabpanel" aria-labelledby="gillion-tab-3" data-fragment-index="1">
+<div id="gillion-panel-3" class="gillion-step fragment" role="region" aria-labelledby="gillion-tab-3" data-fragment-index="1">
 <p><strong>The rule requires an explicit racial reference:</strong> a group, race-specific policy, minority figure, or race-specific issue.</p>
 <p>General crime, education, or health discussion qualifies only with such a reference.</p>
 </div>
-<div id="gillion-panel-4" class="gillion-step fragment current-visible" role="tabpanel" aria-labelledby="gillion-tab-4" data-fragment-index="2">
+<div id="gillion-panel-4" class="gillion-step fragment" role="region" aria-labelledby="gillion-tab-4" data-fragment-index="2">
 <p><strong>Reported intercoder reliability: 97%.</strong> Gillion adjudicates disagreements.</p>
 <p><strong>Discussion:</strong> What would this measure miss about implicit racial appeals?</p>
 </div>
