@@ -1,0 +1,43 @@
+{
+  "article": {
+    "authors": [
+      "Chih-Chien Wang",
+      "Min-Yuh Day",
+      "Chun-Lian Wu"
+    ],
+    "year": 2022,
+    "title": "Political Hate Speech Detection and Lexicon Building: A Study in Taiwan",
+    "journal": "IEEE Access",
+    "volume": 10,
+    "pages": "44337–44346",
+    "doi": "10.1109/ACCESS.2022.3160712"
+  },
+  "training_source": "/Users/yenchiehliao/Dropbox/taiwanese_hate_speech/merged-hate-speeches.csv",
+  "source_rows": 31071,
+  "blank_text_rows": 0,
+  "exported_training_rows": 31071,
+  "training_label_counts": {
+    "0": 13523,
+    "1": 17548
+  },
+  "benchmark_rows": 2000,
+  "labels": "Training: preserve instructor Flair CSV hate_speech/label values. Benchmarks: supplied final 是否仇恨 (0/1), not model predictions or reconstructed rating thresholds.",
+  "files": {
+    "merged-hate-speeches.csv": "1c5e3809ec78914ca0045e4f889ce8c6be380da7b79d2c9e53b1affcad309021",
+    "hate_speech_benchmark.csv": "87ba3935b899c22984f77b0a2a9090ac4d6c5090d793aa79023d6960089c4b0a",
+    "gscore_julia_park.csv": "9dfbd13051e12af1c63c7022568ba6da05bcc1080ca4dd7e50ed39da6046709b"
+  },
+  "grandstanding": {
+    "authors": [
+      "Ju Yeon Park"
+    ],
+    "year": 2021,
+    "doi": "10.1086/709147",
+    "replication_doi": "10.7910/DVN/GSMBFX",
+    "source": "Instructor-supplied gscore_julia_park.csv",
+    "rows": 3500,
+    "text": "speech",
+    "target": "rescaled_gs",
+    "conversion_note": "Provided binary labels; original conversion cutoff not documented in CSV."
+  }
+}

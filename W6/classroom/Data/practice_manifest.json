@@ -1,0 +1,33 @@
+{
+  "preparation_script": "W6/scripts/prepare_practice_data.R",
+  "sample_seed": 7191,
+  "hate": {
+    "raw": 31071,
+    "conflict_rows": 1275,
+    "duplicates": 5811,
+    "benchmark_overlap": 370,
+    "eligible": 23615,
+    "practice": 4000,
+    "counts": {
+      "NonHateSpeech": 1622,
+      "HateSpeech": 2378
+    }
+  },
+  "reference": {
+    "raw": 2000,
+    "conflict_rows": 8,
+    "duplicates": 24,
+    "rows": 1968
+  },
+  "grandstanding": {
+    "raw": 3500,
+    "conflict_rows": 0,
+    "duplicates": 1,
+    "rows": 3499
+  },
+  "files": {
+    "W6/lab/Data/hate_speech_practice.csv": "45e1ef5520b1f6cf58002ee53aa7de79",
+    "W6/lab/Data/hate_speech_reference.csv": "d183cda7752c09ad909e987d69785a7b",
+    "W6/lab/Data/grandstanding_practice.csv": "067291f8abad6eb6b025ff98ff16d8d9"
+  }
+}
