@@ -20,6 +20,8 @@
 
 Use **HTML** to view slides in your browser, **PDF** for a downloadable copy, and **Source ZIP** for editable slide files. The **Week 4 and Week 6 Source ZIPs** also include the classroom R scripts and required data; one download per week is enough.
 
+If the HTML link shows an external-content notice, select **Open the page** to view the slides.
+
 For self-study, read the **Lab HTML** and run the accompanying **R script** one section at a time. Download the complete **Lab ZIP** to get the data and all required files. Worked answers are linked from the handout; no Quarto rendering is required.
 
 [Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
@@ -34,7 +36,7 @@ For self-study, read the **Lab HTML** and run the accompanying **R script** one 
 | Week 3 | Sep 25 | **Mid-Autumn Festival** |  |
 | Week 4 | Oct 2 | [![PDF](https://img.shields.io/badge/PDF-E53935?style=flat-square)](W4/slide/week4.pdf) · [![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=html5&logoColor=white)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W4/slide/week4.html) · [Source ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W4/downloads/week4-student-source.zip) | [Lab HTML](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W4/lab/Lab_Session_W4.html) · [R script](W4/lab/Lab_Session_W4.R) · [Lab ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W4/downloads/week4-lab.zip) · [Instructions](W4/lab/README.md) |
 | Week 5 | Oct 9 | **Compensation Holiday for Happy Double 10th Day** |  |
-| Week 6 | Oct 16 | [![PDF](https://img.shields.io/badge/PDF-E53935?style=flat-square)](W6/slide/week6.pdf) · [![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=html5&logoColor=white)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W6/slide/week6.html) · [Source ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-student-source.zip) |  |
+| Week 6 | Oct 16 | [![PDF](https://img.shields.io/badge/PDF-E53935?style=flat-square)](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/slide/week6.pdf) · [![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=html5&logoColor=white)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W6/slide/week6.html) · [Source ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-student-source.zip) |  |
 | Week 7 | Oct 23 |  |  |
 | Week 8 | Oct 30 |  |  |
 | Week 9 | Nov 6 |  |  |
