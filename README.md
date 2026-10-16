@@ -14,9 +14,13 @@
 
 1. **Git & GitHub guide for Mac users:** [Git 與 GitHub 新手實戰完全手冊 / Git & GitHub Practical Guide (PDF)](resources/git-github-mac-guide.pdf). 感謝 **貴評（國發3）** 提供！
 
-2. **Call for Proposals: 14th Annual Meeting of Asian Political Methodology.** **Submission deadline: October 9, 2026.**
+2. ~~**Call for Proposals: 14th Annual Meeting of Asian Political Methodology.** **Submission deadline: October 9, 2026.**~~
 
 3. **Research title + abstract due: October 23, 2026 (Week 7).** You are welcome to book [instructor office hours](https://calendly.com/ycliao/text-as-data-instructor) to discuss your research ideas, title, or abstract before the deadline.
+
+4. **Call for Proposals: [84th Annual MPSA Conference (2027)](https://www.mpsanet.org/conference/).** **Paper proposal deadline: October 27, 2026.**
+
+5. **Call for Papers: [EPSS 2027 Conference (Copenhagen)](https://epssnet.org/2027-copenhagen/call-for-papers-2/).** **Submission deadline: November 13, 2026, 23:59 CET** (November 14, 2026, 06:59 Taipei time).
 
 Use **HTML** to view slides in your browser, **PDF** for a downloadable copy, and **Source ZIP** for editable slide files. The **Week 4 and Week 6 Source ZIPs** also include the classroom R scripts and required data; one download per week is enough.
 
