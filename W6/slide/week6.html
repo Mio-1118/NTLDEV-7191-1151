@@ -937,7 +937,7 @@ text-align: center;
 .reveal .workflow-tablist button:focus-visible { outline: 3px solid var(--course-blue); outline-offset: 2px; }
 
 .reveal .gillion-sequence { display: block; }
-.reveal .gillion-sequence > .gillion-step { width: 100%; margin: 0 0 12px; transition: none; }
+.reveal .gillion-sequence > .gillion-step { width: 100%; margin: 0 0 10px; transition: none; }
 .reveal .gillion-step > p { font-size: 28px; line-height: 1.28; margin: 0; }
 .reveal .gillion-step > p + p { margin-top: 6px; }
 .reveal .gillion-interpretation li { font-size: 30px; line-height: 1.35; margin: 0.6em 0; }
@@ -1552,7 +1552,7 @@ Yen-Chieh Liao 廖彥傑
 </div>
 </div>
 
-  <p class="date">2026-10-16<span class="compile-time">Fall 2026 (115-1) · National Taiwan University (GIND)<br>NTLDEV 7191 · Fri. 16:30–18:20 · 國發 204<br>Last compiled: 2026-10-16 02:47:54 (Asia/Taipei)</span></p>
+  <p class="date">2026-10-16<span class="compile-time">Fall 2026 (115-1) · National Taiwan University (GIND)<br>NTLDEV 7191 · Fri. 16:30–18:20 · 國發 204<br>Last compiled: 2026-10-16 12:35:30 (Asia/Taipei)</span></p>
 </section>
 <section id="learning-objectives-from-w4-to-w6" class="slide level2">
 <h2>Learning objectives: from W4 to W6</h2>
@@ -1709,18 +1709,17 @@ Yen-Chieh Liao 廖彥傑
 </div>
 <div class="gillion-sequence">
 <div id="gillion-panel-1" class="gillion-step" role="region" aria-labelledby="gillion-tab-1">
-<p><strong>Unit:</strong> paragraphs; exclude written bills and procedural material.</p>
+<p><strong>Unit:</strong> code each paragraph separately, because one speech can cover several topics. Exclude written bills and procedural material.</p>
 </div>
 <div id="gillion-panel-2" class="gillion-step fragment" role="region" aria-labelledby="gillion-tab-2" data-fragment-index="0">
-<p><strong>Training labels:</strong> two assistants code random samples: 300 paragraphs per presidential administration and 1,000 per congressional session.</p>
+<p><strong>Training labels:</strong> two assistants code random samples: 300 paragraphs per presidential administration and 1,000 per congressional session. Their decisions give the classifier examples of what counts as racial discussion.</p>
 </div>
 <div id="gillion-panel-3" class="gillion-step fragment" role="region" aria-labelledby="gillion-tab-3" data-fragment-index="1">
-<p><strong>The rule requires an explicit racial reference:</strong> a group, race-specific policy, minority figure, or race-specific issue.</p>
-<p>General crime, education, or health discussion qualifies only with such a reference.</p>
+<p><strong>Coding rule:</strong> require an explicit reference to a racial group, race-specific policy, minority figure, or race-specific issue. For example, school funding alone does not qualify, but racial inequality in school funding does.</p>
 </div>
 <div id="gillion-panel-4" class="gillion-step fragment" role="region" aria-labelledby="gillion-tab-4" data-fragment-index="2">
-<p><strong>Reported intercoder reliability: 97%.</strong> Gillion adjudicates disagreements.</p>
-<p><strong>Discussion:</strong> What would this measure miss about implicit racial appeals?</p>
+<p><strong>Agreement:</strong> reported intercoder reliability is <strong>97%</strong>. Gillion resolves disagreements. This checks human consistency. Classifier accuracy needs its own test.</p>
+<p><strong>Discuss:</strong> Could this rule miss implicit racial appeals?</p>
 </div>
 </div>
 </div>
@@ -2756,7 +2755,7 @@ NonHateSpeech    HateSpeech
 </div>
 <pre class="text"><code>&gt; class(hs_tokens)
 [1] &quot;tokens&quot;</code></pre>
-<p><strong>Discuss:</strong> Why does what = “character” produce characters rather than Chinese words?</p>
+<p><strong>Discuss:</strong> Why use character tokens here, and what might we lose?</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run. · <a href="https://quanteda.io/reference/tokens.html">quanteda tokens</a></p>
