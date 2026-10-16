@@ -126,21 +126,23 @@ Cambridge University Press, 2016
 ```
 ::::: {.gillion-sequence}
 :::: {.gillion-step #gillion-panel-1 role="region" aria-labelledby="gillion-tab-1"}
-**Unit:** code each paragraph separately, because one speech can cover several topics. Exclude written bills and procedural material.
+**Unit:** paragraphs; exclude written bills and procedural material.
 ::::
 
 :::: {.gillion-step .fragment #gillion-panel-2 role="region" aria-labelledby="gillion-tab-2" data-fragment-index="0"}
-**Training labels:** two assistants code random samples: 300 paragraphs per presidential administration and 1,000 per congressional session. Their decisions give the classifier examples of what counts as racial discussion.
+**Training labels:** two assistants code random samples: 300 paragraphs per presidential administration and 1,000 per congressional session.
 ::::
 
 :::: {.gillion-step .fragment #gillion-panel-3 role="region" aria-labelledby="gillion-tab-3" data-fragment-index="1"}
-**Coding rule:** require an explicit reference to a racial group, race-specific policy, minority figure, or race-specific issue. For example, school funding alone does not qualify, but racial inequality in school funding does.
+**The rule requires an explicit racial reference:** a group, race-specific policy, minority figure, or race-specific issue.
+
+General crime, education, or health discussion qualifies only with such a reference.
 ::::
 
 :::: {.gillion-step .fragment #gillion-panel-4 role="region" aria-labelledby="gillion-tab-4" data-fragment-index="2"}
-**Agreement:** reported intercoder reliability is **97%**. Gillion resolves disagreements. This checks human consistency. Classifier accuracy needs its own test.
+**Reported intercoder reliability: 97%.** Gillion adjudicates disagreements.
 
-**Discuss:** Could this rule miss implicit racial appeals?
+**Discussion:** What would this measure miss about implicit racial appeals?
 ::::
 
 :::::

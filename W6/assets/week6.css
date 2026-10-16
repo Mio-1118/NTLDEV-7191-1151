@@ -39,7 +39,7 @@
 .reveal .workflow-tablist button:focus-visible { outline: 3px solid var(--course-blue); outline-offset: 2px; }
 /* Gillion's points accumulate downward and stay visible at Agreement. */
 .reveal .gillion-sequence { display: block; }
-.reveal .gillion-sequence > .gillion-step { width: 100%; margin: 0 0 10px; transition: none; }
+.reveal .gillion-sequence > .gillion-step { width: 100%; margin: 0 0 12px; transition: none; }
 .reveal .gillion-step > p { font-size: 28px; line-height: 1.28; margin: 0; }
 .reveal .gillion-step > p + p { margin-top: 6px; }
 .reveal .gillion-interpretation li { font-size: 30px; line-height: 1.35; margin: 0.6em 0; }
