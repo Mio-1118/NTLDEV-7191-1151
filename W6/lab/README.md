@@ -4,7 +4,7 @@ Ungraded practice; no submission. Allow 60–90 minutes for the core exercise.
 
 1. Extract the ZIP and open `W6/lab/Lab_Session_W6.html` as the student handout.
 2. Open `Lab_Session_W6.R` in RStudio and set the working directory to its folder, beside `Data/`.
-3. Complete the installation and loading check in section 1. All six packages should load without errors, and `lrn("classif.svm")$id` should return `"classif.svm"`. Then run C01 and sections 2–5 in order in the same R session: hate-speech NB, grandstanding SVM, error reading, and a short practice report.
+3. Complete the installation and loading check in section 1. All six packages should load without errors, and `lrn("classif.svm")$id` should return `"classif.svm"`. Then run C01 and sections 2–4 in order in the same R session: hate-speech NB, grandstanding SVM, and error reading.
 4. Compare your results with `answers/Lab_Session_W6_Answers.html`. Its R script runs from the same lab folder, one level above `answers/`.
 
 The handout follows the W4 format: starting instructions, an R syntax guide, numbered exercises with discussion prompts, optional extensions, and reading connections. All 24 C01–C08 / G01–G03 checkpoints, including all substeps, match the slides. The source QMDs do not need to be rendered. No custom function or workflow.R is loaded.

@@ -14,7 +14,7 @@
 #'
 #' ## Before starting
 #'
-#' **Ungraded take-home practice; no submission.** In this lab, we'll fit Naive Bayes and a linear SVM, compare their predictions with the reference labels, and read the texts they classify incorrectly. Allow **60–90 minutes** for sections 1–5, with extra time if you are new to R. We can try the optional models after finishing the core exercises.
+#' **Ungraded take-home practice; no submission.** In this lab, we'll fit Naive Bayes and a linear SVM, compare their predictions with the reference labels, and read the texts they classify incorrectly. Allow **60–90 minutes** for sections 1–4, with extra time if you are new to R. We can try the optional models after finishing the core exercises.
 #'
 #' Download and extract the [**lab ZIP**](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-lab.zip), then open **`Lab_Session_W6.R`** in RStudio and read this handout alongside it. Set the working directory to the folder containing that R file and keep its `Data/` folder beside it. Run section 1 once, then continue in order in the same R session. You do not need to render the source QMD.
 #'
@@ -581,10 +581,6 @@ cat(parts$test$text[hate_errors[1]], "\n")
 #'
 #' Which case has higher precision, and which has higher recall? We used different labels, languages and class frequencies, so the scores alone cannot tell us which algorithm caused the difference. If we change a model after examining these test errors, we'll need a fresh evaluation sample.
 #'
-#' ## 5. Write a short practice report
-#'
-#' **5 minutes.** Let's turn what we've done into five sentences: describe the data and labels, our split, the features, the classifier settings, and the test results. Include one error you read so that the report connects a score to a text. There is no separate submission.
-#'
 #' ## Optional: try another classifier
 #'
 #' After finishing the core practice, we can try another classifier. The blocks below are for reference and do not run in the main R script; run one separately when you're ready to try it.
@@ -618,4 +614,5 @@ cat(parts$test$text[hate_errors[1]], "\n")
 #' - [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712): source of the hate-speech data.
 #' - [Park (2021)](https://doi.org/10.1086/709147): source of the grandstanding data.
 #' - [quanteda](https://quanteda.io/reference/index.html) and [quanteda.textmodels](https://quanteda.io/quanteda.textmodels/): text features and Naive Bayes.
+#' - [mlr3 documentation](https://mlr3.mlr-org.com/) and [mlr3 book](https://mlr3book.mlr-org.com/): we can review tasks, learners, prediction and evaluation here.
 #' - mlr3: [partition](https://mlr3.mlr-org.com/reference/partition.html), [PredictionClassif](https://mlr3.mlr-org.com/reference/PredictionClassif.html), and [SVM learner](https://mlr3learners.mlr-org.com/reference/mlr_learners_classif.svm.html).

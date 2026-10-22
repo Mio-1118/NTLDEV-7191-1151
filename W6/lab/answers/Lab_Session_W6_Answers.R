@@ -14,9 +14,9 @@
 #'
 #' ## Before starting
 #'
-#' Let's work through the same five sections and checkpoints as the student handout. Compare your output with the results here, then read how we interpret them. [Return to the student handout](../Lab_Session_W6.html).
+#' Let's work through the same four sections and checkpoints as the student handout. Compare your output with the results here, then read how we interpret them. [Return to the student handout](../Lab_Session_W6.html).
 #'
-#' Download and extract the [**lab ZIP**](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-lab.zip) for the handouts, R scripts and `Data/` folder. Allow **60–90 minutes** for the core practice. Open `Lab_Session_W6_Answers.R` in RStudio and set the working directory to the lab folder containing `Data/` (one level above `answers/`). Run section 1 once, then sections 2–5 in order in the same R session. The source QMD does not need to be rendered.
+#' Download and extract the [**lab ZIP**](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-lab.zip) for the handouts, R scripts and `Data/` folder. Allow **60–90 minutes** for the core practice. Open `Lab_Session_W6_Answers.R` in RStudio and set the working directory to the lab folder containing `Data/` (one level above `answers/`). Run section 1 once, then sections 2–4 in order in the same R session. The source QMD does not need to be rendered.
 #'
 #' We'll use `quanteda`, `quanteda.textmodels`, `mlr3`, `mlr3learners`, `e1071` and `stringi`. Let's complete the [package check in section 1](#package-check-install-and-load) before C01, then read the CSVs directly.
 #'
@@ -629,10 +629,6 @@ cat(parts$test$text[hate_errors[1]], "\n")
 #'
 #' Which case has higher precision, and which has higher recall? We used different labels, languages and class frequencies, so the scores alone cannot tell us which algorithm caused the difference. If we change a model after examining these test errors, we'll need a fresh evaluation sample.
 #'
-#' ## 5. Write a short practice report
-#'
-#' **5 minutes.** Let's turn what we've done into five sentences: describe the data and labels, our split, the features, the classifier settings, and the test results. Include one error you read so that the report connects a score to a text. There is no separate submission.
-#'
 #' ## Optional: try another classifier
 #'
 #' After finishing the core practice, we can try another classifier. The blocks below are for reference and do not run in the main R script; run one separately when you're ready to try it.
@@ -666,4 +662,5 @@ cat(parts$test$text[hate_errors[1]], "\n")
 #' - [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712): source of the hate-speech data.
 #' - [Park (2021)](https://doi.org/10.1086/709147): source of the grandstanding data.
 #' - [quanteda](https://quanteda.io/reference/index.html) and [quanteda.textmodels](https://quanteda.io/quanteda.textmodels/): text features and Naive Bayes.
+#' - [mlr3 documentation](https://mlr3.mlr-org.com/) and [mlr3 book](https://mlr3book.mlr-org.com/): we can review tasks, learners, prediction and evaluation here.
 #' - mlr3: [partition](https://mlr3.mlr-org.com/reference/partition.html), [PredictionClassif](https://mlr3.mlr-org.com/reference/PredictionClassif.html), and [SVM learner](https://mlr3learners.mlr-org.com/reference/mlr_learners_classif.svm.html).
