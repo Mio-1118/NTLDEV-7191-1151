@@ -1933,20 +1933,6 @@ We can use the package functions directly; the lab shows the complete calls.
 [quanteda.textmodels](https://quanteda.io/quanteda.textmodels/) · [mlr3 classif.svm](https://mlr3learners.mlr-org.com/reference/mlr_learners_classif.svm.html).
 :::
 
-## A short methods report
-:::::: {.slide-body }
-In our methods report, let's explain five parts of the analysis:
-
-1. **Data and labels:** which text column and supplied target?
-2. **Split:** mlr3 `partition()`, stratified 80/20, seed 7192.
-3. **Features:** Chinese characters or English words; training vocabulary only.
-4. **Model:** quanteda multinomial NB or mlr3 linear SVM; report its settings.
-5. **Results:** test metrics and one error you inspected.
-::::::
-::: {.source}
-Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 classroom NB run. Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
-:::
-
 ## Later weeks: LLM coding and classification
 :::::: {.slide-body}
 ::::: {.columns .paper-intro-columns}
