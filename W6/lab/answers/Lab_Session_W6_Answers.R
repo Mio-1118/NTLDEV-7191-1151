@@ -11,21 +11,19 @@
 #'   warning: false
 #'   message: false
 #' ---
-#' 
+#'
 #' ## Before starting
-#' 
-#' [**Work in pairs (two students).**]{style="color: #e2021a;"}
-#' 
-#' These worked answers follow the same five sections and checkpoints as the student handout. Compare the printed output with your own results, then read the explanation below each discussion question. [Return to the student handout](../Lab_Session_W6.html).
-#' 
-#' Allow **60–90 minutes** for the core practice. Open `Lab_Session_W6_Answers.R` in RStudio and set the working directory to the lab folder containing `Data/` (one level above `answers/`). Run section 1 once, then sections 2–5 in order in the same R session. The source QMD does not need to be rendered.
-#' 
-#' The required packages are `quanteda`, `quanteda.textmodels`, `mlr3`, `mlr3learners`, `e1071` and `stringi`. Complete the [package check in section 1](#package-check-install-and-load) before C01. The setup reads the CSVs directly.
-#' 
+#'
+#' Let's work through the same five sections and checkpoints as the student handout. Compare your output with the results here, then read how we interpret them. [Return to the student handout](../Lab_Session_W6.html).
+#'
+#' Download and extract the [**lab ZIP**](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-lab.zip) for the handouts, R scripts and `Data/` folder. Allow **60–90 minutes** for the core practice. Open `Lab_Session_W6_Answers.R` in RStudio and set the working directory to the lab folder containing `Data/` (one level above `answers/`). Run section 1 once, then sections 2–5 in order in the same R session. The source QMD does not need to be rendered.
+#'
+#' We'll use `quanteda`, `quanteda.textmodels`, `mlr3`, `mlr3learners`, `e1071` and `stringi`. Let's complete the [package check in section 1](#package-check-install-and-load) before C01, then read the CSVs directly.
+#'
 #' ## Reading the R code
-#' 
-#' Work from top to bottom in the same R session. In RStudio, select a line or block and use `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Read the printed output before moving to the next step.
-#' 
+#'
+#' We'll work from top to bottom in the same R session. In RStudio, select a line or block and use `Ctrl+Enter` (Windows) or `Cmd+Enter` (Mac). Pause at the printed output before moving on: what changed, and which object now holds the result?
+#'
 #' | Syntax | Meaning | Example |
 #' |---|---|---|
 #' | `<-` | Save a result under a name | `hs_dfm <- dfm(hs_tokens)` |
@@ -36,11 +34,11 @@
 #' | `==`, `!=` | Equal to, different from | `nb_prediction != parts$test$label` |
 #' | `which(...)` | Find row positions where a condition is TRUE | `which(nb_prediction != parts$test$label)` |
 #' | `table(...)` | Count categories | `table(hate$label)` |
-#' 
-#' The `C` and `G` checkpoint names match the W6 slides. Lettered and numbered substeps belong to the same workflow and should run in order. The code uses existing package functions directly.
-#' 
+#'
+#' The `C` and `G` checkpoint names match the W6 slides, so we can move between the slides and this handout. Run the lettered and numbered substeps in order; each builds on objects created earlier. We'll call the package functions directly.
+#'
 #' ### Functions used in the lab
-#' 
+#'
 #' | Step | Existing functions | Package |
 #' |---|---|---|
 #' | Read a CSV | `read.csv()`, `factor()` | base R |
@@ -50,45 +48,53 @@
 #' | Fit hate-speech NB | `textmodel_nb()`, `predict()` | quanteda.textmodels |
 #' | Fit grandstanding SVM | `lrn()`, `$train()`, `$predict_newdata()` | mlr3 + mlr3learners |
 #' | Check predictions | `PredictionClassif$new()`, `$score()`, `msrs()` | mlr3 |
-#' 
-#' `lmtest` supplies tests for regression models. Classification accuracy, precision, recall and F1 in this exercise come from mlr3.
-#' 
+#'
+#' We'll use mlr3 to calculate classification accuracy, precision, recall and F1. `lmtest` supplies tests for regression models.
+#'
 #' ## Datasets and labels
-#' 
+#'
 #' | Exercise | Data | Classifier | Main interface |
 #' |---|---|---|---|
 #' | Hate speech | Wang, Day & Wu (2022) | Multinomial Naive Bayes | quanteda.textmodels |
 #' | Grandstanding | Park (2021) | Linear SVM | mlr3 + mlr3learners |
-#' 
-#' Both exercises use quanteda to count text features and mlr3 to reserve test rows and calculate evaluation measures. The results below are classroom reanalyses, separate from the papers’ reported models.
-#' 
+#'
+#' In both exercises, we'll count text features with quanteda and use mlr3 to reserve test rows and evaluate predictions. We are reanalysing the data for class; the results below come from our classroom models rather than the papers’ reported models.
+#'
 #' ### Source columns and lab columns
-#' 
+#'
 #' | Data | Original field | Practice CSV field |
 #' |---|---|---|
 #' | Wang, Day & Wu (2022) | `text` | `text` |
 #' | Wang, Day & Wu (2022) | `hate_speech` (0/1) | `label` (NonHateSpeech/HateSpeech) |
 #' | Park (2021) | `speech` | `text` |
 #' | Park (2021) | `rescaled_gs` (0/1) | `label` (NonGrandstanding/Grandstanding) |
-#' 
-#' `doc_id` identifies rows and `key` checks text overlap. Neither is a predictor. The labels retain the source data’s binary categories. No new cutoff is applied.
-#' 
+#'
+#' We'll use `doc_id` to identify rows and `key` to check text overlap, and keep both outside the predictors. We'll also keep the source data’s binary labels without applying a new cutoff.
+#'
+#' ### Reading the category boundaries
+#'
+#' Before we read classification errors, let's agree on what to look for in the texts. The summaries below guide our discussion; they do not reproduce the full annotation instructions or replace the supplied labels.
+#'
+#' **Hate speech:** Wang, Day & Wu define attribute-directed abuse of an individual or group, including attacks based on political beliefs or party affiliation. Their scheme excludes satire and humour and distinguishes offensive speech from hate speech. When reading a comment, identify the target, the attribute attacked and the context indicating abuse. See [Wang, Day & Wu (2022), §III-A(2), p. 44342](https://doi.org/10.1109/ACCESS.2022.3160712) ([full article text](https://www.researchgate.net/publication/363074513_Political_Hate_Speech_Detection_and_Lexicon_Building_A_Study_in_Taiwan)).
+#'
+#' **Grandstanding:** Park's rating instructions cover praise or denigration of people or institutions, policy positions or subjective assessments, and questions intended to embarrass or attack witnesses. Factual descriptions and requests for facts or expert advice form the other end of the scale. A question can still grandstand; self-reference alone does not settle the category. See [Park (2021), author manuscript, “Data and Methods,” p. 14 and Table 1, p. 16](https://repository.essex.ac.uk/27769/1/Manuscript_JOP_final2.pdf#page=14). The original ratings measure relative intensity. The supplied CSV does not document the cutoff for its binary `rescaled_gs` categories; keep those existing categories.
+#'
 #' ## 1. Set up R
-#' 
-#' **5–10 minutes.** Check the packages, then locate `Data/`. The SVM check should print `"classif.svm"`; the C01 data check should print `TRUE`. Keep this R session open for both cases.
-#' 
+#'
+#' **5–10 minutes.** Let's check the packages and locate `Data/` before we load the texts. We should see `"classif.svm"` from the SVM check and `TRUE` from the C01 data check. Keep this R session open for both cases.
+#'
 #' ### Package check: install and load
-#' 
-#' **Install once.** Run this command before the first exercise if the packages are not installed.
-#' 
+#'
+#' If these packages are not installed yet, run this command once before we begin.
+#'
 #' ```r
 #' install.packages(c("quanteda", "quanteda.textmodels",
 #'   "mlr3", "mlr3learners", "e1071", "stringi"),
 #'   repos = "https://cloud.r-project.org")
 #' ```
-#' 
-#' **Load in each new R session.** Run the check below before C01.
-#' 
+#'
+#' Each new R session needs to load the packages again. Let's run this check before C01.
+#'
 ## -----------------------------------------------------------------------------
 # Package loading check
 library(quanteda); library(quanteda.textmodels)
@@ -96,13 +102,13 @@ library(mlr3); library(mlr3learners)
 library(e1071); library(stringi)
 lrn("classif.svm")$id
 
-#' 
-#' **Ready:** all six packages load without errors, and the last line returns `"classif.svm"`. Continue to C01.
-#' 
+#'
+#' Once all six packages load without errors and the last line returns `"classif.svm"`, we're ready for C01.
+#'
 #' ### C01. Setup
-#' 
-#' **Practice:** Identify which package supplies each function. Keep one R session open.
-#' 
+#'
+#' Let's set up the data path and the measures we'll use later. As we read the code, which package supplies each function?
+#'
 ## -----------------------------------------------------------------------------
 # C01: Setup
 # install.packages(c("quanteda", "quanteda.textmodels",
@@ -117,22 +123,19 @@ file.exists(file.path(data_dir, "hate_speech_practice.csv"))
 measures <- msrs(c("classif.acc", "classif.precision",
                    "classif.recall", "classif.fbeta"))
 
-#' 
-#' **Discuss after running:** What does FALSE indicate about the data path?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** Use quanteda for features and quanteda.textmodels for hate-speech NB. Use mlr3/ mlr3learners for grandstanding SVM and mlr3 for splitting and evaluation. The package check above loads mlr3learners and its e1071 backend before either exercise.
-#' 
+#'
+#' Look at the file check. If it returns `FALSE`, where would we look for a problem in the data path?
+#'
+#' If the file check returns `FALSE`, we'll need to check the working directory and make sure the extracted `Data/` folder is beside the lab script. We'll build features with quanteda and fit hate-speech NB with quanteda.textmodels. For grandstanding, we'll use the mlr3/ mlr3learners SVM interface; mlr3 also handles our splits and evaluation. The package check has already loaded mlr3learners and its e1071 backend for us.
+#'
 #' ## 2. Hate speech: Naive Bayes with quanteda.textmodels
-#' 
-#' **25–30 minutes.** Use the data from **Wang, Day & Wu (2022)**. Reserve test comments, count Chinese characters, select a vocabulary using only training rows, and fit Naive Bayes. After checking the held-out comments, apply the same fitted model to the separate human-reference sample.
-#' 
+#'
+#' **25–30 minutes.** We'll start with the data from **Wang, Day & Wu (2022)**. First we'll reserve test comments, then count Chinese characters and use only the training rows to select our vocabulary and fit Naive Bayes. After checking the held-out comments, we'll apply that fitted model to the separate human-reference sample.
+#'
 #' ### C02. Load the Wang, Day & Wu (2022) data
-#' 
-#' **Practice:** Which hate-speech label is more common?
-#' 
+#'
+#' Let's load the comments and count the two labels.
+#'
 ## -----------------------------------------------------------------------------
 # C02: Load the Wang, Day & Wu (2022) data
 hate <- read.csv(file.path(data_dir,
@@ -142,18 +145,15 @@ hate$label <- factor(hate$label,
 table(hate$label)
 nrow(hate)
 
-#' 
-#' **Discuss after running:** Which class is more common? What would always predicting that class achieve?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** The sample contains 2,378 HateSpeech and 1,622 NonHateSpeech comments. Labels come from Wang, Day & Wu (2022).
-#' 
+#'
+#' Which class appears more often? If we predicted that class for every comment, what accuracy would we get?
+#'
+#' We have 2,378 HateSpeech and 1,622 NonHateSpeech comments, so HateSpeech is the majority class. If we always predicted that class, we'd get 2,378 / 4,000 = **59.45% accuracy** on the full sample. That gives us a majority-class baseline. When we evaluate a model, we'll calculate its baseline on the same evaluation rows. The labels come from Wang, Day & Wu (2022).
+#'
 #' ### C03. Reserve test comments with mlr3
-#' 
-#' **Practice:** Which rows must stay outside vocabulary selection and model fitting?
-#' 
+#'
+#' Before we count features, let's set aside the comments we'll use to evaluate the model.
+#'
 ## -----------------------------------------------------------------------------
 # C03: Reserve test comments with mlr3
 hs_task <- as_task_classif(hate["label"],
@@ -166,21 +166,18 @@ parts <- list(train = hate[hs_split$train, ],
 table(parts$train$label)
 table(parts$test$label)
 
-#' 
-#' **Discuss after running:** Why reserve test rows before selecting the vocabulary?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** There are 3,200 training and 800 test comments. Setting the label as the stratum preserves approximately 80/20 within each class. The task holds labels and row IDs for splitting; it does not fit a classifier.
-#' 
+#'
+#' Why do we reserve the test rows now? What information would reach our vocabulary selection if we used those rows too?
+#'
+#' We now have 3,200 training and 800 test comments. By using the label as the stratum, we keep approximately 80/20 of each class in the two sets. At this point, the task just holds the labels and row IDs we need for splitting; we haven't fitted a classifier yet.
+#'
 #' ### C04a_1. Hate speech: tokenize Chinese characters
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `stri_trans_nfkc()` | stringi: normalize Unicode forms in a working text copy. |
 #' | `quanteda::tokens()` | Turn each comment into character tokens. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # C04a_1: Normalize and tokenize Chinese comments
 hs_text <- stringi::stri_trans_nfkc(hate$text)
@@ -190,19 +187,18 @@ hs_tokens <- tokens(hs_text, what = "character",
   remove_numbers = TRUE)
 class(hs_tokens)
 
-#' 
-#' **Discuss after running:** Why does what = "character" produce characters rather than Chinese words?
-#' 
-#' 
-#' **Reading the output:** The output is a tokens object with one token sequence per comment. The raw text in hate$text is unchanged. Punctuation, symbols and numeric tokens are removed.
-#' 
+#'
+#' Look at `what = "character"`. What have we asked R to count, and how would the result differ if we wanted Chinese words?
+#'
+#' We get a tokens object with one sequence per comment. Because we chose character tokenization, these sequences contain characters rather than segmented Chinese words. We've removed punctuation, symbols and numeric tokens from this working copy; the raw text in `hate$text` stays available for us to read.
+#'
 #' ### C04a_2. Hate speech: turn tokens into a DFM
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `tokens_select()` | Retain tokens matching the Han-character pattern. |
 #' | `dfm()` | Count features in a sparse document-feature matrix. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # C04a_2: Select Han characters and count features
 hs_tokens <- tokens_select(hs_tokens,
@@ -210,19 +206,18 @@ hs_tokens <- tokens_select(hs_tokens,
 hs_dfm <- dfm(hs_tokens)
 dim(hs_dfm)
 
-#' 
-#' **Discuss after running:** What do the 4,000 rows and 2,916 columns represent?
-#' 
-#' 
-#' **Reading the output:** Rows are comments, columns are retained characters, and each cell is a count. The DFM contains all comments at this stage; only training rows determine the later vocabulary cutoff.
-#' 
+#'
+#' We now have 4,000 rows and 2,916 columns. Which represents comments, which represents characters, and what does one cell count?
+#'
+#' Each row is a comment, each column is a retained character, and each cell counts that character in that comment. We have all comments in this DFM for now. In the next step, we'll use only the training rows to choose the vocabulary cutoff.
+#'
 #' ### C04b_1. Hate speech: select the training vocabulary
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `dfm_trim()` | Keep features occurring in at least 1% of training documents. |
 #' | `train_label` | Keep one label per training row, in the same order. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # C04b_1: Trim training features
 train_dfm <- dfm_trim(hs_dfm[hs_split$train, ],
@@ -230,19 +225,18 @@ train_dfm <- dfm_trim(hs_dfm[hs_split$train, ],
 train_label <- parts$train$label
 dim(train_dfm)
 
-#' 
-#' **Discuss after running:** Does min_docfreq count documents or total token occurrences?
-#' 
-#' 
-#' **Reading the output:** There are 3,200 training comments and 603 retained features. The 1% threshold refers to document frequency, not a feature’s share of all tokens. Test rows do not choose the vocabulary.
-#' 
+#'
+#' With `min_docfreq = .01`, are we counting the documents that contain a character or all occurrences of that character?
+#'
+#' We keep 603 features across the 3,200 training comments. The 1% threshold asks how many documents contain a character, so repeating it many times in one comment does not make it appear in more documents. Only the training rows contribute to this choice.
+#'
 #' ### C04b_2. Hate speech: match the test columns
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `featnames()` | Read the training feature names in column order. |
 #' | `dfm_match()` | Match that order, drop extra features and fill missing ones with zero. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # C04b_2: Match test features to training columns
 test_dfm <- dfm_match(hs_dfm[hs_split$test, ],
@@ -250,16 +244,15 @@ test_dfm <- dfm_match(hs_dfm[hs_split$test, ],
 dim(test_dfm)
 identical(featnames(train_dfm), featnames(test_dfm))
 
-#' 
-#' **Discuss after running:** Why must the 800 test rows use the same 603 columns in the same order?
-#' 
-#' 
-#' **Reading the output:** The test matrix is 800 by 603 and the name/order check is TRUE. dfm_match changes columns to match the training vocabulary; it does not fit or select a new vocabulary from test texts.
-#' 
+#'
+#' The test set has 800 rows, and the training vocabulary has 603 columns. Why do we need those same columns in the same order when we predict?
+#'
+#' Our test matrix is 800 by 603, and the name/order check returns `TRUE`. We can now give the model the columns it expects: `dfm_match()` aligns them with the training vocabulary without selecting a new vocabulary from the test texts.
+#'
 #' ### C05. Fit Naive Bayes
-#' 
-#' **Practice:** Which object holds the fitted NB model?
-#' 
+#'
+#' Let's fit Naive Bayes using the training counts and their labels.
+#'
 ## -----------------------------------------------------------------------------
 # C05: Fit Naive Bayes
 nb <- textmodel_nb(train_dfm, y = train_label,
@@ -268,18 +261,15 @@ nb <- textmodel_nb(train_dfm, y = train_label,
 class(nb)
 nb$distribution
 
-#' 
-#' **Discuss after running:** Which argument supplies the training labels?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** nb is the fitted multinomial NB object. y must match the row order of the training matrix.
-#' 
+#'
+#' Which argument gives the model its training labels, and which object now holds the fitted model?
+#'
+#' The fitted multinomial NB model is now stored in `nb`. We supplied its labels through `y`, so their order must match the rows of the training matrix.
+#'
 #' ### C06. Predict and evaluate with mlr3
-#' 
-#' **Practice:** Locate one false positive and one false negative in the confusion matrix.
-#' 
+#'
+#' Now we can predict the held-out comments. Let's use the confusion matrix to see where the predictions agree with the labels and where they differ.
+#'
 ## -----------------------------------------------------------------------------
 # C06: Predict and evaluate with mlr3
 nb_prediction <- predict(nb, newdata = test_dfm)
@@ -291,20 +281,17 @@ nb_check$confusion
 nb_scores <- nb_check$score(measures)
 round(nb_scores, 3)
 
-#' 
-#' **Discuss after running:** Rows are predictions. Which cells are false positives and false negatives?
-#' 
-#' 
-#' 
-#' 
-#' `PredictionClassif` stores the reference labels and predictions. `$score(measures)` computes the metrics defined in C01. The task’s `positive` class determines precision, recall and F1.
-#' 
-#' **Reading the output:** TP371, FP140, FN105, TN184. Accuracy .694, precision .726, recall .779, F1 .752. mlr3’s confusion matrix has predictions in rows and reference labels in columns. classif.fbeta uses beta=1, so it reports F1. The task sets HateSpeech as the positive class.
-#' 
+#'
+#' Read the predictions down the rows and the reference labels across the columns. Which cells contain false positives and false negatives?
+#'
+#' We keep the reference labels and predictions together in `PredictionClassif`, then use `$score(measures)` to calculate the measures from C01. When we read precision, recall and F1, we need to check which class the task sets as `positive`.
+#'
+#' Reading predictions down the rows and reference labels across the columns, we find TP371, FP140, FN105 and TN184. Our accuracy is .694, precision .726, recall .779 and F1 .752. For comparison, always predicting HateSpeech on these same 800 test comments gives 476 / 800 = **59.5% accuracy**. We're treating HateSpeech as positive, and `classif.fbeta` uses beta=1, which gives us F1.
+#'
 #' ### C07. Inspect one held-out comment
-#' 
-#' **Practice:** Compare the predicted category with the provided label.
-#' 
+#'
+#' Let's put the scores aside for a moment and read one held-out comment. Does its prediction agree with the provided label?
+#'
 ## -----------------------------------------------------------------------------
 # C07: Inspect one held-out comment
 i <- match("hs_26234", parts$test$doc_id)
@@ -314,20 +301,17 @@ round(predict(nb, newdata = test_dfm[i, ],
               type = "probability"), 3)
 parts$test$label[i]
 
-#' 
-#' **Discuss after running:** Which words express group-based degradation or exclusion?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** hs_26234 is predicted HateSpeech, matching the provided label, with model probability .999. The wording degrades a group as “垃圾” and demands exclusion through “滾回去中國” and “永不得進來台灣”. Read these group-directed features alongside the coding definition.
-#' 
+#'
+#' Which words in this comment express group-based degradation or exclusion? How do they relate to the category definition above?
+#'
+#' For `hs_26234`, we predict HateSpeech with model probability .999, matching the provided label. We can see the group-directed degradation in “垃圾” and the demands for exclusion in “滾回去中國” and “永不得進來台灣”. Those phrases help us connect the prediction to the coding definition above.
+#'
 #' ### C08a. Match human-reference texts to the vocabulary
-#' 
-#' Read the merged **`hate_speech_reference.csv`** directly. Its `source` column records the original BERT/Lexicon filename (or both), while `label` contains the final **是否仇恨 (Hate speech: Yes/No)** category. The original model-prediction columns are excluded. This step evaluates the existing NB model and does not train a BERT model.
-#' 
-#' **Practice:** Why apply the training vocabulary to the human-reference comments?
-#' 
+#'
+#' Next we'll read **`hate_speech_reference.csv`** and evaluate the same fitted NB model on these separate comments. The `source` column tells us whether a comment came from the BERT file, the Lexicon file or both. Our reference is `label`, the final **是否仇恨 (Hate speech: Yes/No)** category. The original model-prediction columns are excluded, and we will not train a BERT model here.
+#'
+#' Before we predict, let's give these comments the vocabulary we selected from the training data.
+#'
 ## -----------------------------------------------------------------------------
 # C08a: Match human-reference texts to the vocabulary
 benchmark <- read.csv(file.path(data_dir,
@@ -343,18 +327,15 @@ ref_dfm <- dfm_match(dfm(ref_tokens),
   features = featnames(train_dfm))
 dim(ref_dfm); sum(ntoken(ref_dfm) == 0)
 
-#' 
-#' **Discuss after running:** Do the 17 zero-feature rows mean empty comments or no retained characters?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** The 1,968 reference comments are text-disjoint from the training sample. dfm_match() uses the fitted training vocabulary. All comments remain in evaluation, including 17 with no retained features.
-#' 
+#'
+#' We find 17 rows with no features. Are those comments empty, or do they contain no characters from our retained vocabulary?
+#'
+#' These 1,968 reference comments have no matching texts in our training sample. We apply the fitted training vocabulary with `dfm_match()`. A row with no retained features may still contain text; it just has none of our selected characters. We keep all comments in the evaluation, including those 17 rows.
+#'
 #' ### C08b. Evaluate the separate human references
-#' 
-#' **Practice:** What changes on the separate human-reference sample?
-#' 
+#'
+#' Let's score these predictions and compare them with our first test results.
+#'
 ## -----------------------------------------------------------------------------
 # C08b: Evaluate the separate human references
 ref_task <- as_task_classif(benchmark["label"],
@@ -366,24 +347,21 @@ ref_check <- PredictionClassif$new(task = ref_task,
 benchmark_scores <- ref_check$score(measures)
 nrow(benchmark); round(benchmark_scores, 3)
 
-#' 
-#' **Discuss after running:** Recall is .880, but precision is .165. What errors does that imply?
-#' 
-#' 
-#' 
-#' 
-#' `PredictionClassif` stores the reference labels and predictions. `$score(measures)` computes the metrics defined in C01. The task’s `positive` class determines precision, recall and F1.
-#' 
-#' **Reading the output:** Precision .165, recall .880, F1 .278. Many false positives remain. Differences in sampling and label construction may matter; this comparison does not isolate a cause.
-#' 
+#'
+#' We get recall of .880 and precision of .165. What does that combination tell us about the comments predicted as HateSpeech?
+#'
+#' We use the same measures from C01 again, with HateSpeech as the task's `positive` class. Keeping that definition fixed helps us compare precision, recall and F1 across the two evaluations.
+#'
+#' Here we get precision .165, recall .880 and F1 .278. We're finding most reference HateSpeech comments, but many comments we predict as HateSpeech are false positives. Sampling and label construction differ across the two evaluations, so this comparison alone cannot tell us why the scores changed.
+#'
 #' ## 3. Grandstanding: linear SVM with mlr3
-#' 
-#' **20–30 minutes.** Use **Park (2021)** data. Repeat the workflow with English word features and an mlr3 learner. The target is the dataset’s existing binary `rescaled_gs` category. The SVM probability and the original research score describe different quantities.
-#' 
+#'
+#' **20–30 minutes.** Now we'll follow the same steps with **Park (2021)** data, using English word features and an mlr3 learner. We'll predict the supplied binary `rescaled_gs` category. As we read the results, remember that the SVM probability and the original research score describe different quantities.
+#'
 #' ### G01a. Load the Park (2021) data
-#' 
-#' **Practice:** Which original field supplies the grandstanding target?
-#' 
+#'
+#' Let's load the hearing excerpts. Which original field gives us the grandstanding target?
+#'
 ## -----------------------------------------------------------------------------
 # G01a: Load the Park (2021) data
 grandstanding <- read.csv(file.path(data_dir,
@@ -392,18 +370,15 @@ grandstanding$label <- factor(grandstanding$label,
   levels = c("NonGrandstanding", "Grandstanding"))
 table(grandstanding$label)
 
-#' 
-#' **Discuss after running:** Which class is more common in the Park (2021) data?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** These 3,499 distinct excerpts retain the existing rescaled_gs categories from Park (2021): Grandstanding and NonGrandstanding. The original binary conversion cutoff is not documented. Score fields are outside the predictors.
-#' 
+#'
+#' Look at the label counts. Which class is more common in this sample?
+#'
+#' We have 3,499 distinct excerpts with the supplied `rescaled_gs` categories, Grandstanding and NonGrandstanding, from Park (2021). We'll keep these categories because the file does not document the original binary conversion cutoff. We also keep the score fields outside the predictors.
+#'
 #' ### G01b. Reserve test excerpts with mlr3
-#' 
-#' **Practice:** Which category is the positive class?
-#' 
+#'
+#' We'll reserve test excerpts as before. Check which category we set as the positive class.
+#'
 ## -----------------------------------------------------------------------------
 # G01b: Reserve test excerpts with mlr3
 gs_task <- as_task_classif(grandstanding["label"],
@@ -416,21 +391,18 @@ gs_parts <- list(train = grandstanding[gs_split$train, ],
 table(gs_parts$train$label)
 table(gs_parts$test$label)
 
-#' 
-#' **Discuss after running:** How does stratification preserve both categories in the test set?
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** There are 2,799 training and 700 test excerpts. The positive class is Grandstanding. The task sets the class used for precision and recall.
-#' 
+#'
+#' Compare the training and test counts. How does stratification keep both categories represented?
+#'
+#' We have 2,799 training and 700 test excerpts. We've set Grandstanding as positive in the task, so that is the class we'll use when we read precision and recall.
+#'
 #' ### G02a_1. Grandstanding: build a corpus and tokens
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `corpus()` | Read text and document IDs from the data table. |
 #' | `tokens()` | Split the selected text into words and remove the requested token types. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02a_1: Build an English corpus and tokens
 gs_corpus <- corpus(grandstanding,
@@ -440,20 +412,19 @@ gs_tokens <- tokens(gs_corpus, remove_punct = TRUE,
   remove_url = TRUE)
 ndoc(gs_corpus)
 
-#' 
-#' **Discuss after running:** Which column supplies text, and which column supplies document IDs?
-#' 
-#' 
-#' **Reading the output:** The corpus has 3,499 documents. text_field selects text and docid_field selects doc_id. Other columns are document metadata; they are not counted as text features.
-#' 
+#'
+#' In the `corpus()` call, which column do we read as text and which do we use for document IDs?
+#'
+#' Our corpus contains 3,499 documents. We use `text_field` to select `text` and `docid_field` to select `doc_id`. The remaining columns stay as document metadata, so we don't count them as words in the text.
+#'
 #' ### G02a_2. Grandstanding: normalize and count words
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `tokens_tolower()` | Combine upper- and lowercase versions of words. |
 #' | `tokens_remove()` | Remove the English stopword list from the tokens. |
 #' | `dfm()` | Count the remaining words for each document. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02a_2: Normalize English tokens and build a DFM
 gs_tokens <- tokens_tolower(gs_tokens)
@@ -462,19 +433,18 @@ gs_tokens <- tokens_remove(gs_tokens,
 gs_dfm <- dfm(gs_tokens)
 dim(gs_dfm)
 
-#' 
-#' **Discuss after running:** How do these word features differ from the Chinese character features?
-#' 
-#' 
-#' **Reading the output:** The output is a sparse DFM of word counts, before training-only trimming. Removing stopwords is a preprocessing choice for this exercise; it can remove meaningful words in other research questions.
-#' 
+#'
+#' What does one column count here? Compare these English word features with the Chinese character features we used earlier.
+#'
+#' We now have a sparse DFM of word counts, ready for trimming with the training rows. Here we count English words rather than Chinese characters. We've chosen to remove English stopwords for this exercise; for another research question, we'd first ask whether those words carry meaning we need.
+#'
 #' ### G02a_3. Grandstanding: trim and align the vocabulary
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `dfm_trim()` | Choose words using training document frequencies. |
 #' | `dfm_match()` | Give test documents the same feature columns. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02a_3: Select training words and match test columns
 gs_train_dfm <- dfm_trim(gs_dfm[gs_split$train, ],
@@ -483,19 +453,18 @@ gs_test_dfm <- dfm_match(gs_dfm[gs_split$test, ],
   features = featnames(gs_train_dfm))
 dim(gs_train_dfm); dim(gs_test_dfm)
 
-#' 
-#' **Discuss after running:** Why do both matrices have 629 columns even though they contain different texts?
-#' 
-#' 
-#' **Reading the output:** The training DFM has 2,799 rows, the test DFM has 700, and both have 629 features. This repeats the training-only vocabulary rule used for hate speech.
-#' 
+#'
+#' Both matrices have 629 columns even though they contain different excerpts. Where did we choose those columns, and why do we keep them the same?
+#'
+#' We choose 629 features from the 2,799 training rows, then give the 700 test rows those same columns. This is the same rule we used for hate speech: the training texts choose the vocabulary, and the test texts use it.
+#'
 #' ### G02b_1. Grandstanding: convert the DFM for mlr3
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `quanteda::convert()` | Turn the small sparse DFM into a dense data frame. |
 #' | `doc_id <- NULL` | Remove the identifier, leaving 629 numeric feature columns. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02b_1: Convert text counts to feature tables
 gs_train_data <- convert(gs_train_dfm, to = "data.frame")
@@ -503,19 +472,18 @@ gs_test_data <- convert(gs_test_dfm, to = "data.frame")
 gs_train_data$doc_id <- NULL; gs_test_data$doc_id <- NULL
 dim(gs_train_data); dim(gs_test_data)
 
-#' 
-#' **Discuss after running:** Why should a document ID stay outside the predictor columns?
-#' 
-#' 
-#' **Reading the output:** The converted tables contain 629 numeric feature columns after removing `doc_id`. Dense conversion is suitable for this dataset. Larger text matrices may require sparse learners or backends.
-#' 
+#'
+#' We've removed the document ID from the feature table. What should the model learn from, and why would an ID be an unsuitable predictor?
+#'
+#' After removing `doc_id`, we have 629 numeric feature columns. These are the text counts we'll pass to the learner. A dense table is manageable for this dataset; with a larger text matrix, we'd look for a learner or backend that can use sparse features.
+#'
 #' ### G02b_2. Grandstanding: add the target column
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `make.names()` | Create valid, unique feature names. |
 #' | `label` | Add the target after the 629 feature columns. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02b_2: Name feature columns and add labels
 names(gs_train_data) <- make.names(featnames(gs_train_dfm),
@@ -526,19 +494,18 @@ gs_test_data$label <- factor(gs_parts$test$label,
   levels = c("Grandstanding", "NonGrandstanding"))
 dim(gs_train_data); dim(gs_test_data)
 
-#' 
-#' **Discuss after running:** Why are there now 630 columns, but only 629 predictors?
-#' 
-#' 
-#' **Reading the output:** There are 629 features plus label. Both tables share names and order. The test factor places Grandstanding first to match the positive-class order used by the mlr3 task; this prevents reversing binary evaluation measures.
-#' 
+#'
+#' We now have 630 columns. Which one is the target, leaving 629 predictors?
+#'
+#' The extra column is `label`, giving us 629 features plus the target. We've kept the feature names and order the same in both tables. We also put Grandstanding first in the test label factor to match the mlr3 task's positive-class order, so the binary measures refer to the intended class.
+#'
 #' ### G02c_1. mlr3: define the classification task
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `as_task_classif()` | Describe the training data, target column and positive class. |
 #' | `TaskClassif` | Stores data and roles. Creating the task does not train a model. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02c_1: Define the grandstanding task
 gs_model_task <- as_task_classif(gs_train_data,
@@ -546,19 +513,18 @@ gs_model_task <- as_task_classif(gs_train_data,
 gs_model_task$target_names
 length(gs_model_task$feature_names)
 
-#' 
-#' **Discuss after running:** Which column is the target, and why is it excluded from feature_names?
-#' 
-#' 
-#' **Reading the output:** The target is label and the task has 629 feature names. The positive class controls binary precision, recall and F1. This task contains text features; the earlier label-only tasks were used to partition rows.
-#' 
+#'
+#' Check `target_names` and `feature_names`. Why do we keep the target column outside the predictors?
+#'
+#' We can see `label` listed as the target and 629 names listed as features. This task holds the text counts we'll train on; our earlier label-only tasks helped us split the rows. Setting the positive class tells mlr3 how to calculate binary precision, recall and F1.
+#'
 #' ### G02c_2. mlr3: choose an SVM learner
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `lrn()` | Create an unfitted learner and set its options. |
 #' | `predict_type = "prob"` | Request class probabilities as well as predicted categories. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02c_2: Configure the linear SVM learner
 library(mlr3learners)
@@ -568,20 +534,19 @@ gs_learner <- lrn("classif.svm", type = "C-classification",
 gs_learner$id
 gs_learner$predict_type
 
-#' 
-#' **Discuss after running:** Has lrn() already learned from any training rows?
-#' 
-#' 
-#' **Reading the output:** The learner ID is classif.svm and predict_type is prob. mlr3learners supplies the SVM interface backed by e1071. kernel, cost and scale configure this classroom model. Fitting happens in the next step.
-#' 
+#'
+#' We've chosen the learner and its settings. Has `lrn()` seen any training rows yet?
+#'
+#' We've created a `classif.svm` learner with `predict_type` set to `prob`. The interface comes from mlr3learners and uses e1071 underneath. So far we've chosen `kernel`, `cost` and `scale`; we'll give the learner its training rows in the next step.
+#'
 #' ### G02c_3. mlr3: train and predict
-#' 
+#'
 #' | Function / object | What it does here |
 #' |---|---|
 #' | `$train(task)` | Fit the learner using the training task. |
 #' | `$predict_newdata()` | Return predictions for the held-out feature table. |
 #' | `$response` / `$prob` | Read category labels / the matrix of class probabilities. |
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02c_3: Train the learner and predict held-out texts
 set.seed(7193)
@@ -591,32 +556,30 @@ gs_prediction <- gs_result$response
 length(gs_prediction)
 colnames(gs_result$prob)
 
-#' 
-#' **Discuss after running:** Which object stores the fitted learner, and which stores the 700 test predictions?
-#' 
-#' 
-#' **Reading the output:** gs_learner stores the fitted model, while gs_result stores 700 predictions. Each row has one predicted category and a probability for each class. Test labels support evaluation; they do not enter training.
-#' 
+#'
+#' We now have a fitted model and 700 test predictions. Which object holds each, and where can we find the class probabilities?
+#'
+#' Our fitted model is in `gs_learner`, and its 700 predictions are in `gs_result`. For each test row, we can read the predicted category and a probability for each class. We'll use the test labels to evaluate these predictions; they were kept outside training.
+#'
 #' ### G02d. Evaluate the mlr3 predictions
-#' 
+#'
 ## -----------------------------------------------------------------------------
 # G02d: Evaluate the mlr3 predictions
 gs_result$confusion
 gs_scores <- gs_result$score(measures)
 round(gs_scores, 3)
 
-#' 
-#' **Discuss after running:** Locate the 74 false positives and 155 false negatives.
-#' 
-#' 
-#' **Reading the output:** TP176, FP74, FN155, TN295. Accuracy .673, precision .704, recall .532, F1 .606. Grandstanding is the positive class.
-#' 
-#' `PredictionClassif` stores the reference labels and predictions. `$score(measures)` computes the metrics defined in C01. The task’s `positive` class determines precision, recall and F1.
-#' 
+#'
+#' Find the 74 false positives and 155 false negatives in the table. Which kind of error is more common?
+#'
+#' With Grandstanding as positive, we count TP176, FP74, FN155 and TN295. Our accuracy is .673, precision .704, recall .532 and F1 .606. We miss more reference Grandstanding excerpts than we incorrectly predict as Grandstanding, which helps explain the lower recall.
+#'
+#' Here `gs_result` is our `PredictionClassif` object, holding the reference labels and predictions. We call `$score(measures)` with the measures from C01 and read precision, recall and F1 for the task's `positive` class, Grandstanding.
+#'
 #' ### G03. Inspect one grandstanding prediction
-#' 
-#' **Practice:** Does this prediction agree with the provided rescaled_gs category?
-#' 
+#'
+#' Let's read one excerpt alongside its prediction and the supplied `rescaled_gs` category.
+#'
 ## -----------------------------------------------------------------------------
 # G03: Inspect one grandstanding prediction
 j <- match("gs_01045", gs_parts$test$doc_id)
@@ -625,22 +588,19 @@ gs_result$response[j]
 round(gs_result$prob[j, ], 3)
 gs_result$truth[j]
 
-#' 
-#' **Discuss after running:** Which words suggest self-promotion? Read the full statement next.
-#' 
-#' 
-#' 
-#' 
-#' **Reading the output:** gs_01045 is predicted Grandstanding, matching the provided label, with linear SVM probability .637. “I am not intimidated by anybody” and “I am going to do whatever I have to do” emphasize the speaker’s own resolve. The tax statements declare a public political position. This example illustrates self-promotion and position-taking; a model probability does not establish substantive correctness. The original grandstanding score for this statement is 2.003; that score is not a predictor.
-#' 
+#'
+#' Which words suggest self-promotion or position-taking? Keep them in mind as we read the full statement next.
+#'
+#' For `gs_01045`, we predict Grandstanding with linear SVM probability .637, matching the provided label. Let's look at what the speaker says: “I am not intimidated by anybody” and “I am going to do whatever I have to do” emphasize personal resolve, while the tax statements take a public political position. We can discuss these as self-promotion and position-taking, but the model probability cannot establish whether the classification is substantively correct. The original grandstanding score is 2.003; we have kept it outside the predictors.
+#'
 #' ## 4. Read and compare prediction errors
-#' 
-#' **10–15 minutes.** Read one full text from each case. Use the confusion matrix to identify the type of error, then explain the category boundary in your own words.
-#' 
+#'
+#' **10–15 minutes.** Let's read one full text from each case. We'll first identify the type of error, then explain what the category boundary means for that text.
+#'
 #' ### Follow the slide demonstration
-#' 
-#' `which()` finds the held-out rows where prediction and reference differ. Select the first error, compare the categories and probability, then print the complete statement. This block is identical to the **Read performance with the text** slide.
-#' 
+#'
+#' We'll use `which()` to find the held-out rows where prediction and reference differ. Let's select the first error, compare its categories and probability, and print the complete statement. This is the same block we used on the **Read performance with the text** slide.
+#'
 ## -----------------------------------------------------------------------------
 # Read one grandstanding prediction error
 error_rows <- which(gs_result$response != gs_result$truth)
@@ -653,56 +613,56 @@ data.frame(
   row.names = NULL)
 cat(gs_parts$test$text[k], "\n")
 
-#' 
-#' **Discuss:** Is this a false positive or a false negative? Which metric does it lower? Does describing the needs of a district count as self-promotion?
-#' 
-#' **Reading the output:** The first SVM error is gs_00013: prediction Grandstanding, reference NonGrandstanding. This is a false positive, which lowers precision. The statement repeatedly refers to the speaker’s district and asks how a program will address local needs. Those phrases can resemble self-promotion, but the full statement can also read as a substantive request for policy information. Discuss the coding boundary and what hearing context would help; a mismatch alone does not prove that the model or reference is substantively correct.
-#' 
+#'
+#' Is this a false positive or a false negative, and which metric does it lower? As we read, consider whether describing a district's needs is enough to count as self-promotion.
+#'
+#' Our first SVM error is `gs_00013`: we predict Grandstanding, while the reference is NonGrandstanding. That makes it a false positive and lowers precision. The speaker repeatedly mentions the district and asks how a program will address local needs. We might read those phrases as self-promotion, or read the full statement as a request for policy information. What hearing context would help us decide? The disagreement gives us a case to examine; it does not by itself establish that either the model or the reference is substantively correct.
+#'
 #' ### Repeat with the hate-speech model
-#' 
+#'
 ## -----------------------------------------------------------------------------
 hate_errors <- which(nb_prediction != parts$test$label)
 cat(parts$test$text[hate_errors[1]], "\n")
 
-#' 
-#' Read both full texts and explain the category boundary. Identify any cases where the text alone leaves the label uncertain.
-#' 
-#' **Discuss:** Which case has higher precision? Which has higher recall? These datasets have different labels, languages and class frequencies, so their scores do not isolate the effect of the algorithm. Changing a model after examining test errors requires a fresh evaluation sample.
-#' 
+#'
+#' Now compare the two full texts with their category definitions. Where can we explain the boundary clearly, and where would we need more context to judge the label?
+#'
+#' Which case has higher precision, and which has higher recall? We used different labels, languages and class frequencies, so the scores alone cannot tell us which algorithm caused the difference. If we change a model after examining these test errors, we'll need a fresh evaluation sample.
+#'
 #' ## 5. Write a short practice report
-#' 
-#' **5 minutes.** Write five sentences covering the data and labels, split, features, classifier settings, and test results. Include one error you read. No separate submission is required.
-#' 
+#'
+#' **5 minutes.** Let's turn what we've done into five sentences: describe the data and labels, our split, the features, the classifier settings, and the test results. Include one error you read so that the report connects a score to a text. There is no separate submission.
+#'
 #' ## Optional: try another classifier
-#' 
-#' Finish the core practice first. These blocks are displayed for reference and do not run in the main R script. To try one, run its code separately after completing the required steps.
-#' 
+#'
+#' After finishing the core practice, we can try another classifier. The blocks below are for reference and do not run in the main R script; run one separately when you're ready to try it.
+#'
 #' ### Logistic regression with quanteda.textmodels
-#' 
-#' Keep the same training matrix and held-out test matrix. `textmodel_lr()` selects its penalty using cross-validation within the training data. Run this section only after C01–C08.
-#' 
+#'
+#' Let's keep our training and held-out test matrices and fit logistic regression. `textmodel_lr()` selects its penalty by cross-validation within the training data. Complete C01–C08 before trying this block.
+#'
 
-#' 
+#'
 #' ### Reuse the mlr3 SVM for hate speech
-#' 
-#' The required grandstanding exercise already uses `mlr3learners` and `e1071`. Use the small classroom vocabulary for this demonstration: converting to a data frame creates a dense matrix. For large text datasets, consider learners/backends that support sparse features.
-#' 
+#'
+#' We can also reuse `mlr3learners` and `e1071` from the grandstanding exercise to fit an SVM for hate speech. We'll keep the small classroom vocabulary because converting it to a data frame creates a dense matrix. For a large text dataset, we'd need to consider learners or backends that support sparse features.
+#'
 
-#' 
-#' `$train()` fits the classifier. `$predict()` returns a prediction object; `$score()` compares its predictions with the held-out labels. This optional model uses the same split and training-derived vocabulary as NB.
-#' 
+#'
+#' Here we fit the classifier with `$train()`, obtain a prediction object with `$predict()`, and compare predictions with the held-out labels using `$score()`. Keeping the NB split and training-derived vocabulary lets us compare the two models on the same comments.
+#'
 #' ## Data notes
-#' 
-#' The lab reads three CSVs directly: `hate_speech_practice.csv` (4,000 comments), `hate_speech_reference.csv` (1,968 human references), and `grandstanding_practice.csv` (3,499 excerpts). The existing labels are unchanged. Their preparation removes duplicated/conflicting text labels and excludes every raw human-reference text from the hate-speech practice pool before sampling. It does not select a vocabulary or fit a model.
-#' 
-#' Both classifiers use text counts only. Grandstanding’s conversion to a data frame makes a dense table; the modest 629-word vocabulary is for this classroom example. For larger text matrices, use learners/backends that support sparse features.
-#' 
-#' The original source CSVs remain in `Data`. `prepare_practice_data.R` reproduces the cleaned CSVs using base R and stringi; students do not need to run it for the core exercise. See `Data/README.md` and `practice_manifest.json` for cleaning rules and counts. Label and score fields never enter X.
-#' 
-#' The split uses mlr3 `partition()` with seed 7192 and label stratification. Hate speech fits multinomial NB via quanteda.textmodels; grandstanding fits a linear SVM via mlr3. The SVM uses type C-classification, a linear kernel, cost 1 and scale FALSE. Seed 7193 makes its probability fitting reproducible. Its results are not a reproduction of Park’s original research model. These splits separate texts, not necessarily authors, hearings, threads or time periods.
-#' 
+#'
+#' We read three prepared CSVs: `hate_speech_practice.csv` (4,000 comments), `hate_speech_reference.csv` (1,968 human references), and `grandstanding_practice.csv` (3,499 excerpts). Preparation keeps the existing labels, removes duplicate texts and texts with conflicting labels, and excludes every raw human-reference text from the hate-speech practice pool before sampling. We choose the vocabulary and fit the models later in the lab.
+#'
+#' For both classifiers, we use only text counts as predictors. The grandstanding exercise converts its 629-word vocabulary into a dense data frame, which is manageable for this example. With larger text matrices, we'd look for learners or backends that support sparse features.
+#'
+#' The original source CSVs are in `Data`. We can reproduce the cleaned CSVs with `prepare_practice_data.R`, using base R and stringi, but we don't need to run it for the core exercise. `Data/README.md` and `practice_manifest.json` record the cleaning rules and counts. Throughout the lab, we keep label and score fields outside X.
+#'
+#' We split the data with mlr3 `partition()`, seed 7192 and label stratification. For hate speech, we fit multinomial NB through quanteda.textmodels; for grandstanding, we fit a linear SVM through mlr3. Our SVM uses type C-classification, a linear kernel, cost 1 and scale FALSE, with seed 7193 for reproducible probability fitting. These results describe our classroom model rather than a reproduction of Park’s original research model. We separate texts across the split, but authors, hearings, threads or time periods may still overlap.
+#'
 #' ## Reading connections
-#' 
+#'
 #' - [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712): source of the hate-speech data.
 #' - [Park (2021)](https://doi.org/10.1086/709147): source of the grandstanding data.
 #' - [quanteda](https://quanteda.io/reference/index.html) and [quanteda.textmodels](https://quanteda.io/quanteda.textmodels/): text features and Naive Bayes.

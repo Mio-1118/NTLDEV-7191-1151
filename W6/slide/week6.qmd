@@ -44,13 +44,13 @@ execute:
 | Develop the method | Inspect KWIC; revise rules | Fit ML algorithms and predict new texts |
 | Assess results | Read errors and sensitivity | Reserved test and human benchmark |
 
-**Practice:** apply machine learning algorithms to two real datasets:
+**Today, we'll use machine learning with two real datasets:**
 
 1. Political hate speech in Taiwan.
 2. Grandstanding statements in US congressional hearings.
 ::::::
 ::: {.source}
-Course progression: [W4: Dictionaries and Sentiment Analysis](../../W4/slide/week4.html) to W6.
+Course progression: [W4: Dictionaries and Sentiment Analysis](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W4/slide/week4.html) to W6.
 :::
 
 ## Cases we use in W6
@@ -83,7 +83,7 @@ Original-study sources accompany each literature case. Classification practice u
 :::: {.column}
 - **Texts:** Chinese political news comments.
 - **Study:** a hate-speech lexicon and BERT classifiers.
-- **W6 practice:** NB on the Wang, Day & Wu (2022) data.
+- **Our exercise:** we'll fit NB to the Wang, Day & Wu (2022) data.
 ::::
 :::::
 ::::::
@@ -201,7 +201,7 @@ Gillion (2016), [Appendix A, pp. 163–166](https://doi.org/10.1017/CBO978131641
 :::::: {.slide-body .gillion-interpretation}
 - **Missed content:** coded racial messages without an explicit racial reference.
 - **Example:** “inner city” can carry racial meaning in context; the phrase alone is not enough to infer a racial appeal.
-- **Measurement lesson:** 97% agreement shows consistent coding. It does not establish that implicit appeals are captured.
+- **What we learn:** 97% agreement shows consistent coding. We still need to ask whether the rule captures implicit appeals.
 ::::::
 ::: {.source}
 Course interpretation of [Gillion (2016), Appendix A](https://doi.org/10.1017/CBO9781316412299.011) · Racial cue example: [White (2007)](https://doi.org/10.1017/S0003055407070177).
@@ -305,7 +305,7 @@ Book cover · University of Chicago Press, 2013
 - **Question:** how is news attention distributed across policy issues over time?
 - **Data:** New York Times front-page stories, 1996–2006.
 - **Application:** human coders assign policy topics; counts track media attention across issues and time.
-- **W6 connection:** construct consistent labels before comparing issues.
+- **Our first step:** apply the topic labels consistently before we compare issues.
 ::::
 :::::
 ::::::
@@ -414,7 +414,7 @@ Method supplement: [Nielsen (2014), §4.1, pp. 13–14](https://www.mit.edu/~rni
 - **Nielsen case:** treat clerics as scholars, then test whether blocked careers predict jihadist rhetoric.
 - **Language check:** explain why “apostasy” signals jihadist ideology in context.
 - **External checks:** compare scores with biographies and scholarly classifications (2014), plus a jihadist infographic criticizing non-jihadist preachers (2017).
-- **W6 lesson:** validate what the score means using evidence outside the training texts.
+- **Our check:** use evidence outside the training texts to see what the score means.
 ::::
 :::::
 ::::::
@@ -424,15 +424,15 @@ Book connection: §20.3. Nielsen (2017), Ch. 5. [Nielsen (2014), pp. 15–17](ht
 
 ## Nielsen: the limits of external validation
 :::::: {.slide-body}
-**A missing biographical label is not a confirmed negative.**
+**If a biography omits ideology, we cannot label the person non-jihadist on that basis.**
 
 Some biographies identify jihadist commitments explicitly. Others omit ideology. Silence cannot establish non-jihadist status.
 
 **Course discussion:** could a text criticizing jihadism receive a high score because it discusses the same vocabulary?
 
-Check passages in context and inspect differences across genres and authors. Independent benchmarks and close reading answer complementary questions.
+Let's read passages in context and compare genres and authors. A separate benchmark checks the scores; close reading helps us understand the language behind them.
 
-For our hate-speech task, inspect comments quoting abuse in order to reject it.
+For our hate-speech task, let's check comments that quote abuse in order to reject it.
 ::::::
 ::: {.source}
 Nielsen (2013), [dissertation, §4.4.1, pp. 121–122](https://dash.harvard.edu/handle/1/11124850); Nielsen (2014), p. 17 n. 16. Discussion and hate-speech application are course extensions.
@@ -502,16 +502,16 @@ Ju Yeon Park (2021)
 
 ## Coding and measurement choices
 :::::: {.slide-body .compact-table}
-**Course discussion:** apply lessons from the research cases to our hate speech task.
+**Let's use these studies to think through our hate-speech task.**
 
 | Design choice | Question for W6 |
 |---|---|
 | Coding unit | Does one sentence contain enough evidence for our category? |
 | Repeated judgments | Which disagreements should trigger human review? |
-| Aggregation | Do we need comment labels, hate-speech shares, or a genuinely numeric target? |
+| Aggregation | Do we need comment labels, hate-speech shares, or a continuous score? |
 | Validation | Which independent evidence tests the intended interpretation? |
 
-More raters or models cannot repair an unsuitable coding definition.
+Before adding raters or models, let's check that our coding rule fits the question.
 ::::::
 ::: {.source}
 Course synthesis from the preceding research cases, including [Benoit et al. (2016)](https://doi.org/10.1017/S0003055416000058).
@@ -592,7 +592,7 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712) · [P
 
 ## R tools for document classification
 :::::: {.slide-body .compact-table}
-**R can prepare text features, train classifiers and evaluate predictions.**
+**We'll use R to prepare text features, train classifiers and check predictions.**
 
 | What we need | R tools |
 |---|---|
@@ -602,9 +602,9 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712) · [P
 | Connect preprocessing steps | `mlr3pipelines` |
 | Search model settings | `mlr3tuning` |
 
-**Choose mlr3** for resampling, model comparison, pipelines and tuning.
+**When we need resampling, model comparison, pipelines or tuning, we can use mlr3.**
 
-**For direct fitting:** use `quanteda.textmodels`, as in the W6 NB exercise.
+**For our NB exercise,** we'll fit the model directly with `quanteda.textmodels`.
 ::::::
 ::: {.source}
 Official documentation: [quanteda](https://quanteda.io/) · [mlr3](https://mlr-org.com/) · [pipelines](https://mlr3pipelines.mlr-org.com/) · [tuning](https://mlr3tuning.mlr-org.com/).
@@ -650,7 +650,7 @@ Official homepage · mlr-org.com · captured 2026-10-15
 
 ## Simple models with quanteda.textmodels
 :::::: {.slide-body .compact-table}
-For a simple text classifier, use a **DFM plus training labels** directly.
+We can train a simple text classifier directly from a **DFM and training labels**.
 
 | Model | Function |
 |---|---|
@@ -660,7 +660,7 @@ For a simple text classifier, use a **DFM plus training labels** directly.
 
 **Linear SVM:** experimental, for two classes.
 
-**W6:** fit NB with training counts and labels, then predict held-out texts.
+**We'll fit NB** with training counts and labels, then predict held-out texts.
 ::::::
 ::: {.source}
 [quanteda.textmodels manual](https://cran.r-project.org/web/packages/quanteda.textmodels/quanteda.textmodels.pdf) · [Package source and documentation](https://github.com/quanteda/quanteda.textmodels).
@@ -675,7 +675,7 @@ For a simple text classifier, use a **DFM plus training labels** directly.
 
 We will use the data from **Wang, Day & Wu (2022)** and **Park (2021)**.
 
-**Same operations:** load → split → features → fit classifier → predict → check labels.
+**We'll use the same steps:** load → split → features → fit classifier → predict → check labels.
 ::::::
 ::: {.source}
 [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712); [Park (2021)](https://doi.org/10.1086/709147) · [Classroom ZIP](../downloads/week6-classroom.zip).
@@ -756,7 +756,7 @@ lrn("classif.svm")$id
 | Classifier | Multinomial NB | Linear SVM |
 | Model interface | `quanteda.textmodels` | `mlr3` + `mlr3learners` |
 
-**Only text enters the feature matrix.** Labels are the outcome.
+**We'll build features from the text.** The label is what we're trying to predict.
 ::::::
 ::: {.source}
 Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 classroom NB run. Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
@@ -764,9 +764,9 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 c
 
 ## Labels come before the algorithm
 :::::: {.slide-body }
-- Read the coding definition and the unit being classified.
-- Keep the provided labels; do not invent a new cutoff.
-- Inspect disagreements and uncertain texts when interpreting errors.
+- First, let's read the coding definition and check what one row represents.
+- We'll keep the provided labels; we won't invent a new cutoff.
+- When we inspect errors, let's read disagreements and uncertain texts closely.
 
 **Hate speech:** use the labels in the Wang, Day & Wu (2022) data.
 
@@ -778,21 +778,21 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 c
 
 ## Naive Bayes: enough to start using it
 :::::: {.slide-body }
-**Task:** predict a category from text counts.
+**We'll predict a category from text counts.**
 
 - Fit with a **document–feature matrix** and one label per row.
 - NB combines the counted features as evidence for each category.
 - `predict()` returns categories; `type = "probability"` returns model probabilities.
 
-Today’s focus: **fit → predict → inspect**.
+Let's focus on **fit → predict → inspect**.
 ::::::
 ::: {.source}
 [quanteda.textmodels: textmodel_nb](https://quanteda.io/quanteda.textmodels/reference/textmodel_nb.html) · [Classroom ZIP](../downloads/week6-classroom.zip).
 :::
 
 ## Set up once for both cases
-:::::: {.slide-body }
-[**Work in pairs (two students).**]{.accent-red} Copy and run — **C01**.
+:::::: {.slide-body .setup-code}
+Copy and run — **C01**.
 
 ```r
 # C01: Setup
@@ -809,7 +809,6 @@ measures <- msrs(c("classif.acc", "classif.precision",
                    "classif.recall", "classif.fbeta"))
 ```
 
-Unzip the package and open R in its folder.
 ::::::
 ::: {.source}
 [quanteda.textmodels: textmodel_nb](https://quanteda.io/quanteda.textmodels/reference/textmodel_nb.html) · [Classroom ZIP](../downloads/week6-classroom.zip).
@@ -851,7 +850,7 @@ table(hate$label)
 nrow(hate)
 ```
 
-`read.csv()` loads 4,000 cleaned comments with the existing labels.
+We'll use `read.csv()` to load 4,000 cleaned comments with their existing labels.
 ::::::
 ::: {.source}
 Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 classroom NB run.
@@ -894,7 +893,7 @@ table(parts$train$label)
 table(parts$test$label)
 ```
 
-**mlr3:** `as_task_classif()` declares the outcome. `partition()` returns row IDs for the split.
+**With mlr3,** we declare the outcome using `as_task_classif()`, then get row IDs for our split with `partition()`.
 
 ::::::
 ::: {.source}
@@ -1091,7 +1090,7 @@ class(nb)
 nb$distribution
 ```
 
-**quanteda.textmodels:** `textmodel_nb()` takes counts and matching labels, then returns a fitted NB model.
+We'll give `textmodel_nb()` the counts and matching labels. It returns our fitted NB model.
 
 ::::::
 ::: {.source}
@@ -1140,7 +1139,7 @@ nb_scores <- nb_check$score(measures)
 round(nb_scores, 3)
 ```
 
-**Interfaces:** `predict()` uses the quanteda NB model. `PredictionClassif$new()` combines predictions with test labels. `$score()` computes metrics.
+We'll predict with the quanteda NB model, pair those predictions with test labels using `PredictionClassif$new()`, then calculate metrics with `$score()`.
 
 ::::::
 ::: {.source}
@@ -1184,7 +1183,7 @@ round(predict(nb, newdata = test_dfm[i, ],
 parts$test$label[i]
 ```
 
-The full comment uses the **same training vocabulary**.
+We'll represent the full comment using the **same training vocabulary**.
 ::::::
 ::: {.source}
 Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 classroom NB run.
@@ -1241,7 +1240,7 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 c
 - **Reference label:** **`label`** comes from **是否仇恨 (Hate speech: Yes/No)**, not the original model-prediction columns.
 - **1,968 distinct comments** remain after duplicate/conflict checks and are excluded from training.
 
-We use these comments **after fitting**, with no model selection on them.
+We'll check these comments **after fitting** and keep the model fixed.
 ::::::
 ::: {.source}
 Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 classroom NB run.
@@ -1307,7 +1306,7 @@ benchmark_scores <- ref_check$score(measures)
 nrow(benchmark); round(benchmark_scores, 3)
 ```
 
-**Evaluation:** `PredictionClassif$new()` stores reference and prediction together. `$score(measures)` calculates the selected metrics.
+We'll put the reference labels and predictions together in `PredictionClassif$new()`, then calculate our selected metrics with `$score(measures)`.
 
 ::::::
 ::: {.source}
@@ -1343,7 +1342,7 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 c
 | HateSpeech recall | .779 | .880 |
 | HateSpeech F1 | .752 | .278 |
 
-**Read:** high recall alone is insufficient. This simple NB produces many false positives on the separate sample.
+**Let's read precision alongside recall.** This simple NB produces many false positives on the separate sample, despite its high recall.
 ::::::
 ::: {.source}
 Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 classroom NB run.
@@ -1359,7 +1358,7 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 c
 - `rescaled_gs` becomes `label`: existing binary category.
 - `sentimentit_score` stays outside the predictors.
 
-Build English word counts with quanteda; fit a **linear SVM with mlr3**.
+We'll count English words with quanteda, then fit a **linear SVM with mlr3**.
 ::::::
 ::: {.source}
 Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
@@ -1378,7 +1377,7 @@ grandstanding$label <- factor(grandstanding$label,
 table(grandstanding$label)
 ```
 
-The CSV retains `rescaled_gs` categories; one duplicate was removed before class.
+We'll use the CSV's existing `rescaled_gs` categories. One duplicate was removed before class.
 ::::::
 ::: {.source}
 Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
@@ -1419,7 +1418,7 @@ table(gs_parts$train$label)
 table(gs_parts$test$label)
 ```
 
-**mlr3:** `partition()` returns row IDs. Setting `stratum` to the label preserves an approximate 80/20 split within each category.
+We'll use the row IDs from `partition()` to split the data. Setting `stratum` to the label gives us an approximate 80/20 split within each category.
 
 ::::::
 ::: {.source}
@@ -1792,7 +1791,7 @@ gs_scores <- gs_result$score(measures)
 round(gs_scores, 3)
 ```
 
-**mlr3 fields and methods:** `$confusion` reads a table. `$score(measures)` calls a method that returns evaluation scores.
+We'll read the confusion table with `$confusion` and calculate the evaluation scores with `$score(measures)`.
 
 ::::::
 ::: {.source}
@@ -1835,7 +1834,7 @@ round(gs_result$prob[j, ], 3)
 gs_result$truth[j]
 ```
 
-The full excerpt is held outside training.
+We'll read an excerpt that we kept out of training.
 ::::::
 ::: {.source}
 Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
@@ -1871,7 +1870,7 @@ Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run
 
 **Prediction / reference:** Grandstanding · **SVM probability:** .637
 
-**Read:** self-promotion and a public stance on taxes. Original score: **2.003**.
+**Let's look for** self-promotion and a stance on taxes. Original score: **2.003**.
 ::::::
 ::: {.source}
 Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
@@ -1879,7 +1878,7 @@ Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run
 
 ## Read performance with the text
 :::::: {.slide-body}
-Run after G03 in the same R session.
+Let's run this after G03 in the same R session.
 
 ```r
 # Read one grandstanding prediction error
@@ -1894,7 +1893,7 @@ data.frame(
 cat(gs_parts$test$text[k], "\n")
 ```
 
-**Read:** `which()` finds mismatches, `k` selects one, and `cat()` prints its full text.
+We'll find mismatches with `which()`, select one with `k`, and print its full text with `cat()`.
 ::::::
 ::: {.source}
 Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run.
@@ -1921,14 +1920,14 @@ Data: [Park (2021)](https://doi.org/10.1086/709147). W6 classroom linear SVM run
 
 ## Optional: reuse the features with other classifiers
 :::::: {.slide-body .compact-table}
-Use the same training split and vocabulary.
+Let's keep the same training split and vocabulary as we try another classifier.
 
 | Model | Package interface | Prediction |
 |---|---|---|
-| Logistic regression | `quanteda.textmodels::textmodel_lr()` | `predict()` |
+| Logistic regression | `quanteda.textmodels`<br>`textmodel_lr()` | `predict()` |
 | Linear SVM | mlr3 `lrn("classif.svm", kernel = "linear")` | `$train()` then `$predict()` |
 
-The lab shows the complete calls. No custom model wrappers are required.
+We can use the package functions directly; the lab shows the complete calls.
 ::::::
 ::: {.source}
 [quanteda.textmodels](https://quanteda.io/quanteda.textmodels/) · [mlr3 classif.svm](https://mlr3learners.mlr-org.com/reference/mlr_learners_classif.svm.html).
@@ -1936,7 +1935,7 @@ The lab shows the complete calls. No custom model wrappers are required.
 
 ## A short methods report
 :::::: {.slide-body }
-Report five things:
+In our methods report, let's explain five parts of the analysis:
 
 1. **Data and labels:** which text column and supplied target?
 2. **Split:** mlr3 `partition()`, stratified 80/20, seed 7192.
@@ -1967,11 +1966,11 @@ Data: [Wang, Day & Wu (2022)](https://doi.org/10.1109/ACCESS.2022.3160712). W6 c
 
 ## Practice and the Week 7 deadline
 :::::: {.slide-body }
-**In class:** copy **C01–C08**, then **G01–G03** (including all substeps), in order in one R session.
+**In class, we'll run C01–C08, then G01–G03** (including all substeps), in order in one R session.
 
 - Hate speech: inspect the test and separate human-reference results.
 - Grandstanding: fit mlr3 linear SVM using `rescaled_gs`.
-- Read one error from each case and explain the coding boundary.
+- Let's read one error from each case and explain the category boundary.
 
 [Classroom code + data](../downloads/week6-classroom.zip) · [Lab](../lab/Lab_Session_W6.html) · [Worked answers](../lab/answers/Lab_Session_W6_Answers.html)
 
@@ -2045,5 +2044,5 @@ Source files and hashes: [data notes](../classroom/Data/README.md).
 
 **Evaluation references:** scikit-learn documentation on [cross-validation](https://scikit-learn.org/stable/modules/cross_validation.html) and [classification metrics](https://scikit-learn.org/stable/modules/model_evaluation.html).
 
-Hate-speech NB uses Wang, Day & Wu (2022); grandstanding linear SVM uses Park (2021). Both have executed predictions. Named study results retain their original citations.
+Our hate-speech NB exercise uses Wang, Day & Wu (2022); our grandstanding linear SVM uses Park (2021). We've run predictions for both exercises. Results from the original studies are cited separately.
 ::::::

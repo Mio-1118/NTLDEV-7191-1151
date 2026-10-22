@@ -1,4 +1,4 @@
-# Optional models; run W6_classification.R first.
+# Optional models; run Lab_Session_W6.R first in the same R session.
 set.seed(7193)
 lr <- textmodel_lr(train_dfm, y = train_label)
 lr_prediction <- predict(lr, newdata = test_dfm)

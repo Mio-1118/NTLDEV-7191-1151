@@ -900,6 +900,7 @@ text-align: center;
 .reveal .slides section.slide.level2 > .slide-body { max-height: 510px; }
 .reveal .slide-body table { font-size: 0.93em; }
 .reveal .slide-body pre { font-size: 0.59em; }
+.reveal .setup-code pre { font-size: 0.52em; }
 .reveal .slide-body pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
 .reveal .console-output-label { color: var(--course-slate); }
 .reveal .console-output-label p { font-size: 20px; font-weight: 600; line-height: 1.2; margin: 0 0 6px; }
@@ -1552,7 +1553,7 @@ Yen-Chieh Liao 廖彥傑
 </div>
 </div>
 
-  <p class="date">2026-10-16<span class="compile-time">Fall 2026 (115-1) · National Taiwan University (GIND)<br>NTLDEV 7191 · Fri. 16:30–18:20 · 國發 204<br>Last compiled: 2026-10-16 16:05:12 (Asia/Taipei)</span></p>
+  <p class="date">2026-10-16<span class="compile-time">Fall 2026 (115-1) · National Taiwan University (GIND)<br>NTLDEV 7191 · Fri. 16:30–18:20 · 國發 204<br>Last compiled: 2026-10-22 12:58:46 (Asia/Taipei)</span></p>
 </section>
 <section id="learning-objectives-from-w4-to-w6" class="slide level2">
 <h2>Learning objectives: from W4 to W6</h2>
@@ -1593,14 +1594,14 @@ Yen-Chieh Liao 廖彥傑
 </tr>
 </tbody>
 </table>
-<p><strong>Practice:</strong> apply machine learning algorithms to two real datasets:</p>
+<p><strong>Today, we’ll use machine learning with two real datasets:</strong></p>
 <ol type="1">
 <li>Political hate speech in Taiwan.</li>
 <li>Grandstanding statements in US congressional hearings.</li>
 </ol>
 </div>
 <div class="source">
-<p>Course progression: <a href="../../W4/slide/week4.html">W4: Dictionaries and Sentiment Analysis</a> to W6.</p>
+<p>Course progression: <a href="https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/W4/slide/week4.html">W4: Dictionaries and Sentiment Analysis</a> to W6.</p>
 </div>
 </section>
 <section id="cases-we-use-in-w6" class="slide level2">
@@ -1667,7 +1668,7 @@ Yen-Chieh Liao 廖彥傑
 <ul>
 <li><strong>Texts:</strong> Chinese political news comments.</li>
 <li><strong>Study:</strong> a hate-speech lexicon and BERT classifiers.</li>
-<li><strong>W6 practice:</strong> NB on the Wang, Day &amp; Wu (2022) data.</li>
+<li><strong>Our exercise:</strong> we’ll fit NB to the Wang, Day &amp; Wu (2022) data.</li>
 </ul>
 </div></div>
 </div>
@@ -1778,7 +1779,7 @@ Yen-Chieh Liao 廖彥傑
 <ul>
 <li><strong>Missed content:</strong> coded racial messages without an explicit racial reference.</li>
 <li><strong>Example:</strong> “inner city” can carry racial meaning in context; the phrase alone is not enough to infer a racial appeal.</li>
-<li><strong>Measurement lesson:</strong> 97% agreement shows consistent coding. It does not establish that implicit appeals are captured.</li>
+<li><strong>What we learn:</strong> 97% agreement shows consistent coding. We still need to ask whether the rule captures implicit appeals.</li>
 </ul>
 </div>
 <div class="source">
@@ -1883,7 +1884,7 @@ Yen-Chieh Liao 廖彥傑
 <li><strong>Question:</strong> how is news attention distributed across policy issues over time?</li>
 <li><strong>Data:</strong> New York Times front-page stories, 1996–2006.</li>
 <li><strong>Application:</strong> human coders assign policy topics; counts track media attention across issues and time.</li>
-<li><strong>W6 connection:</strong> construct consistent labels before comparing issues.</li>
+<li><strong>Our first step:</strong> apply the topic labels consistently before we compare issues.</li>
 </ul>
 </div></div>
 </div>
@@ -2019,7 +2020,7 @@ Yen-Chieh Liao 廖彥傑
 <li><strong>Nielsen case:</strong> treat clerics as scholars, then test whether blocked careers predict jihadist rhetoric.</li>
 <li><strong>Language check:</strong> explain why “apostasy” signals jihadist ideology in context.</li>
 <li><strong>External checks:</strong> compare scores with biographies and scholarly classifications (2014), plus a jihadist infographic criticizing non-jihadist preachers (2017).</li>
-<li><strong>W6 lesson:</strong> validate what the score means using evidence outside the training texts.</li>
+<li><strong>Our check:</strong> use evidence outside the training texts to see what the score means.</li>
 </ul>
 </div></div>
 </div>
@@ -2030,11 +2031,11 @@ Yen-Chieh Liao 廖彥傑
 <section id="nielsen-the-limits-of-external-validation" class="slide level2">
 <h2>Nielsen: the limits of external validation</h2>
 <div class="slide-body">
-<p><strong>A missing biographical label is not a confirmed negative.</strong></p>
+<p><strong>If a biography omits ideology, we cannot label the person non-jihadist on that basis.</strong></p>
 <p>Some biographies identify jihadist commitments explicitly. Others omit ideology. Silence cannot establish non-jihadist status.</p>
 <p><strong>Course discussion:</strong> could a text criticizing jihadism receive a high score because it discusses the same vocabulary?</p>
-<p>Check passages in context and inspect differences across genres and authors. Independent benchmarks and close reading answer complementary questions.</p>
-<p>For our hate-speech task, inspect comments quoting abuse in order to reject it.</p>
+<p>Let’s read passages in context and compare genres and authors. A separate benchmark checks the scores; close reading helps us understand the language behind them.</p>
+<p>For our hate-speech task, let’s check comments that quote abuse in order to reject it.</p>
 </div>
 <div class="source">
 <p>Nielsen (2013), <a href="https://dash.harvard.edu/handle/1/11124850">dissertation, §4.4.1, pp. 121–122</a>; Nielsen (2014), p. 17 n. 16. Discussion and hate-speech application are course extensions.</p>
@@ -2105,7 +2106,7 @@ Yen-Chieh Liao 廖彥傑
 <section id="coding-and-measurement-choices" class="slide level2">
 <h2>Coding and measurement choices</h2>
 <div class="slide-body compact-table">
-<p><strong>Course discussion:</strong> apply lessons from the research cases to our hate speech task.</p>
+<p><strong>Let’s use these studies to think through our hate-speech task.</strong></p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 50%">
@@ -2128,7 +2129,7 @@ Yen-Chieh Liao 廖彥傑
 </tr>
 <tr class="odd">
 <td>Aggregation</td>
-<td>Do we need comment labels, hate-speech shares, or a genuinely numeric target?</td>
+<td>Do we need comment labels, hate-speech shares, or a continuous score?</td>
 </tr>
 <tr class="even">
 <td>Validation</td>
@@ -2136,7 +2137,7 @@ Yen-Chieh Liao 廖彥傑
 </tr>
 </tbody>
 </table>
-<p>More raters or models cannot repair an unsuitable coding definition.</p>
+<p>Before adding raters or models, let’s check that our coding rule fits the question.</p>
 </div>
 <div class="source">
 <p>Course synthesis from the preceding research cases, including <a href="https://doi.org/10.1017/S0003055416000058">Benoit et al. (2016)</a>.</p>
@@ -2217,7 +2218,7 @@ Yen-Chieh Liao 廖彥傑
 <section id="r-tools-for-document-classification" class="slide level2">
 <h2>R tools for document classification</h2>
 <div class="slide-body compact-table">
-<p><strong>R can prepare text features, train classifiers and evaluate predictions.</strong></p>
+<p><strong>We’ll use R to prepare text features, train classifiers and check predictions.</strong></p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2248,8 +2249,8 @@ Yen-Chieh Liao 廖彥傑
 </tr>
 </tbody>
 </table>
-<p><strong>Choose mlr3</strong> for resampling, model comparison, pipelines and tuning.</p>
-<p><strong>For direct fitting:</strong> use <code>quanteda.textmodels</code>, as in the W6 NB exercise.</p>
+<p><strong>When we need resampling, model comparison, pipelines or tuning, we can use mlr3.</strong></p>
+<p><strong>For our NB exercise,</strong> we’ll fit the model directly with <code>quanteda.textmodels</code>.</p>
 </div>
 <div class="source">
 <p>Official documentation: <a href="https://quanteda.io/">quanteda</a> · <a href="https://mlr-org.com/">mlr3</a> · <a href="https://mlr3pipelines.mlr-org.com/">pipelines</a> · <a href="https://mlr3tuning.mlr-org.com/">tuning</a>.</p>
@@ -2334,7 +2335,7 @@ Yen-Chieh Liao 廖彥傑
 <section id="simple-models-with-quanteda.textmodels" class="slide level2">
 <h2>Simple models with quanteda.textmodels</h2>
 <div class="slide-body compact-table">
-<p>For a simple text classifier, use a <strong>DFM plus training labels</strong> directly.</p>
+<p>We can train a simple text classifier directly from a <strong>DFM and training labels</strong>.</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -2358,7 +2359,7 @@ Yen-Chieh Liao 廖彥傑
 </tbody>
 </table>
 <p><strong>Linear SVM:</strong> experimental, for two classes.</p>
-<p><strong>W6:</strong> fit NB with training counts and labels, then predict held-out texts.</p>
+<p><strong>We’ll fit NB</strong> with training counts and labels, then predict held-out texts.</p>
 </div>
 <div class="source">
 <p><a href="https://cran.r-project.org/web/packages/quanteda.textmodels/quanteda.textmodels.pdf">quanteda.textmodels manual</a> · <a href="https://github.com/quanteda/quanteda.textmodels">Package source and documentation</a>.</p>
@@ -2394,7 +2395,7 @@ Yen-Chieh Liao 廖彥傑
 </tbody>
 </table>
 <p>We will use the data from <strong>Wang, Day &amp; Wu (2022)</strong> and <strong>Park (2021)</strong>.</p>
-<p><strong>Same operations:</strong> load → split → features → fit classifier → predict → check labels.</p>
+<p><strong>We’ll use the same steps:</strong> load → split → features → fit classifier → predict → check labels.</p>
 </div>
 <div class="source">
 <p><a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>; <a href="https://doi.org/10.1086/709147">Park (2021)</a> · <a href="../downloads/week6-classroom.zip">Classroom ZIP</a>.</p>
@@ -2544,7 +2545,7 @@ Yen-Chieh Liao 廖彥傑
 </tr>
 </tbody>
 </table>
-<p><strong>Only text enters the feature matrix.</strong> Labels are the outcome.</p>
+<p><strong>We’ll build features from the text.</strong> The label is what we’re trying to predict.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run. Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -2554,9 +2555,9 @@ Yen-Chieh Liao 廖彥傑
 <h2>Labels come before the algorithm</h2>
 <div class="slide-body">
 <ul>
-<li>Read the coding definition and the unit being classified.</li>
-<li>Keep the provided labels; do not invent a new cutoff.</li>
-<li>Inspect disagreements and uncertain texts when interpreting errors.</li>
+<li>First, let’s read the coding definition and check what one row represents.</li>
+<li>We’ll keep the provided labels; we won’t invent a new cutoff.</li>
+<li>When we inspect errors, let’s read disagreements and uncertain texts closely.</li>
 </ul>
 <p><strong>Hate speech:</strong> use the labels in the Wang, Day &amp; Wu (2022) data.</p>
 <p><strong>Grandstanding:</strong> use <code>rescaled_gs</code>; the CSV does not document its original binary cutoff.</p>
@@ -2568,13 +2569,13 @@ Yen-Chieh Liao 廖彥傑
 <section id="naive-bayes-enough-to-start-using-it" class="slide level2">
 <h2>Naive Bayes: enough to start using it</h2>
 <div class="slide-body">
-<p><strong>Task:</strong> predict a category from text counts.</p>
+<p><strong>We’ll predict a category from text counts.</strong></p>
 <ul>
 <li>Fit with a <strong>document–feature matrix</strong> and one label per row.</li>
 <li>NB combines the counted features as evidence for each category.</li>
 <li><code>predict()</code> returns categories; <code>type = &quot;probability&quot;</code> returns model probabilities.</li>
 </ul>
-<p>Today’s focus: <strong>fit → predict → inspect</strong>.</p>
+<p>Let’s focus on <strong>fit → predict → inspect</strong>.</p>
 </div>
 <div class="source">
 <p><a href="https://quanteda.io/quanteda.textmodels/reference/textmodel_nb.html">quanteda.textmodels: textmodel_nb</a> · <a href="../downloads/week6-classroom.zip">Classroom ZIP</a>.</p>
@@ -2582,8 +2583,8 @@ Yen-Chieh Liao 廖彥傑
 </section>
 <section id="set-up-once-for-both-cases" class="slide level2">
 <h2>Set up once for both cases</h2>
-<div class="slide-body">
-<p><span class="accent-red"><strong>Work in pairs (two students).</strong></span> Copy and run — <strong>C01</strong>.</p>
+<div class="slide-body setup-code">
+<p>Copy and run — <strong>C01</strong>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href></a><span class="co"># C01: Setup</span></span>
 <span id="cb2-2"><a href></a><span class="co"># install.packages(c(&quot;quanteda&quot;, &quot;quanteda.textmodels&quot;,</span></span>
 <span id="cb2-3"><a href></a><span class="co">#                    &quot;mlr3&quot;, &quot;mlr3learners&quot;, &quot;e1071&quot;, &quot;stringi&quot;))</span></span>
@@ -2596,7 +2597,6 @@ Yen-Chieh Liao 廖彥傑
 <span id="cb2-10"><a href></a><span class="fu">file.exists</span>(<span class="fu">file.path</span>(data_dir, <span class="st">&quot;hate_speech_practice.csv&quot;</span>))</span>
 <span id="cb2-11"><a href></a>measures <span class="ot">&lt;-</span> <span class="fu">msrs</span>(<span class="fu">c</span>(<span class="st">&quot;classif.acc&quot;</span>, <span class="st">&quot;classif.precision&quot;</span>,</span>
 <span id="cb2-12"><a href></a>                   <span class="st">&quot;classif.recall&quot;</span>, <span class="st">&quot;classif.fbeta&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unzip the package and open R in its folder.</p>
 </div>
 <div class="source">
 <p><a href="https://quanteda.io/quanteda.textmodels/reference/textmodel_nb.html">quanteda.textmodels: textmodel_nb</a> · <a href="../downloads/week6-classroom.zip">Classroom ZIP</a>.</p>
@@ -2649,7 +2649,7 @@ Yen-Chieh Liao 廖彥傑
 <span id="cb4-5"><a href></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;NonHateSpeech&quot;</span>, <span class="st">&quot;HateSpeech&quot;</span>))</span>
 <span id="cb4-6"><a href></a><span class="fu">table</span>(hate<span class="sc">$</span>label)</span>
 <span id="cb4-7"><a href></a><span class="fu">nrow</span>(hate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>read.csv()</code> loads 4,000 cleaned comments with the existing labels.</p>
+<p>We’ll use <code>read.csv()</code> to load 4,000 cleaned comments with their existing labels.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -2686,7 +2686,7 @@ NonHateSpeech    HateSpeech
 <span id="cb6-8"><a href></a>              <span class="at">test =</span> hate[hs_split<span class="sc">$</span>test, ])</span>
 <span id="cb6-9"><a href></a><span class="fu">table</span>(parts<span class="sc">$</span>train<span class="sc">$</span>label)</span>
 <span id="cb6-10"><a href></a><span class="fu">table</span>(parts<span class="sc">$</span>test<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>mlr3:</strong> <code>as_task_classif()</code> declares the outcome. <code>partition()</code> returns row IDs for the split.</p>
+<p><strong>With mlr3,</strong> we declare the outcome using <code>as_task_classif()</code>, then get row IDs for our split with <code>partition()</code>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -2924,7 +2924,7 @@ NonHateSpeech    HateSpeech
 <span id="cb16-4"><a href></a>  <span class="at">prior =</span> <span class="st">&quot;docfreq&quot;</span>)</span>
 <span id="cb16-5"><a href></a><span class="fu">class</span>(nb)</span>
 <span id="cb16-6"><a href></a>nb<span class="sc">$</span>distribution</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>quanteda.textmodels:</strong> <code>textmodel_nb()</code> takes counts and matching labels, then returns a fitted NB model.</p>
+<p>We’ll give <code>textmodel_nb()</code> the counts and matching labels. It returns our fitted NB model.</p>
 </div>
 <div class="source">
 <p><a href="https://quanteda.io/quanteda.textmodels/reference/textmodel_nb.html">quanteda.textmodels: textmodel_nb</a> · <a href="../downloads/week6-classroom.zip">Classroom ZIP</a>.</p>
@@ -2985,7 +2985,7 @@ NonHateSpeech    HateSpeech
 <span id="cb18-7"><a href></a>nb_check<span class="sc">$</span>confusion</span>
 <span id="cb18-8"><a href></a>nb_scores <span class="ot">&lt;-</span> nb_check<span class="sc">$</span><span class="fu">score</span>(measures)</span>
 <span id="cb18-9"><a href></a><span class="fu">round</span>(nb_scores, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Interfaces:</strong> <code>predict()</code> uses the quanteda NB model. <code>PredictionClassif$new()</code> combines predictions with test labels. <code>$score()</code> computes metrics.</p>
+<p>We’ll predict with the quanteda NB model, pair those predictions with test labels using <code>PredictionClassif$new()</code>, then calculate metrics with <code>$score()</code>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -3022,7 +3022,7 @@ response        HateSpeech NonHateSpeech
 <span id="cb20-5"><a href></a><span class="fu">round</span>(<span class="fu">predict</span>(nb, <span class="at">newdata =</span> test_dfm[i, ],</span>
 <span id="cb20-6"><a href></a>              <span class="at">type =</span> <span class="st">&quot;probability&quot;</span>), <span class="dv">3</span>)</span>
 <span id="cb20-7"><a href></a>parts<span class="sc">$</span>test<span class="sc">$</span>label[i]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The full comment uses the <strong>same training vocabulary</strong>.</p>
+<p>We’ll represent the full comment using the <strong>same training vocabulary</strong>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -3097,7 +3097,7 @@ Levels: NonHateSpeech HateSpeech</code></pre>
 <li><strong>Reference label:</strong> <strong><code>label</code></strong> comes from <strong>是否仇恨 (Hate speech: Yes/No)</strong>, not the original model-prediction columns.</li>
 <li><strong>1,968 distinct comments</strong> remain after duplicate/conflict checks and are excluded from training.</li>
 </ul>
-<p>We use these comments <strong>after fitting</strong>, with no model selection on them.</p>
+<p>We’ll check these comments <strong>after fitting</strong> and keep the model fixed.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -3154,7 +3154,7 @@ Levels: NonHateSpeech HateSpeech</code></pre>
 <span id="cb24-7"><a href></a>  <span class="at">response =</span> <span class="fu">as.character</span>(benchmark<span class="sc">$</span>prediction))</span>
 <span id="cb24-8"><a href></a>benchmark_scores <span class="ot">&lt;-</span> ref_check<span class="sc">$</span><span class="fu">score</span>(measures)</span>
 <span id="cb24-9"><a href></a><span class="fu">nrow</span>(benchmark); <span class="fu">round</span>(benchmark_scores, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Evaluation:</strong> <code>PredictionClassif$new()</code> stores reference and prediction together. <code>$score(measures)</code> calculates the selected metrics.</p>
+<p>We’ll put the reference labels and predictions together in <code>PredictionClassif$new()</code>, then calculate our selected metrics with <code>$score(measures)</code>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -3211,7 +3211,7 @@ Levels: NonHateSpeech HateSpeech</code></pre>
 </tr>
 </tbody>
 </table>
-<p><strong>Read:</strong> high recall alone is insufficient. This simple NB produces many false positives on the separate sample.</p>
+<p><strong>Let’s read precision alongside recall.</strong> This simple NB produces many false positives on the separate sample, despite its high recall.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022)</a>. W6 classroom NB run.</p>
@@ -3227,7 +3227,7 @@ Levels: NonHateSpeech HateSpeech</code></pre>
 <li><code>rescaled_gs</code> becomes <code>label</code>: existing binary category.</li>
 <li><code>sentimentit_score</code> stays outside the predictors.</li>
 </ul>
-<p>Build English word counts with quanteda; fit a <strong>linear SVM with mlr3</strong>.</p>
+<p>We’ll count English words with quanteda, then fit a <strong>linear SVM with mlr3</strong>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3243,7 +3243,7 @@ Levels: NonHateSpeech HateSpeech</code></pre>
 <span id="cb26-4"><a href></a>grandstanding<span class="sc">$</span>label <span class="ot">&lt;-</span> <span class="fu">factor</span>(grandstanding<span class="sc">$</span>label,</span>
 <span id="cb26-5"><a href></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;NonGrandstanding&quot;</span>, <span class="st">&quot;Grandstanding&quot;</span>))</span>
 <span id="cb26-6"><a href></a><span class="fu">table</span>(grandstanding<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The CSV retains <code>rescaled_gs</code> categories; one duplicate was removed before class.</p>
+<p>We’ll use the CSV’s existing <code>rescaled_gs</code> categories. One duplicate was removed before class.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3278,7 +3278,7 @@ NonGrandstanding    Grandstanding
 <span id="cb28-8"><a href></a>                 <span class="at">test =</span> grandstanding[gs_split<span class="sc">$</span>test, ])</span>
 <span id="cb28-9"><a href></a><span class="fu">table</span>(gs_parts<span class="sc">$</span>train<span class="sc">$</span>label)</span>
 <span id="cb28-10"><a href></a><span class="fu">table</span>(gs_parts<span class="sc">$</span>test<span class="sc">$</span>label)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>mlr3:</strong> <code>partition()</code> returns row IDs. Setting <code>stratum</code> to the label preserves an approximate 80/20 split within each category.</p>
+<p>We’ll use the row IDs from <code>partition()</code> to split the data. Setting <code>stratum</code> to the label gives us an approximate 80/20 split within each category.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3738,7 +3738,7 @@ NonGrandstanding    Grandstanding
 <span id="cb46-2"><a href></a>gs_result<span class="sc">$</span>confusion</span>
 <span id="cb46-3"><a href></a>gs_scores <span class="ot">&lt;-</span> gs_result<span class="sc">$</span><span class="fu">score</span>(measures)</span>
 <span id="cb46-4"><a href></a><span class="fu">round</span>(gs_scores, <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>mlr3 fields and methods:</strong> <code>$confusion</code> reads a table. <code>$score(measures)</code> calls a method that returns evaluation scores.</p>
+<p>We’ll read the confusion table with <code>$confusion</code> and calculate the evaluation scores with <code>$score(measures)</code>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3774,7 +3774,7 @@ response           Grandstanding NonGrandstanding
 <span id="cb48-4"><a href></a>gs_result<span class="sc">$</span>response[j]</span>
 <span id="cb48-5"><a href></a><span class="fu">round</span>(gs_result<span class="sc">$</span>prob[j, ], <span class="dv">3</span>)</span>
 <span id="cb48-6"><a href></a>gs_result<span class="sc">$</span>truth[j]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The full excerpt is held outside training.</p>
+<p>We’ll read an excerpt that we kept out of training.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3808,7 +3808,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <p>Also I have not signed the no tax pledge. <span class="grandstanding-emphasis"><strong><em>I am not intimidated by anybody. I am going to do whatever I have to do.</em></strong></span> I do not like to raise taxes. I do not want to raise taxes. I want to see how we can cut first. But, I also want to deal with the entitlements. The Simpson Bowles Commission is sort of a grand compromise. A grand compromise that not everyone really feels totally comfortable with. But you know that they are kind of moving in the right direction. So we really are going to have to get it out of this administration to participate with us.</p>
 </blockquote>
 <p><strong>Prediction / reference:</strong> Grandstanding · <strong>SVM probability:</strong> .637</p>
-<p><strong>Read:</strong> self-promotion and a public stance on taxes. Original score: <strong>2.003</strong>.</p>
+<p><strong>Let’s look for</strong> self-promotion and a stance on taxes. Original score: <strong>2.003</strong>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3817,7 +3817,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <section id="read-performance-with-the-text" class="slide level2">
 <h2>Read performance with the text</h2>
 <div class="slide-body">
-<p>Run after G03 in the same R session.</p>
+<p>Let’s run this after G03 in the same R session.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href></a><span class="co"># Read one grandstanding prediction error</span></span>
 <span id="cb50-2"><a href></a>error_rows <span class="ot">&lt;-</span> <span class="fu">which</span>(gs_result<span class="sc">$</span>response <span class="sc">!=</span> gs_result<span class="sc">$</span>truth)</span>
 <span id="cb50-3"><a href></a>k <span class="ot">&lt;-</span> error_rows[<span class="dv">1</span>]</span>
@@ -3828,7 +3828,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <span id="cb50-8"><a href></a>  <span class="at">prob =</span> <span class="fu">round</span>(gs_result<span class="sc">$</span>prob[k, <span class="st">&quot;Grandstanding&quot;</span>], <span class="dv">3</span>),</span>
 <span id="cb50-9"><a href></a>  <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
 <span id="cb50-10"><a href></a><span class="fu">cat</span>(gs_parts<span class="sc">$</span>test<span class="sc">$</span>text[k], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Read:</strong> <code>which()</code> finds mismatches, <code>k</code> selects one, and <code>cat()</code> prints its full text.</p>
+<p>We’ll find mismatches with <code>which()</code>, select one with <code>k</code>, and print its full text with <code>cat()</code>.</p>
 </div>
 <div class="source">
 <p>Data: <a href="https://doi.org/10.1086/709147">Park (2021)</a>. W6 classroom linear SVM run.</p>
@@ -3854,7 +3854,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <section id="optional-reuse-the-features-with-other-classifiers" class="slide level2">
 <h2>Optional: reuse the features with other classifiers</h2>
 <div class="slide-body compact-table">
-<p>Use the same training split and vocabulary.</p>
+<p>Let’s keep the same training split and vocabulary as we try another classifier.</p>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -3871,7 +3871,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <tbody>
 <tr class="odd">
 <td>Logistic regression</td>
-<td><code>quanteda.textmodels::textmodel_lr()</code></td>
+<td><code>quanteda.textmodels</code><br><code>textmodel_lr()</code></td>
 <td><code>predict()</code></td>
 </tr>
 <tr class="even">
@@ -3881,7 +3881,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 </tr>
 </tbody>
 </table>
-<p>The lab shows the complete calls. No custom model wrappers are required.</p>
+<p>We can use the package functions directly; the lab shows the complete calls.</p>
 </div>
 <div class="source">
 <p><a href="https://quanteda.io/quanteda.textmodels/">quanteda.textmodels</a> · <a href="https://mlr3learners.mlr-org.com/reference/mlr_learners_classif.svm.html">mlr3 classif.svm</a>.</p>
@@ -3890,7 +3890,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <section id="a-short-methods-report" class="slide level2">
 <h2>A short methods report</h2>
 <div class="slide-body">
-<p>Report five things:</p>
+<p>In our methods report, let’s explain five parts of the analysis:</p>
 <ol type="1">
 <li><strong>Data and labels:</strong> which text column and supplied target?</li>
 <li><strong>Split:</strong> mlr3 <code>partition()</code>, stratified 80/20, seed 7192.</li>
@@ -3924,11 +3924,11 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <section id="practice-and-the-week-7-deadline" class="slide level2">
 <h2>Practice and the Week 7 deadline</h2>
 <div class="slide-body">
-<p><strong>In class:</strong> copy <strong>C01–C08</strong>, then <strong>G01–G03</strong> (including all substeps), in order in one R session.</p>
+<p><strong>In class, we’ll run C01–C08, then G01–G03</strong> (including all substeps), in order in one R session.</p>
 <ul>
 <li>Hate speech: inspect the test and separate human-reference results.</li>
 <li>Grandstanding: fit mlr3 linear SVM using <code>rescaled_gs</code>.</li>
-<li>Read one error from each case and explain the coding boundary.</li>
+<li>Let’s read one error from each case and explain the category boundary.</li>
 </ul>
 <p><a href="../downloads/week6-classroom.zip">Classroom code + data</a> · <a href="../lab/Lab_Session_W6.html">Lab</a> · <a href="../lab/answers/Lab_Session_W6_Answers.html">Worked answers</a></p>
 <p><strong>Week 7:</strong> proposal due <strong>2026-10-23, before 23:59</strong>. No separate submission for this practice.</p>
@@ -4023,7 +4023,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <p><strong>Further tools:</strong> <a href="https://cran.r-project.org/package=quanteda.textmodels">quanteda.textmodels</a> for text classifiers; <a href="https://mlr3.mlr-org.com/">mlr3</a> for splitting and evaluation; <a href="https://huggingface.co/docs/transformers/tasks/sequence_classification">Transformers</a> for the fine-tuning extension.</p>
 <p><strong>R workflow references:</strong> <a href="https://www.tidyverse.org/packages/">tidyverse</a>, <a href="https://www.tidymodels.org/">tidymodels</a>, and the <a href="https://mlr3book.mlr-org.com/chapters/chapter6/feature_selection.html">mlr3 feature-selection chapter</a>.</p>
 <p><strong>Evaluation references:</strong> scikit-learn documentation on <a href="https://scikit-learn.org/stable/modules/cross_validation.html">cross-validation</a> and <a href="https://scikit-learn.org/stable/modules/model_evaluation.html">classification metrics</a>.</p>
-<p>Hate-speech NB uses Wang, Day &amp; Wu (2022); grandstanding linear SVM uses Park (2021). Both have executed predictions. Named study results retain their original citations.</p>
+<p>Our hate-speech NB exercise uses Wang, Day &amp; Wu (2022); our grandstanding linear SVM uses Park (2021). We’ve run predictions for both exercises. Results from the original studies are cited separately.</p>
 </div>
 
 </section>

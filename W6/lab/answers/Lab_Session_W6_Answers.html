@@ -2245,14 +2245,13 @@ vertical-align: -.125em;
 
 <section id="before-starting" class="level2">
 <h2 class="anchored" data-anchor-id="before-starting">Before starting</h2>
-<p><span style="color: #e2021a;"><strong>Work in pairs (two students).</strong></span></p>
-<p>These worked answers follow the same five sections and checkpoints as the student handout. Compare the printed output with your own results, then read the explanation below each discussion question. <a href="../Lab_Session_W6.html">Return to the student handout</a>.</p>
-<p>Allow <strong>60–90 minutes</strong> for the core practice. Open <code>Lab_Session_W6_Answers.R</code> in RStudio and set the working directory to the lab folder containing <code>Data/</code> (one level above <code>answers/</code>). Run section 1 once, then sections 2–5 in order in the same R session. The source QMD does not need to be rendered.</p>
-<p>The required packages are <code>quanteda</code>, <code>quanteda.textmodels</code>, <code>mlr3</code>, <code>mlr3learners</code>, <code>e1071</code> and <code>stringi</code>. Complete the <a href="#package-check-install-and-load">package check in section 1</a> before C01. The setup reads the CSVs directly.</p>
+<p>Let’s work through the same five sections and checkpoints as the student handout. Compare your output with the results here, then read how we interpret them. <a href="../Lab_Session_W6.html">Return to the student handout</a>.</p>
+<p>Download and extract the <a href="https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/W6/downloads/week6-lab.zip"><strong>lab ZIP</strong></a> for the handouts, R scripts and <code>Data/</code> folder. Allow <strong>60–90 minutes</strong> for the core practice. Open <code>Lab_Session_W6_Answers.R</code> in RStudio and set the working directory to the lab folder containing <code>Data/</code> (one level above <code>answers/</code>). Run section 1 once, then sections 2–5 in order in the same R session. The source QMD does not need to be rendered.</p>
+<p>We’ll use <code>quanteda</code>, <code>quanteda.textmodels</code>, <code>mlr3</code>, <code>mlr3learners</code>, <code>e1071</code> and <code>stringi</code>. Let’s complete the <a href="#package-check-install-and-load">package check in section 1</a> before C01, then read the CSVs directly.</p>
 </section>
 <section id="reading-the-r-code" class="level2">
 <h2 class="anchored" data-anchor-id="reading-the-r-code">Reading the R code</h2>
-<p>Work from top to bottom in the same R session. In RStudio, select a line or block and use <code>Ctrl+Enter</code> (Windows) or <code>Cmd+Enter</code> (Mac). Read the printed output before moving to the next step.</p>
+<p>We’ll work from top to bottom in the same R session. In RStudio, select a line or block and use <code>Ctrl+Enter</code> (Windows) or <code>Cmd+Enter</code> (Mac). Pause at the printed output before moving on: what changed, and which object now holds the result?</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -2309,7 +2308,7 @@ vertical-align: -.125em;
 </tr>
 </tbody>
 </table>
-<p>The <code>C</code> and <code>G</code> checkpoint names match the W6 slides. Lettered and numbered substeps belong to the same workflow and should run in order. The code uses existing package functions directly.</p>
+<p>The <code>C</code> and <code>G</code> checkpoint names match the W6 slides, so we can move between the slides and this handout. Run the lettered and numbered substeps in order; each builds on objects created earlier. We’ll call the package functions directly.</p>
 <section id="functions-used-in-the-lab" class="level3">
 <h3 class="anchored" data-anchor-id="functions-used-in-the-lab">Functions used in the lab</h3>
 <table class="caption-top table">
@@ -2363,7 +2362,7 @@ vertical-align: -.125em;
 </tr>
 </tbody>
 </table>
-<p><code>lmtest</code> supplies tests for regression models. Classification accuracy, precision, recall and F1 in this exercise come from mlr3.</p>
+<p>We’ll use mlr3 to calculate classification accuracy, precision, recall and F1. <code>lmtest</code> supplies tests for regression models.</p>
 </section>
 </section>
 <section id="datasets-and-labels" class="level2">
@@ -2398,7 +2397,7 @@ vertical-align: -.125em;
 </tr>
 </tbody>
 </table>
-<p>Both exercises use quanteda to count text features and mlr3 to reserve test rows and calculate evaluation measures. The results below are classroom reanalyses, separate from the papers’ reported models.</p>
+<p>In both exercises, we’ll count text features with quanteda and use mlr3 to reserve test rows and evaluate predictions. We are reanalysing the data for class; the results below come from our classroom models rather than the papers’ reported models.</p>
 <section id="source-columns-and-lab-columns" class="level3">
 <h3 class="anchored" data-anchor-id="source-columns-and-lab-columns">Source columns and lab columns</h3>
 <table class="caption-top table">
@@ -2437,19 +2436,25 @@ vertical-align: -.125em;
 </tr>
 </tbody>
 </table>
-<p><code>doc_id</code> identifies rows and <code>key</code> checks text overlap. Neither is a predictor. The labels retain the source data’s binary categories. No new cutoff is applied.</p>
+<p>We’ll use <code>doc_id</code> to identify rows and <code>key</code> to check text overlap, and keep both outside the predictors. We’ll also keep the source data’s binary labels without applying a new cutoff.</p>
+</section>
+<section id="reading-the-category-boundaries" class="level3">
+<h3 class="anchored" data-anchor-id="reading-the-category-boundaries">Reading the category boundaries</h3>
+<p>Before we read classification errors, let’s agree on what to look for in the texts. The summaries below guide our discussion; they do not reproduce the full annotation instructions or replace the supplied labels.</p>
+<p><strong>Hate speech:</strong> Wang, Day &amp; Wu define attribute-directed abuse of an individual or group, including attacks based on political beliefs or party affiliation. Their scheme excludes satire and humour and distinguishes offensive speech from hate speech. When reading a comment, identify the target, the attribute attacked and the context indicating abuse. See <a href="https://doi.org/10.1109/ACCESS.2022.3160712">Wang, Day &amp; Wu (2022), §III-A(2), p. 44342</a> (<a href="https://www.researchgate.net/publication/363074513_Political_Hate_Speech_Detection_and_Lexicon_Building_A_Study_in_Taiwan">full article text</a>).</p>
+<p><strong>Grandstanding:</strong> Park’s rating instructions cover praise or denigration of people or institutions, policy positions or subjective assessments, and questions intended to embarrass or attack witnesses. Factual descriptions and requests for facts or expert advice form the other end of the scale. A question can still grandstand; self-reference alone does not settle the category. See <a href="https://repository.essex.ac.uk/27769/1/Manuscript_JOP_final2.pdf#page=14">Park (2021), author manuscript, “Data and Methods,” p. 14 and Table 1, p. 16</a>. The original ratings measure relative intensity. The supplied CSV does not document the cutoff for its binary <code>rescaled_gs</code> categories; keep those existing categories.</p>
 </section>
 </section>
 <section id="set-up-r" class="level2">
 <h2 class="anchored" data-anchor-id="set-up-r">1. Set up R</h2>
-<p><strong>5–10 minutes.</strong> Check the packages, then locate <code>Data/</code>. The SVM check should print <code>&quot;classif.svm&quot;</code>; the C01 data check should print <code>TRUE</code>. Keep this R session open for both cases.</p>
+<p><strong>5–10 minutes.</strong> Let’s check the packages and locate <code>Data/</code> before we load the texts. We should see <code>&quot;classif.svm&quot;</code> from the SVM check and <code>TRUE</code> from the C01 data check. Keep this R session open for both cases.</p>
 <section id="package-check-install-and-load" class="level3">
 <h3 class="anchored" data-anchor-id="package-check-install-and-load">Package check: install and load</h3>
-<p><strong>Install once.</strong> Run this command before the first exercise if the packages are not installed.</p>
+<p>If these packages are not installed yet, run this command once before we begin.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;quanteda&quot;</span>, <span class="st">&quot;quanteda.textmodels&quot;</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;mlr3&quot;</span>, <span class="st">&quot;mlr3learners&quot;</span>, <span class="st">&quot;e1071&quot;</span>, <span class="st">&quot;stringi&quot;</span>),</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="st">&quot;https://cloud.r-project.org&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Load in each new R session.</strong> Run the check below before C01.</p>
+<p>Each new R session needs to load the packages again. Let’s run this check before C01.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Package loading check</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda); <span class="fu">library</span>(quanteda.textmodels)</span>
@@ -2460,11 +2465,11 @@ vertical-align: -.125em;
 <pre><code>[1] &quot;classif.svm&quot;</code></pre>
 </div>
 </div>
-<p><strong>Ready:</strong> all six packages load without errors, and the last line returns <code>&quot;classif.svm&quot;</code>. Continue to C01.</p>
+<p>Once all six packages load without errors and the last line returns <code>&quot;classif.svm&quot;</code>, we’re ready for C01.</p>
 </section>
 <section id="c01.-setup" class="level3">
 <h3 class="anchored" data-anchor-id="c01.-setup">C01. Setup</h3>
-<p><strong>Practice:</strong> Identify which package supplies each function. Keep one R session open.</p>
+<p>Let’s set up the data path and the measures we’ll use later. As we read the code, which package supplies each function?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C01: Setup</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c(&quot;quanteda&quot;, &quot;quanteda.textmodels&quot;,</span></span>
@@ -2482,16 +2487,16 @@ vertical-align: -.125em;
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>measures <span class="ot">&lt;-</span> <span class="fu">msrs</span>(<span class="fu">c</span>(<span class="st">&quot;classif.acc&quot;</span>, <span class="st">&quot;classif.precision&quot;</span>,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&quot;classif.recall&quot;</span>, <span class="st">&quot;classif.fbeta&quot;</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>Discuss after running:</strong> What does FALSE indicate about the data path?</p>
-<p><strong>Reading the output:</strong> Use quanteda for features and quanteda.textmodels for hate-speech NB. Use mlr3/ mlr3learners for grandstanding SVM and mlr3 for splitting and evaluation. The package check above loads mlr3learners and its e1071 backend before either exercise.</p>
+<p>Look at the file check. If it returns <code>FALSE</code>, where would we look for a problem in the data path?</p>
+<p>If the file check returns <code>FALSE</code>, we’ll need to check the working directory and make sure the extracted <code>Data/</code> folder is beside the lab script. We’ll build features with quanteda and fit hate-speech NB with quanteda.textmodels. For grandstanding, we’ll use the mlr3/ mlr3learners SVM interface; mlr3 also handles our splits and evaluation. The package check has already loaded mlr3learners and its e1071 backend for us.</p>
 </section>
 </section>
 <section id="hate-speech-naive-bayes-with-quanteda.textmodels" class="level2">
 <h2 class="anchored" data-anchor-id="hate-speech-naive-bayes-with-quanteda.textmodels">2. Hate speech: Naive Bayes with quanteda.textmodels</h2>
-<p><strong>25–30 minutes.</strong> Use the data from <strong>Wang, Day &amp; Wu (2022)</strong>. Reserve test comments, count Chinese characters, select a vocabulary using only training rows, and fit Naive Bayes. After checking the held-out comments, apply the same fitted model to the separate human-reference sample.</p>
+<p><strong>25–30 minutes.</strong> We’ll start with the data from <strong>Wang, Day &amp; Wu (2022)</strong>. First we’ll reserve test comments, then count Chinese characters and use only the training rows to select our vocabulary and fit Naive Bayes. After checking the held-out comments, we’ll apply that fitted model to the separate human-reference sample.</p>
 <section id="c02.-load-the-wang-day-wu-2022-data" class="level3">
 <h3 class="anchored" data-anchor-id="c02.-load-the-wang-day-wu-2022-data">C02. Load the Wang, Day &amp; Wu (2022) data</h3>
-<p><strong>Practice:</strong> Which hate-speech label is more common?</p>
+<p>Let’s load the comments and count the two labels.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C02: Load the Wang, Day &amp; Wu (2022) data</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>hate <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(data_dir,</span>
@@ -2509,12 +2514,12 @@ NonHateSpeech    HateSpeech
 <pre><code>[1] 4000</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which class is more common? What would always predicting that class achieve?</p>
-<p><strong>Reading the output:</strong> The sample contains 2,378 HateSpeech and 1,622 NonHateSpeech comments. Labels come from Wang, Day &amp; Wu (2022).</p>
+<p>Which class appears more often? If we predicted that class for every comment, what accuracy would we get?</p>
+<p>We have 2,378 HateSpeech and 1,622 NonHateSpeech comments, so HateSpeech is the majority class. If we always predicted that class, we’d get 2,378 / 4,000 = <strong>59.45% accuracy</strong> on the full sample. That gives us a majority-class baseline. When we evaluate a model, we’ll calculate its baseline on the same evaluation rows. The labels come from Wang, Day &amp; Wu (2022).</p>
 </section>
 <section id="c03.-reserve-test-comments-with-mlr3" class="level3">
 <h3 class="anchored" data-anchor-id="c03.-reserve-test-comments-with-mlr3">C03. Reserve test comments with mlr3</h3>
-<p><strong>Practice:</strong> Which rows must stay outside vocabulary selection and model fitting?</p>
+<p>Before we count features, let’s set aside the comments we’ll use to evaluate the model.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C03: Reserve test comments with mlr3</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hs_task <span class="ot">&lt;-</span> <span class="fu">as_task_classif</span>(hate[<span class="st">&quot;label&quot;</span>],</span>
@@ -2537,8 +2542,8 @@ NonHateSpeech    HateSpeech
           324           476 </code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Why reserve test rows before selecting the vocabulary?</p>
-<p><strong>Reading the output:</strong> There are 3,200 training and 800 test comments. Setting the label as the stratum preserves approximately 80/20 within each class. The task holds labels and row IDs for splitting; it does not fit a classifier.</p>
+<p>Why do we reserve the test rows now? What information would reach our vocabulary selection if we used those rows too?</p>
+<p>We now have 3,200 training and 800 test comments. By using the label as the stratum, we keep approximately 80/20 of each class in the two sets. At this point, the task just holds the labels and row IDs we need for splitting; we haven’t fitted a classifier yet.</p>
 </section>
 <section id="c04a_1.-hate-speech-tokenize-chinese-characters" class="level3">
 <h3 class="anchored" data-anchor-id="c04a_1.-hate-speech-tokenize-chinese-characters">C04a_1. Hate speech: tokenize Chinese characters</h3>
@@ -2576,8 +2581,8 @@ NonHateSpeech    HateSpeech
 <pre><code>[1] &quot;tokens&quot;</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Why does what = “character” produce characters rather than Chinese words?</p>
-<p><strong>Reading the output:</strong> The output is a tokens object with one token sequence per comment. The raw text in hate$text is unchanged. Punctuation, symbols and numeric tokens are removed.</p>
+<p>Look at <code>what = &quot;character&quot;</code>. What have we asked R to count, and how would the result differ if we wanted Chinese words?</p>
+<p>We get a tokens object with one sequence per comment. Because we chose character tokenization, these sequences contain characters rather than segmented Chinese words. We’ve removed punctuation, symbols and numeric tokens from this working copy; the raw text in <code>hate$text</code> stays available for us to read.</p>
 </section>
 <section id="c04a_2.-hate-speech-turn-tokens-into-a-dfm" class="level3">
 <h3 class="anchored" data-anchor-id="c04a_2.-hate-speech-turn-tokens-into-a-dfm">C04a_2. Hate speech: turn tokens into a DFM</h3>
@@ -2613,8 +2618,8 @@ NonHateSpeech    HateSpeech
 <pre><code>[1] 4000 2916</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> What do the 4,000 rows and 2,916 columns represent?</p>
-<p><strong>Reading the output:</strong> Rows are comments, columns are retained characters, and each cell is a count. The DFM contains all comments at this stage; only training rows determine the later vocabulary cutoff.</p>
+<p>We now have 4,000 rows and 2,916 columns. Which represents comments, which represents characters, and what does one cell count?</p>
+<p>Each row is a comment, each column is a retained character, and each cell counts that character in that comment. We have all comments in this DFM for now. In the next step, we’ll use only the training rows to choose the vocabulary cutoff.</p>
 </section>
 <section id="c04b_1.-hate-speech-select-the-training-vocabulary" class="level3">
 <h3 class="anchored" data-anchor-id="c04b_1.-hate-speech-select-the-training-vocabulary">C04b_1. Hate speech: select the training vocabulary</h3>
@@ -2650,8 +2655,8 @@ NonHateSpeech    HateSpeech
 <pre><code>[1] 3200  603</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Does min_docfreq count documents or total token occurrences?</p>
-<p><strong>Reading the output:</strong> There are 3,200 training comments and 603 retained features. The 1% threshold refers to document frequency, not a feature’s share of all tokens. Test rows do not choose the vocabulary.</p>
+<p>With <code>min_docfreq = .01</code>, are we counting the documents that contain a character or all occurrences of that character?</p>
+<p>We keep 603 features across the 3,200 training comments. The 1% threshold asks how many documents contain a character, so repeating it many times in one comment does not make it appear in more documents. Only the training rows contribute to this choice.</p>
 </section>
 <section id="c04b_2.-hate-speech-match-the-test-columns" class="level3">
 <h3 class="anchored" data-anchor-id="c04b_2.-hate-speech-match-the-test-columns">C04b_2. Hate speech: match the test columns</h3>
@@ -2690,12 +2695,12 @@ NonHateSpeech    HateSpeech
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Why must the 800 test rows use the same 603 columns in the same order?</p>
-<p><strong>Reading the output:</strong> The test matrix is 800 by 603 and the name/order check is TRUE. dfm_match changes columns to match the training vocabulary; it does not fit or select a new vocabulary from test texts.</p>
+<p>The test set has 800 rows, and the training vocabulary has 603 columns. Why do we need those same columns in the same order when we predict?</p>
+<p>Our test matrix is 800 by 603, and the name/order check returns <code>TRUE</code>. We can now give the model the columns it expects: <code>dfm_match()</code> aligns them with the training vocabulary without selecting a new vocabulary from the test texts.</p>
 </section>
 <section id="c05.-fit-naive-bayes" class="level3">
 <h3 class="anchored" data-anchor-id="c05.-fit-naive-bayes">C05. Fit Naive Bayes</h3>
-<p><strong>Practice:</strong> Which object holds the fitted NB model?</p>
+<p>Let’s fit Naive Bayes using the training counts and their labels.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C05: Fit Naive Bayes</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>nb <span class="ot">&lt;-</span> <span class="fu">textmodel_nb</span>(train_dfm, <span class="at">y =</span> train_label,</span>
@@ -2710,12 +2715,12 @@ NonHateSpeech    HateSpeech
 <pre><code>[1] &quot;multinomial&quot;</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which argument supplies the training labels?</p>
-<p><strong>Reading the output:</strong> nb is the fitted multinomial NB object. y must match the row order of the training matrix.</p>
+<p>Which argument gives the model its training labels, and which object now holds the fitted model?</p>
+<p>The fitted multinomial NB model is now stored in <code>nb</code>. We supplied its labels through <code>y</code>, so their order must match the rows of the training matrix.</p>
 </section>
 <section id="c06.-predict-and-evaluate-with-mlr3" class="level3">
 <h3 class="anchored" data-anchor-id="c06.-predict-and-evaluate-with-mlr3">C06. Predict and evaluate with mlr3</h3>
-<p><strong>Practice:</strong> Locate one false positive and one false negative in the confusion matrix.</p>
+<p>Now we can predict the held-out comments. Let’s use the confusion matrix to see where the predictions agree with the labels and where they differ.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C06: Predict and evaluate with mlr3</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>nb_prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(nb, <span class="at">newdata =</span> test_dfm)</span>
@@ -2737,13 +2742,13 @@ response        HateSpeech NonHateSpeech
             0.694             0.726             0.779             0.752 </code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Rows are predictions. Which cells are false positives and false negatives?</p>
-<p><code>PredictionClassif</code> stores the reference labels and predictions. <code>$score(measures)</code> computes the metrics defined in C01. The task’s <code>positive</code> class determines precision, recall and F1.</p>
-<p><strong>Reading the output:</strong> TP371, FP140, FN105, TN184. Accuracy .694, precision .726, recall .779, F1 .752. mlr3’s confusion matrix has predictions in rows and reference labels in columns. classif.fbeta uses beta=1, so it reports F1. The task sets HateSpeech as the positive class.</p>
+<p>Read the predictions down the rows and the reference labels across the columns. Which cells contain false positives and false negatives?</p>
+<p>We keep the reference labels and predictions together in <code>PredictionClassif</code>, then use <code>$score(measures)</code> to calculate the measures from C01. When we read precision, recall and F1, we need to check which class the task sets as <code>positive</code>.</p>
+<p>Reading predictions down the rows and reference labels across the columns, we find TP371, FP140, FN105 and TN184. Our accuracy is .694, precision .726, recall .779 and F1 .752. For comparison, always predicting HateSpeech on these same 800 test comments gives 476 / 800 = <strong>59.5% accuracy</strong>. We’re treating HateSpeech as positive, and <code>classif.fbeta</code> uses beta=1, which gives us F1.</p>
 </section>
 <section id="c07.-inspect-one-held-out-comment" class="level3">
 <h3 class="anchored" data-anchor-id="c07.-inspect-one-held-out-comment">C07. Inspect one held-out comment</h3>
-<p><strong>Practice:</strong> Compare the predicted category with the provided label.</p>
+<p>Let’s put the scores aside for a moment and read one held-out comment. Does its prediction agree with the provided label?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C07: Inspect one held-out comment</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="fu">match</span>(<span class="st">&quot;hs_26234&quot;</span>, parts<span class="sc">$</span>test<span class="sc">$</span>doc_id)</span>
@@ -2770,13 +2775,13 @@ docs       NonHateSpeech HateSpeech
 Levels: NonHateSpeech HateSpeech</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which words express group-based degradation or exclusion?</p>
-<p><strong>Reading the output:</strong> hs_26234 is predicted HateSpeech, matching the provided label, with model probability .999. The wording degrades a group as “垃圾” and demands exclusion through “滾回去中國” and “永不得進來台灣”. Read these group-directed features alongside the coding definition.</p>
+<p>Which words in this comment express group-based degradation or exclusion? How do they relate to the category definition above?</p>
+<p>For <code>hs_26234</code>, we predict HateSpeech with model probability .999, matching the provided label. We can see the group-directed degradation in “垃圾” and the demands for exclusion in “滾回去中國” and “永不得進來台灣”. Those phrases help us connect the prediction to the coding definition above.</p>
 </section>
 <section id="c08a.-match-human-reference-texts-to-the-vocabulary" class="level3">
 <h3 class="anchored" data-anchor-id="c08a.-match-human-reference-texts-to-the-vocabulary">C08a. Match human-reference texts to the vocabulary</h3>
-<p>Read the merged <strong><code>hate_speech_reference.csv</code></strong> directly. Its <code>source</code> column records the original BERT/Lexicon filename (or both), while <code>label</code> contains the final <strong>是否仇恨 (Hate speech: Yes/No)</strong> category. The original model-prediction columns are excluded. This step evaluates the existing NB model and does not train a BERT model.</p>
-<p><strong>Practice:</strong> Why apply the training vocabulary to the human-reference comments?</p>
+<p>Next we’ll read <strong><code>hate_speech_reference.csv</code></strong> and evaluate the same fitted NB model on these separate comments. The <code>source</code> column tells us whether a comment came from the BERT file, the Lexicon file or both. Our reference is <code>label</code>, the final <strong>是否仇恨 (Hate speech: Yes/No)</strong> category. The original model-prediction columns are excluded, and we will not train a BERT model here.</p>
+<p>Before we predict, let’s give these comments the vocabulary we selected from the training data.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C08a: Match human-reference texts to the vocabulary</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>benchmark <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(data_dir,</span>
@@ -2798,12 +2803,12 @@ Levels: NonHateSpeech HateSpeech</code></pre>
 <pre><code>[1] 17</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Do the 17 zero-feature rows mean empty comments or no retained characters?</p>
-<p><strong>Reading the output:</strong> The 1,968 reference comments are text-disjoint from the training sample. dfm_match() uses the fitted training vocabulary. All comments remain in evaluation, including 17 with no retained features.</p>
+<p>We find 17 rows with no features. Are those comments empty, or do they contain no characters from our retained vocabulary?</p>
+<p>These 1,968 reference comments have no matching texts in our training sample. We apply the fitted training vocabulary with <code>dfm_match()</code>. A row with no retained features may still contain text; it just has none of our selected characters. We keep all comments in the evaluation, including those 17 rows.</p>
 </section>
 <section id="c08b.-evaluate-the-separate-human-references" class="level3">
 <h3 class="anchored" data-anchor-id="c08b.-evaluate-the-separate-human-references">C08b. Evaluate the separate human references</h3>
-<p><strong>Practice:</strong> What changes on the separate human-reference sample?</p>
+<p>Let’s score these predictions and compare them with our first test results.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C08b: Evaluate the separate human references</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>ref_task <span class="ot">&lt;-</span> <span class="fu">as_task_classif</span>(benchmark[<span class="st">&quot;label&quot;</span>],</span>
@@ -2822,17 +2827,17 @@ Levels: NonHateSpeech HateSpeech</code></pre>
             0.514             0.165             0.880             0.278 </code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Recall is .880, but precision is .165. What errors does that imply?</p>
-<p><code>PredictionClassif</code> stores the reference labels and predictions. <code>$score(measures)</code> computes the metrics defined in C01. The task’s <code>positive</code> class determines precision, recall and F1.</p>
-<p><strong>Reading the output:</strong> Precision .165, recall .880, F1 .278. Many false positives remain. Differences in sampling and label construction may matter; this comparison does not isolate a cause.</p>
+<p>We get recall of .880 and precision of .165. What does that combination tell us about the comments predicted as HateSpeech?</p>
+<p>We use the same measures from C01 again, with HateSpeech as the task’s <code>positive</code> class. Keeping that definition fixed helps us compare precision, recall and F1 across the two evaluations.</p>
+<p>Here we get precision .165, recall .880 and F1 .278. We’re finding most reference HateSpeech comments, but many comments we predict as HateSpeech are false positives. Sampling and label construction differ across the two evaluations, so this comparison alone cannot tell us why the scores changed.</p>
 </section>
 </section>
 <section id="grandstanding-linear-svm-with-mlr3" class="level2">
 <h2 class="anchored" data-anchor-id="grandstanding-linear-svm-with-mlr3">3. Grandstanding: linear SVM with mlr3</h2>
-<p><strong>20–30 minutes.</strong> Use <strong>Park (2021)</strong> data. Repeat the workflow with English word features and an mlr3 learner. The target is the dataset’s existing binary <code>rescaled_gs</code> category. The SVM probability and the original research score describe different quantities.</p>
+<p><strong>20–30 minutes.</strong> Now we’ll follow the same steps with <strong>Park (2021)</strong> data, using English word features and an mlr3 learner. We’ll predict the supplied binary <code>rescaled_gs</code> category. As we read the results, remember that the SVM probability and the original research score describe different quantities.</p>
 <section id="g01a.-load-the-park-2021-data" class="level3">
 <h3 class="anchored" data-anchor-id="g01a.-load-the-park-2021-data">G01a. Load the Park (2021) data</h3>
-<p><strong>Practice:</strong> Which original field supplies the grandstanding target?</p>
+<p>Let’s load the hearing excerpts. Which original field gives us the grandstanding target?</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># G01a: Load the Park (2021) data</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>grandstanding <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(data_dir,</span>
@@ -2846,12 +2851,12 @@ NonGrandstanding    Grandstanding
             1846             1653 </code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which class is more common in the Park (2021) data?</p>
-<p><strong>Reading the output:</strong> These 3,499 distinct excerpts retain the existing rescaled_gs categories from Park (2021): Grandstanding and NonGrandstanding. The original binary conversion cutoff is not documented. Score fields are outside the predictors.</p>
+<p>Look at the label counts. Which class is more common in this sample?</p>
+<p>We have 3,499 distinct excerpts with the supplied <code>rescaled_gs</code> categories, Grandstanding and NonGrandstanding, from Park (2021). We’ll keep these categories because the file does not document the original binary conversion cutoff. We also keep the score fields outside the predictors.</p>
 </section>
 <section id="g01b.-reserve-test-excerpts-with-mlr3" class="level3">
 <h3 class="anchored" data-anchor-id="g01b.-reserve-test-excerpts-with-mlr3">G01b. Reserve test excerpts with mlr3</h3>
-<p><strong>Practice:</strong> Which category is the positive class?</p>
+<p>We’ll reserve test excerpts as before. Check which category we set as the positive class.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># G01b: Reserve test excerpts with mlr3</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>gs_task <span class="ot">&lt;-</span> <span class="fu">as_task_classif</span>(grandstanding[<span class="st">&quot;label&quot;</span>],</span>
@@ -2874,8 +2879,8 @@ NonGrandstanding    Grandstanding
              369              331 </code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> How does stratification preserve both categories in the test set?</p>
-<p><strong>Reading the output:</strong> There are 2,799 training and 700 test excerpts. The positive class is Grandstanding. The task sets the class used for precision and recall.</p>
+<p>Compare the training and test counts. How does stratification keep both categories represented?</p>
+<p>We have 2,799 training and 700 test excerpts. We’ve set Grandstanding as positive in the task, so that is the class we’ll use when we read precision and recall.</p>
 </section>
 <section id="g02a_1.-grandstanding-build-a-corpus-and-tokens" class="level3">
 <h3 class="anchored" data-anchor-id="g02a_1.-grandstanding-build-a-corpus-and-tokens">G02a_1. Grandstanding: build a corpus and tokens</h3>
@@ -2913,8 +2918,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] 3499</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which column supplies text, and which column supplies document IDs?</p>
-<p><strong>Reading the output:</strong> The corpus has 3,499 documents. text_field selects text and docid_field selects doc_id. Other columns are document metadata; they are not counted as text features.</p>
+<p>In the <code>corpus()</code> call, which column do we read as text and which do we use for document IDs?</p>
+<p>Our corpus contains 3,499 documents. We use <code>text_field</code> to select <code>text</code> and <code>docid_field</code> to select <code>doc_id</code>. The remaining columns stay as document metadata, so we don’t count them as words in the text.</p>
 </section>
 <section id="g02a_2.-grandstanding-normalize-and-count-words" class="level3">
 <h3 class="anchored" data-anchor-id="g02a_2.-grandstanding-normalize-and-count-words">G02a_2. Grandstanding: normalize and count words</h3>
@@ -2955,8 +2960,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1]  3499 14123</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> How do these word features differ from the Chinese character features?</p>
-<p><strong>Reading the output:</strong> The output is a sparse DFM of word counts, before training-only trimming. Removing stopwords is a preprocessing choice for this exercise; it can remove meaningful words in other research questions.</p>
+<p>What does one column count here? Compare these English word features with the Chinese character features we used earlier.</p>
+<p>We now have a sparse DFM of word counts, ready for trimming with the training rows. Here we count English words rather than Chinese characters. We’ve chosen to remove English stopwords for this exercise; for another research question, we’d first ask whether those words carry meaning we need.</p>
 </section>
 <section id="g02a_3.-grandstanding-trim-and-align-the-vocabulary" class="level3">
 <h3 class="anchored" data-anchor-id="g02a_3.-grandstanding-trim-and-align-the-vocabulary">G02a_3. Grandstanding: trim and align the vocabulary</h3>
@@ -2992,8 +2997,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] 700 629</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Why do both matrices have 629 columns even though they contain different texts?</p>
-<p><strong>Reading the output:</strong> The training DFM has 2,799 rows, the test DFM has 700, and both have 629 features. This repeats the training-only vocabulary rule used for hate speech.</p>
+<p>Both matrices have 629 columns even though they contain different excerpts. Where did we choose those columns, and why do we keep them the same?</p>
+<p>We choose 629 features from the 2,799 training rows, then give the 700 test rows those same columns. This is the same rule we used for hate speech: the training texts choose the vocabulary, and the test texts use it.</p>
 </section>
 <section id="g02b_1.-grandstanding-convert-the-dfm-for-mlr3" class="level3">
 <h3 class="anchored" data-anchor-id="g02b_1.-grandstanding-convert-the-dfm-for-mlr3">G02b_1. Grandstanding: convert the DFM for mlr3</h3>
@@ -3032,8 +3037,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] 700 629</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Why should a document ID stay outside the predictor columns?</p>
-<p><strong>Reading the output:</strong> The converted tables contain 629 numeric feature columns after removing <code>doc_id</code>. Dense conversion is suitable for this dataset. Larger text matrices may require sparse learners or backends.</p>
+<p>We’ve removed the document ID from the feature table. What should the model learn from, and why would an ID be an unsuitable predictor?</p>
+<p>After removing <code>doc_id</code>, we have 629 numeric feature columns. These are the text counts we’ll pass to the learner. A dense table is manageable for this dataset; with a larger text matrix, we’d look for a learner or backend that can use sparse features.</p>
 </section>
 <section id="g02b_2.-grandstanding-add-the-target-column" class="level3">
 <h3 class="anchored" data-anchor-id="g02b_2.-grandstanding-add-the-target-column">G02b_2. Grandstanding: add the target column</h3>
@@ -3071,8 +3076,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] 700 630</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Why are there now 630 columns, but only 629 predictors?</p>
-<p><strong>Reading the output:</strong> There are 629 features plus label. Both tables share names and order. The test factor places Grandstanding first to match the positive-class order used by the mlr3 task; this prevents reversing binary evaluation measures.</p>
+<p>We now have 630 columns. Which one is the target, leaving 629 predictors?</p>
+<p>The extra column is <code>label</code>, giving us 629 features plus the target. We’ve kept the feature names and order the same in both tables. We also put Grandstanding first in the test label factor to match the mlr3 task’s positive-class order, so the binary measures refer to the intended class.</p>
 </section>
 <section id="g02c_1.-mlr3-define-the-classification-task" class="level3">
 <h3 class="anchored" data-anchor-id="g02c_1.-mlr3-define-the-classification-task">G02c_1. mlr3: define the classification task</h3>
@@ -3111,8 +3116,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] 629</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which column is the target, and why is it excluded from feature_names?</p>
-<p><strong>Reading the output:</strong> The target is label and the task has 629 feature names. The positive class controls binary precision, recall and F1. This task contains text features; the earlier label-only tasks were used to partition rows.</p>
+<p>Check <code>target_names</code> and <code>feature_names</code>. Why do we keep the target column outside the predictors?</p>
+<p>We can see <code>label</code> listed as the target and 629 names listed as features. This task holds the text counts we’ll train on; our earlier label-only tasks helped us split the rows. Setting the positive class tells mlr3 how to calculate binary precision, recall and F1.</p>
 </section>
 <section id="g02c_2.-mlr3-choose-an-svm-learner" class="level3">
 <h3 class="anchored" data-anchor-id="g02c_2.-mlr3-choose-an-svm-learner">G02c_2. mlr3: choose an SVM learner</h3>
@@ -3153,8 +3158,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] &quot;prob&quot;</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Has lrn() already learned from any training rows?</p>
-<p><strong>Reading the output:</strong> The learner ID is classif.svm and predict_type is prob. mlr3learners supplies the SVM interface backed by e1071. kernel, cost and scale configure this classroom model. Fitting happens in the next step.</p>
+<p>We’ve chosen the learner and its settings. Has <code>lrn()</code> seen any training rows yet?</p>
+<p>We’ve created a <code>classif.svm</code> learner with <code>predict_type</code> set to <code>prob</code>. The interface comes from mlr3learners and uses e1071 underneath. So far we’ve chosen <code>kernel</code>, <code>cost</code> and <code>scale</code>; we’ll give the learner its training rows in the next step.</p>
 </section>
 <section id="g02c_3.-mlr3-train-and-predict" class="level3">
 <h3 class="anchored" data-anchor-id="g02c_3.-mlr3-train-and-predict">G02c_3. mlr3: train and predict</h3>
@@ -3199,8 +3204,8 @@ NonGrandstanding    Grandstanding
 <pre><code>[1] &quot;Grandstanding&quot;    &quot;NonGrandstanding&quot;</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which object stores the fitted learner, and which stores the 700 test predictions?</p>
-<p><strong>Reading the output:</strong> gs_learner stores the fitted model, while gs_result stores 700 predictions. Each row has one predicted category and a probability for each class. Test labels support evaluation; they do not enter training.</p>
+<p>We now have a fitted model and 700 test predictions. Which object holds each, and where can we find the class probabilities?</p>
+<p>Our fitted model is in <code>gs_learner</code>, and its 700 predictions are in <code>gs_result</code>. For each test row, we can read the predicted category and a probability for each class. We’ll use the test labels to evaluate these predictions; they were kept outside training.</p>
 </section>
 <section id="g02d.-evaluate-the-mlr3-predictions" class="level3">
 <h3 class="anchored" data-anchor-id="g02d.-evaluate-the-mlr3-predictions">G02d. Evaluate the mlr3 predictions</h3>
@@ -3220,13 +3225,13 @@ response           Grandstanding NonGrandstanding
             0.673             0.704             0.532             0.606 </code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Locate the 74 false positives and 155 false negatives.</p>
-<p><strong>Reading the output:</strong> TP176, FP74, FN155, TN295. Accuracy .673, precision .704, recall .532, F1 .606. Grandstanding is the positive class.</p>
-<p><code>PredictionClassif</code> stores the reference labels and predictions. <code>$score(measures)</code> computes the metrics defined in C01. The task’s <code>positive</code> class determines precision, recall and F1.</p>
+<p>Find the 74 false positives and 155 false negatives in the table. Which kind of error is more common?</p>
+<p>With Grandstanding as positive, we count TP176, FP74, FN155 and TN295. Our accuracy is .673, precision .704, recall .532 and F1 .606. We miss more reference Grandstanding excerpts than we incorrectly predict as Grandstanding, which helps explain the lower recall.</p>
+<p>Here <code>gs_result</code> is our <code>PredictionClassif</code> object, holding the reference labels and predictions. We call <code>$score(measures)</code> with the measures from C01 and read precision, recall and F1 for the task’s <code>positive</code> class, Grandstanding.</p>
 </section>
 <section id="g03.-inspect-one-grandstanding-prediction" class="level3">
 <h3 class="anchored" data-anchor-id="g03.-inspect-one-grandstanding-prediction">G03. Inspect one grandstanding prediction</h3>
-<p><strong>Practice:</strong> Does this prediction agree with the provided rescaled_gs category?</p>
+<p>Let’s read one excerpt alongside its prediction and the supplied <code>rescaled_gs</code> category.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># G03: Inspect one grandstanding prediction</span></span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>j <span class="ot">&lt;-</span> <span class="fu">match</span>(<span class="st">&quot;gs_01045&quot;</span>, gs_parts<span class="sc">$</span>test<span class="sc">$</span>doc_id)</span>
@@ -3250,16 +3255,16 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 Levels: Grandstanding NonGrandstanding</code></pre>
 </div>
 </div>
-<p><strong>Discuss after running:</strong> Which words suggest self-promotion? Read the full statement next.</p>
-<p><strong>Reading the output:</strong> gs_01045 is predicted Grandstanding, matching the provided label, with linear SVM probability .637. “I am not intimidated by anybody” and “I am going to do whatever I have to do” emphasize the speaker’s own resolve. The tax statements declare a public political position. This example illustrates self-promotion and position-taking; a model probability does not establish substantive correctness. The original grandstanding score for this statement is 2.003; that score is not a predictor.</p>
+<p>Which words suggest self-promotion or position-taking? Keep them in mind as we read the full statement next.</p>
+<p>For <code>gs_01045</code>, we predict Grandstanding with linear SVM probability .637, matching the provided label. Let’s look at what the speaker says: “I am not intimidated by anybody” and “I am going to do whatever I have to do” emphasize personal resolve, while the tax statements take a public political position. We can discuss these as self-promotion and position-taking, but the model probability cannot establish whether the classification is substantively correct. The original grandstanding score is 2.003; we have kept it outside the predictors.</p>
 </section>
 </section>
 <section id="read-and-compare-prediction-errors" class="level2">
 <h2 class="anchored" data-anchor-id="read-and-compare-prediction-errors">4. Read and compare prediction errors</h2>
-<p><strong>10–15 minutes.</strong> Read one full text from each case. Use the confusion matrix to identify the type of error, then explain the category boundary in your own words.</p>
+<p><strong>10–15 minutes.</strong> Let’s read one full text from each case. We’ll first identify the type of error, then explain what the category boundary means for that text.</p>
 <section id="follow-the-slide-demonstration" class="level3">
 <h3 class="anchored" data-anchor-id="follow-the-slide-demonstration">Follow the slide demonstration</h3>
-<p><code>which()</code> finds the held-out rows where prediction and reference differ. Select the first error, compare the categories and probability, then print the complete statement. This block is identical to the <strong>Read performance with the text</strong> slide.</p>
+<p>We’ll use <code>which()</code> to find the held-out rows where prediction and reference differ. Let’s select the first error, compare its categories and probability, and print the complete statement. This is the same block we used on the <strong>Read performance with the text</strong> slide.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read one grandstanding prediction error</span></span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>error_rows <span class="ot">&lt;-</span> <span class="fu">which</span>(gs_result<span class="sc">$</span>response <span class="sc">!=</span> gs_result<span class="sc">$</span>truth)</span>
@@ -3279,8 +3284,8 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <pre><code>I know that Ms. Pingree mentioned the Coastal Climate Resilience Fund. So the district I represent includes a whole bunch of rural communities that lie in the tsunami zone. Coastal communities like Westport and Ocean Shores are seeing much more severe storm events and flooding and there are four coastal tribes in the district that I represent that are in the process of trying to move to higher ground. I was hoping you could provide a roadmap for what this program is going to look like if it is funded, and how the program is going to address the specific needs of the communities I represent and others along the coast. </code></pre>
 </div>
 </div>
-<p><strong>Discuss:</strong> Is this a false positive or a false negative? Which metric does it lower? Does describing the needs of a district count as self-promotion?</p>
-<p><strong>Reading the output:</strong> The first SVM error is gs_00013: prediction Grandstanding, reference NonGrandstanding. This is a false positive, which lowers precision. The statement repeatedly refers to the speaker’s district and asks how a program will address local needs. Those phrases can resemble self-promotion, but the full statement can also read as a substantive request for policy information. Discuss the coding boundary and what hearing context would help; a mismatch alone does not prove that the model or reference is substantively correct.</p>
+<p>Is this a false positive or a false negative, and which metric does it lower? As we read, consider whether describing a district’s needs is enough to count as self-promotion.</p>
+<p>Our first SVM error is <code>gs_00013</code>: we predict Grandstanding, while the reference is NonGrandstanding. That makes it a false positive and lowers precision. The speaker repeatedly mentions the district and asks how a program will address local needs. We might read those phrases as self-promotion, or read the full statement as a request for policy information. What hearing context would help us decide? The disagreement gives us a case to examine; it does not by itself establish that either the model or the reference is substantively correct.</p>
 </section>
 <section id="repeat-with-the-hate-speech-model" class="level3">
 <h3 class="anchored" data-anchor-id="repeat-with-the-hate-speech-model">Repeat with the hate-speech model</h3>
@@ -3291,20 +3296,20 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <pre><code>﻿這隻河童來台灣亂更恐怖。 </code></pre>
 </div>
 </div>
-<p>Read both full texts and explain the category boundary. Identify any cases where the text alone leaves the label uncertain.</p>
-<p><strong>Discuss:</strong> Which case has higher precision? Which has higher recall? These datasets have different labels, languages and class frequencies, so their scores do not isolate the effect of the algorithm. Changing a model after examining test errors requires a fresh evaluation sample.</p>
+<p>Now compare the two full texts with their category definitions. Where can we explain the boundary clearly, and where would we need more context to judge the label?</p>
+<p>Which case has higher precision, and which has higher recall? We used different labels, languages and class frequencies, so the scores alone cannot tell us which algorithm caused the difference. If we change a model after examining these test errors, we’ll need a fresh evaluation sample.</p>
 </section>
 </section>
 <section id="write-a-short-practice-report" class="level2">
 <h2 class="anchored" data-anchor-id="write-a-short-practice-report">5. Write a short practice report</h2>
-<p><strong>5 minutes.</strong> Write five sentences covering the data and labels, split, features, classifier settings, and test results. Include one error you read. No separate submission is required.</p>
+<p><strong>5 minutes.</strong> Let’s turn what we’ve done into five sentences: describe the data and labels, our split, the features, the classifier settings, and the test results. Include one error you read so that the report connects a score to a text. There is no separate submission.</p>
 </section>
 <section id="optional-try-another-classifier" class="level2">
 <h2 class="anchored" data-anchor-id="optional-try-another-classifier">Optional: try another classifier</h2>
-<p>Finish the core practice first. These blocks are displayed for reference and do not run in the main R script. To try one, run its code separately after completing the required steps.</p>
+<p>After finishing the core practice, we can try another classifier. The blocks below are for reference and do not run in the main R script; run one separately when you’re ready to try it.</p>
 <section id="logistic-regression-with-quanteda.textmodels" class="level3">
 <h3 class="anchored" data-anchor-id="logistic-regression-with-quanteda.textmodels">Logistic regression with quanteda.textmodels</h3>
-<p>Keep the same training matrix and held-out test matrix. <code>textmodel_lr()</code> selects its penalty using cross-validation within the training data. Run this section only after C01–C08.</p>
+<p>Let’s keep our training and held-out test matrices and fit logistic regression. <code>textmodel_lr()</code> selects its penalty by cross-validation within the training data. Complete C01–C08 before trying this block.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">7193</span>)</span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>lr <span class="ot">&lt;-</span> <span class="fu">textmodel_lr</span>(train_dfm, <span class="at">y =</span> train_label)</span>
@@ -3317,7 +3322,7 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 </section>
 <section id="reuse-the-mlr3-svm-for-hate-speech" class="level3">
 <h3 class="anchored" data-anchor-id="reuse-the-mlr3-svm-for-hate-speech">Reuse the mlr3 SVM for hate speech</h3>
-<p>The required grandstanding exercise already uses <code>mlr3learners</code> and <code>e1071</code>. Use the small classroom vocabulary for this demonstration: converting to a data frame creates a dense matrix. For large text datasets, consider learners/backends that support sparse features.</p>
+<p>We can also reuse <code>mlr3learners</code> and <code>e1071</code> from the grandstanding exercise to fit an SVM for hate speech. We’ll keep the small classroom vocabulary because converting it to a data frame creates a dense matrix. For a large text dataset, we’d need to consider learners or backends that support sparse features.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c(&quot;mlr3learners&quot;, &quot;e1071&quot;))</span></span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mlr3learners)</span>
@@ -3337,15 +3342,15 @@ Levels: Grandstanding NonGrandstanding</code></pre>
 <span id="cb97-16"><a href="#cb97-16" aria-hidden="true" tabindex="-1"></a>svm_result <span class="ot">&lt;-</span> svm<span class="sc">$</span><span class="fu">predict</span>(svm_task, <span class="at">row_ids =</span> svm_test)</span>
 <span id="cb97-17"><a href="#cb97-17" aria-hidden="true" tabindex="-1"></a>svm_result<span class="sc">$</span><span class="fu">score</span>(measures)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><code>$train()</code> fits the classifier. <code>$predict()</code> returns a prediction object; <code>$score()</code> compares its predictions with the held-out labels. This optional model uses the same split and training-derived vocabulary as NB.</p>
+<p>Here we fit the classifier with <code>$train()</code>, obtain a prediction object with <code>$predict()</code>, and compare predictions with the held-out labels using <code>$score()</code>. Keeping the NB split and training-derived vocabulary lets us compare the two models on the same comments.</p>
 </section>
 </section>
 <section id="data-notes" class="level2">
 <h2 class="anchored" data-anchor-id="data-notes">Data notes</h2>
-<p>The lab reads three CSVs directly: <code>hate_speech_practice.csv</code> (4,000 comments), <code>hate_speech_reference.csv</code> (1,968 human references), and <code>grandstanding_practice.csv</code> (3,499 excerpts). The existing labels are unchanged. Their preparation removes duplicated/conflicting text labels and excludes every raw human-reference text from the hate-speech practice pool before sampling. It does not select a vocabulary or fit a model.</p>
-<p>Both classifiers use text counts only. Grandstanding’s conversion to a data frame makes a dense table; the modest 629-word vocabulary is for this classroom example. For larger text matrices, use learners/backends that support sparse features.</p>
-<p>The original source CSVs remain in <code>Data</code>. <code>prepare_practice_data.R</code> reproduces the cleaned CSVs using base R and stringi; students do not need to run it for the core exercise. See <code>Data/README.md</code> and <code>practice_manifest.json</code> for cleaning rules and counts. Label and score fields never enter X.</p>
-<p>The split uses mlr3 <code>partition()</code> with seed 7192 and label stratification. Hate speech fits multinomial NB via quanteda.textmodels; grandstanding fits a linear SVM via mlr3. The SVM uses type C-classification, a linear kernel, cost 1 and scale FALSE. Seed 7193 makes its probability fitting reproducible. Its results are not a reproduction of Park’s original research model. These splits separate texts, not necessarily authors, hearings, threads or time periods.</p>
+<p>We read three prepared CSVs: <code>hate_speech_practice.csv</code> (4,000 comments), <code>hate_speech_reference.csv</code> (1,968 human references), and <code>grandstanding_practice.csv</code> (3,499 excerpts). Preparation keeps the existing labels, removes duplicate texts and texts with conflicting labels, and excludes every raw human-reference text from the hate-speech practice pool before sampling. We choose the vocabulary and fit the models later in the lab.</p>
+<p>For both classifiers, we use only text counts as predictors. The grandstanding exercise converts its 629-word vocabulary into a dense data frame, which is manageable for this example. With larger text matrices, we’d look for learners or backends that support sparse features.</p>
+<p>The original source CSVs are in <code>Data</code>. We can reproduce the cleaned CSVs with <code>prepare_practice_data.R</code>, using base R and stringi, but we don’t need to run it for the core exercise. <code>Data/README.md</code> and <code>practice_manifest.json</code> record the cleaning rules and counts. Throughout the lab, we keep label and score fields outside X.</p>
+<p>We split the data with mlr3 <code>partition()</code>, seed 7192 and label stratification. For hate speech, we fit multinomial NB through quanteda.textmodels; for grandstanding, we fit a linear SVM through mlr3. Our SVM uses type C-classification, a linear kernel, cost 1 and scale FALSE, with seed 7193 for reproducible probability fitting. These results describe our classroom model rather than a reproduction of Park’s original research model. We separate texts across the split, but authors, hearings, threads or time periods may still overlap.</p>
 </section>
 <section id="reading-connections" class="level2">
 <h2 class="anchored" data-anchor-id="reading-connections">Reading connections</h2>
