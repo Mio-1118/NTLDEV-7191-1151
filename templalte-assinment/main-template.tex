@@ -11,8 +11,8 @@
   \setCJKmonofont{Noto Serif CJK TC}
 }{
   \IfFileExists{/System/Library/Fonts/Supplemental/Songti.ttc}{
-    \setCJKmainfont[Path=/System/Library/Fonts/Supplemental/,FontIndex=2]{Songti.ttc}
-    \setCJKmonofont[Path=/System/Library/Fonts/Supplemental/,FontIndex=2]{Songti.ttc}
+    \setCJKmainfont[Path=/System/Library/Fonts/Supplemental/,FontIndex=7,BoldFont=Songti.ttc,BoldFeatures={FontIndex=2}]{Songti.ttc}
+    \setCJKmonofont[Path=/System/Library/Fonts/Supplemental/,FontIndex=7,BoldFont=Songti.ttc,BoldFeatures={FontIndex=2}]{Songti.ttc}
   }{
     \setCJKmainfont{bsmi00lp.ttf}
     \setCJKmonofont{bsmi00lp.ttf}
@@ -283,7 +283,8 @@ Find the command you need below and replace the sample text, filenames, and labe
 \end{tabularx}
 
 \medskip
-\noindent\textbf{文獻與公式 / Citations and Equations}
+\noindent\begin{minipage}{\linewidth}
+\textbf{文獻與公式 / Citations and Equations}\par\smallskip
 
 \noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}X@{}}
 \toprule
@@ -298,6 +299,7 @@ Find the command you need below and replace the sample text, filenames, and labe
 公式引用 / Equation reference & \texttt{\textbackslash{}eqref\{eq:example\}} \\
 \bottomrule
 \end{tabularx}
+\end{minipage}
 \endgroup
 
 \subsection*{常用環境 / Common Environments}
@@ -326,7 +328,8 @@ Find the command you need below and replace the sample text, filenames, and labe
 \end{figure}
 \end{verbatim}
 
-\noindent\textbf{表格 / Table}
+\noindent\begin{minipage}{\linewidth}
+\textbf{表格 / Table}
 \begin{verbatim}
 \begin{table}[htbp]
   \centering
@@ -342,6 +345,7 @@ Find the command you need below and replace the sample text, filenames, and labe
   \end{tabular}
 \end{table}
 \end{verbatim}
+\end{minipage}\par\medskip
 
 \noindent\textbf{編號公式 / Numbered Equation}
 \begin{verbatim}

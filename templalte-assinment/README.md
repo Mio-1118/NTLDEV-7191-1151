@@ -4,7 +4,7 @@
 
 We use this bilingual template for course reports and research notes in NTLDEV 7191 and NTLDEV 7192.
 
-[下載完整 ZIP / Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/templalte-assinment/templalte-assinment.zip)
+[PDF 預覽 / Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/main/templalte-assinment/assignment-template-preview.pdf) · [下載完整 ZIP / Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/templalte-assinment/templalte-assinment.zip)
 
 ## 1. 上傳 Overleaf / Upload to Overleaf
 
