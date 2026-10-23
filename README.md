@@ -32,6 +32,8 @@ For Week 7, we follow the **Lab HTML** and run the matching **R script**. Each o
 
 [Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
 
+[Assignment template / 作業模板 (LaTeX)](templalte-assinment): The folder contains `main-template.tex`, `reference.bib`, and the `images` folder for use in Overleaf.
+
 
 ## Slides and Lab Sessions
 
