@@ -16,7 +16,7 @@
 
 2. ~~**Call for Proposals: 14th Annual Meeting of Asian Political Methodology.** **Submission deadline: October 9, 2026.**~~
 
-3. **Research title + abstract due: October 23, 2026 (Week 7).** You are welcome to book [instructor office hours](https://calendly.com/ycliao/text-as-data-instructor) to discuss your research ideas, title, or abstract before the deadline.
+3. ~~**Research title + abstract due: October 23, 2026 (Week 7).** You are welcome to book [instructor office hours](https://calendly.com/ycliao/text-as-data-instructor) to discuss your research ideas, title, or abstract before the deadline.~~
 
 4. **Call for Proposals: [84th Annual MPSA Conference (2027)](https://www.mpsanet.org/conference/).** **Paper proposal deadline: October 27, 2026.**
 
