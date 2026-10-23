@@ -12,7 +12,7 @@
 
 ## Announcements
 
-1. **Git & GitHub guide for Mac users:** [Git 與 GitHub 新手實戰完全手冊 / Git & GitHub Practical Guide (PDF)](resources/git-github-mac-guide.pdf). 感謝 **貴評（國發3）** 提供！
+1. **Git & GitHub guide for Mac users:** [Git 與 GitHub 新手實戰完全手冊 / Git & GitHub Practical Guide (PDF)](resource/git-github-mac-guide.pdf). 感謝 **貴評（國發3）** 提供！
 
 2. ~~**Call for Proposals: 14th Annual Meeting of Asian Political Methodology.** **Submission deadline: October 9, 2026.**~~
 
@@ -34,7 +34,7 @@ For Week 7, we follow the **Lab HTML** and run the matching **R script**. Each o
 
 [Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
 
-[Assignment template / 作業模板 (LaTeX)](templalte-assinment) · [Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/402046dd43e6ea317bc7b5e58a9e102820faf3d9/templalte-assinment/assignment-template-preview.pdf) · [Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/402046dd43e6ea317bc7b5e58a9e102820faf3d9/templalte-assinment/templalte-assinment.zip). Upload the ZIP to Overleaf to create a project. It contains `main-template.tex`, `reference.bib`, and the `images` folder.
+[Assignment template / 作業模板 (LaTeX)](resource/assignment-template) · [Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/c5ad4f72f00920bd9f4c407140a18cabd58b454a/resource/assignment-template/assignment-template-preview.pdf) · [Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/c5ad4f72f00920bd9f4c407140a18cabd58b454a/resource/assignment-template/assignment-template.zip). Upload the ZIP to Overleaf to create a project. It contains `main-template.tex`, `reference.bib`, and the `images` folder.
 
 
 ## Slides and Lab Sessions
