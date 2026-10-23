@@ -1,0 +1,379 @@
+% Adapted from Gui-Ping (Roy) Liang 
+% 編譯 / Compilation: XeLaTeX → BibTeX → XeLaTeX → XeLaTeX
+% 本機指令 / Local command: latexmk -xelatex main-template.tex
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+% 中文字體與程式碼字體 / Chinese text and code fonts
+\IfFontExistsTF{Noto Serif CJK TC}{
+  \setCJKmainfont{Noto Serif CJK TC}
+  \setCJKmonofont{Noto Serif CJK TC}
+}{
+  \IfFileExists{/System/Library/Fonts/Supplemental/Songti.ttc}{
+    \setCJKmainfont[Path=/System/Library/Fonts/Supplemental/,FontIndex=2]{Songti.ttc}
+    \setCJKmonofont[Path=/System/Library/Fonts/Supplemental/,FontIndex=2]{Songti.ttc}
+  }{
+    \setCJKmainfont{bsmi00lp.ttf}
+    \setCJKmonofont{bsmi00lp.ttf}
+  }
+}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx} % 插入圖片 / Insert images with \includegraphics
+\graphicspath{{images/}}
+\usepackage{booktabs,tabularx}
+\usepackage{setspace}
+\setstretch{1.3}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\definecolor{darkblue}{RGB}{30,30,130}
+\definecolor{darkred}{RGB}{130,10,10}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{stefan_green}{RGB}{0,100,0}
+\newcommand{\david}[1]{{\color{codegreen}#1}}
+\newcommand{\change}[1]{{\color{stefan_green}#1}}
+\newcommand{\notice}[1]{{\color{darkred}#1}}
+\usepackage[backend=biber,style=authoryear,sorting=nyt]{biblatex}
+\addbibresource{reference.bib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}
+\renewcommand{\abstractname}{摘要 / Abstract}
+\renewcommand{\contentsname}{目錄 / Contents}
+\renewcommand{\figurename}{圖 / Figure}
+\renewcommand{\tablename}{表 / Table}
+\renewcommand{\refname}{參考文獻 / References}
+
+\title{\textbf{NTLDEV 7192 與 NTLDEV 7191}\\課程專用報告（研究紀要）模板\\[0.8em]\textbf{NTLDEV 7192 and NTLDEV 7191}\\Course Report Template/Research Note}
+\author{姓名 / Name\thanks{系所、學號與電子郵件。Department, student ID, and email.}}
+\date{\today}
+
+\begin{document}
+% 標題頁與摘要分頁 / Separate the title and abstract pages.
+\maketitle
+\clearpage
+\begin{abstract}
+
+[Write your abstract here. You can then comment out the text below using the percent sign.]
+
+
+\begingroup
+\color{red}
+\noindent\textbf{注意：Overleaf 專案名稱。}請將 Overleaf 專案名稱改為「課程代碼-姓名-學號」，方便我在專案列表中辨識課程、學生姓名與學號。主檔維持 \texttt{main-template.tex} 或直接覆蓋\texttt{main.tex}均可。
+
+\noindent\textbf{Important: Overleaf project name.} 
+
+Rename your Overleaf project to \texttt{CourseCode-YourName-StudentID}. This helps the instructor identify your course, name, and student ID in the project list. You can keep the main file named \texttt{main-template.tex} or rename it to \texttt{main.tex}.
+
+\par
+\endgroup
+\medskip
+
+\noindent\textbf{篇幅提醒：}摘要至多 1,000 字，建議控制在 500 字以內，以便日後修改並用於研討會投稿。投稿時請以各研討會的摘要格式與篇幅規定為準。
+
+\noindent\textbf{Length guidance:} The abstract must not exceed 1,000 words; preferably keep it within 500 words to facilitate adaptation for conference submissions. Follow the specific abstract format and length requirements of the target conference.
+
+\medskip
+本版模示範比較立法報告常用的文字格式、章節、圖片、表格、公式、交叉引用與文獻引用。
+請將示範文字替換成自己的研究問題、資料、方法與發現。
+所有示範數字均為教學用途，不代表實證結果。
+
+This template demonstrates text formatting, sections, figures, tables, equations, cross-references, and citations for a comparative legislative studies report. Replace the examples with your research questions, data, methods, and findings. All numerical examples are for teaching and do not represent empirical results.
+\end{abstract}
+\clearpage
+% 目錄獨立一頁 / Start the contents on a separate page.
+\tableofcontents
+\clearpage
+
+\section{緒論 / Introduction}
+\label{sec:introduction}
+\subsection{研究動機與問題 / Motivation and Questions}
+在此說明研究背景、問題意識與研究貢獻。例如：不同議會制度下，政黨如何維持議員的投票一致性？
+
+Describe the background, research question, and contribution. For example: How do parties maintain voting unity under different parliamentary systems?
+
+% 空一行表示新的段落；不要用連續的 \\ 代替段落。
+% Start a paragraph with a blank line; do not use repeated line breaks.
+這是一個新段落。使用 \textbf{粗體}強調關鍵概念，使用 \emph{emphasis}標示英文重點。
+特殊字元需要跳脫，例如百分比 25\%、底線 party\_id、\& 與 \#。
+註腳可以補充資料來源或定義。\footnote{這是註腳範例，請替換成必要的補充說明。 This is a sample footnote; replace it with a useful note.}
+
+Use a blank line to start a new paragraph. Use \textbf{bold} for key concepts and \emph{emphasis} for emphasis. Escape special characters, such as 25\%, party\_id, \&, and \#. Footnotes can provide sources or definitions.
+
+\subsection{條列與連結 / Lists and Links}
+\begin{itemize}
+  \item 研究對象：國家、議院或政黨。\par Cases: countries, chambers, or parties.
+  \item 分析單位：議員、單次表決或議員與表決的組合。\par Unit of analysis: legislators, divisions, or legislator--division observations.
+\end{itemize}
+\begin{enumerate}[label=\arabic*.]
+  \item 提出研究問題與理論預期。\par State the question and theoretical expectations.
+  \item 整理資料，定義變數並進行分析。\par Prepare the data, define variables, and conduct the analysis.
+  \item 回應問題並說明研究限制。\par Answer the question and discuss limitations.
+\end{enumerate}
+網址可使用 \url{https://www.parliament.uk/}，也可使用
+\href{https://www.parliament.uk/}{自訂連結文字}。
+
+Use \texttt{itemize} for bullet points and \texttt{enumerate} for numbered steps. Use \texttt{\textbackslash url} for a visible URL, or \texttt{\textbackslash href} for custom link text.
+
+\section{西敏制下的投票 / Voting in the Westminster System}
+\label{sec:theory}
+% 文獻 key 必須與 reference.bib 中的 key 完全相同。
+% Citation keys must exactly match the keys in reference.bib.
+% \textcite：作者融入句子；\parencite：括號引用。
+% Use \textcite for narrative citations and \parencite for parenthetical citations.
+\textcite{cox1987}的著作可作為理解英國議會制度發展的閱讀起點。
+括號式引用的寫法如下\parencite{cox1987}。
+一次引用多筆文獻可寫為\parencite{cox1987,carey2009}。
+
+The work of \textcite{cox1987} offers a starting point for reading about the development of British parliamentary institutions. Parenthetical citations look like this \parencite{cox1987}; multiple sources can be cited together \parencite{cox1987,carey2009}.
+
+指定頁碼的語法為： / Syntax for citing specific pages:
+\begin{quote}
+\texttt{\textbackslash{}parencite[23--25]\{cox1987\}}
+\end{quote}
+以上頁碼僅示範語法；請核對原文後填入真正支持論點的頁碼。
+
+The command above demonstrates a citation with page numbers. The pages are illustrative; check the source and enter the pages that support your claim.
+
+\begin{quote}
+這裡是區塊引文的排版示範，並非任何文獻的原文。
+實際使用時應填入經核對的引文，並附作者、年份與頁碼。
+
+\par This is a block quotation formatting example, not a quotation from a source. Replace it with a verified quotation and cite the author, year, and page.
+\end{quote}
+
+\subsection{研究假設 / Research Hypothesis}
+\textbf{H1：}請在此寫出可由資料檢驗的理論預期，並交代理論理由。
+
+\textbf{H1:} State a testable expectation and explain its theoretical basis.
+
+\section{表決、跑票與辯論資料 / Data on Divisions, Defection and Debates}
+\label{sec:data}
+\subsection{資料來源與變數 / Data Sources and Variables}
+在此交代研究期間、資料來源、樣本選擇、缺漏值處理與變數定義。
+下列圖片是隨版模附上的占位圖，請換成自己的圖表。
+
+Describe the study period, sources, sample selection, missing data treatment, and variable definitions. Replace the placeholder below with your own figure.
+
+% figure 是浮動環境；[htbp] 表示優先放在此處、頁頂、頁底或浮動頁。
+% figure is a float; [htbp] allows placement here, at the top, bottom, or on a float page.
+% 寬度使用 \linewidth 的比例，通常比固定公分更容易維持版面。
+% Scale image width relative to \linewidth to adapt to the available space.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.65\linewidth]{example-image.pdf}
+  \caption{研究架構占位圖 / Research Framework Placeholder}
+  \label{fig:framework} % label 放在 caption 後方 / Put label after caption
+  \par\small 資料來源：LaTeX mwe 套件示範圖，非研究資料。\\Source: Example image from the LaTeX mwe package; not research data.
+\end{figure}
+如圖~\ref{fig:framework}所示，可以在內文引用圖片編號。
+換圖時將 PNG、JPG 或 PDF 放入 \texttt{images/}，再修改
+\texttt{\textbackslash{}includegraphics} 的檔名。
+
+Refer to Figure~\ref{fig:framework} in the text. To replace the image, put a PNG, JPG, or PDF in \texttt{images/} and update the filename in \texttt{\textbackslash includegraphics}.
+
+\begin{table}[htbp]
+  \centering
+  \caption{變數定義與示範值 / Variable Definitions and Illustrative Values}
+  \label{tab:variables}
+  \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.28\linewidth}Xr}
+    \toprule
+    變數 / Variable & 定義 / Definition & 值 / Value \\
+    \midrule
+    跑票次數\newline Defections & 議員投票與所屬政黨立場不一致的次數。\newline Votes against the party position. & 8 \\
+    參與表決次數\newline Votes cast & 納入分析的有效表決次數。\newline Valid votes included in the analysis. & 100 \\
+    跑票比例\newline Defection rate & 跑票次數除以參與表決次數。\newline Defections divided by votes cast. & 0.08 \\
+    \bottomrule
+  \end{tabularx}
+  \par\small 註：所有數字僅用於排版練習。\\Note: All values are fictional and used for formatting practice.
+\end{table}
+表~\ref{tab:variables}示範三線表；欄位中的 \texttt{l}、\texttt{r} 與 \texttt{X}
+分別表示靠左、靠右與可自動換行的欄位。
+
+Table~\ref{tab:variables} demonstrates a three-rule table. The column types \texttt{l}, \texttt{r}, and \texttt{X} mean left-aligned, right-aligned, and automatically wrapping columns.
+
+\section{跑票分析 / Analysis of Rebellion}
+\label{sec:analysis}
+\subsection{公式排版 / Formatting Equations}
+行內公式以美元符號包住，例如 $r_i = d_i/n_i$。
+需要編號時使用 \texttt{equation} 環境：
+
+Enclose inline mathematics in dollar signs, for example $r_i=d_i/n_i$. Use the \texttt{equation} environment for a numbered equation:
+\begin{equation}
+  r_i = \frac{d_i}{n_i}, \qquad n_i > 0.
+  \label{eq:rebellion}
+\end{equation}
+式~\eqref{eq:rebellion}中，$d_i$ 為議員 $i$ 的跑票次數，$n_i$ 為參與表決次數。
+若沒有有效表決，應另行說明處理方式。
+
+In Equation~\eqref{eq:rebellion}, $d_i$ is the number of defections by legislator $i$, and $n_i$ is the number of votes cast. Explain how observations with no valid votes are handled.
+
+多行公式可使用 \texttt{align} 環境，以 \texttt{\&} 對齊：
+
+Use \texttt{align} for multiline equations, with \texttt{\&} marking alignment points:
+\begin{align}
+  \eta_i &= \alpha + \beta_1 x_{1i} + \beta_2 x_{2i}, \\
+  p_i &= \frac{\exp(\eta_i)}{1+\exp(\eta_i)}.
+\end{align}
+以上僅為公式排版示範；實際模型應由研究問題與資料結構決定。
+
+These equations demonstrate formatting only; choose an actual model based on the research question and data structure.
+
+\subsection{結果與交叉引用 / Results and Cross-References}
+可引用第~\ref{sec:theory}~節的理論、第~\ref{sec:data}~節的資料，
+或指出圖~\ref{fig:framework}位於第~\pageref{fig:framework}~頁。
+請勿手動輸入圖表與公式編號，以免增刪內容後編號失去一致性。
+
+Refer to the theory in Section~\ref{sec:theory}, the data in Section~\ref{sec:data}, or Figure~\ref{fig:framework} on page~\pageref{fig:framework}. Use cross-reference commands so numbering stays correct when content changes.
+
+\section{結論 / Conclusion}
+在此回應研究問題，概述主要發現、研究限制與未來研究方向。
+撰寫正式報告時，請移除本版模的操作說明與練習內容。
+
+Answer the research question, summarize the findings, and discuss limitations and future research. Remove the instructional text and exercises when preparing the final report.
+
+
+
+\clearpage
+
+\printbibliography[heading=bibintoc,title={參考文獻 / References}]
+
+
+\appendix
+\section{常用指令速查表 / Common Command Quick Reference}
+依用途查找下列指令，將範例中的文字、檔名與標籤替換為自己的內容。
+
+Find the command you need below and replace the sample text, filenames, and labels with your own.
+
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}X@{}}
+\toprule
+用途 / Purpose & 指令 / Command \\
+\midrule
+章節 / Section & \texttt{\textbackslash{}section\{Title\}} \\
+小節 / Subsection & \texttt{\textbackslash{}subsection\{Title\}} \\
+次小節 / Subsubsection & \texttt{\textbackslash{}subsubsection\{Title\}} \\
+粗體 / Bold & \texttt{\textbackslash{}textbf\{Text\}} \\
+強調 / Emphasis & \texttt{\textbackslash{}emph\{Text\}} \\
+新段落 / New paragraph & 原始碼空一行。 / Leave a blank line in the source. \\
+註腳 / Footnote & \texttt{\textbackslash{}footnote\{Note\}} \\
+網址 / URL & \texttt{\textbackslash{}url\{https://example.org\}} \\
+連結文字 / Link text & \texttt{\textbackslash{}href\{https://example.org\}\{Text\}} \\
+特殊字元 / Special characters & \texttt{\textbackslash\%\ \textbackslash\&\ \textbackslash\_\ \textbackslash\#\ \textbackslash\$\ \textbackslash\{\ \textbackslash\}} \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+\noindent\textbf{圖片、表格與交叉引用 / Figures, Tables, and Cross-References}
+
+\noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}X@{}}
+\toprule
+用途 / Purpose & 指令 / Command \\
+\midrule
+插入圖片 / Insert image & \texttt{\textbackslash{}includegraphics[width=.7\textbackslash{}linewidth]\{file.pdf\}} \\
+圖表標題 / Caption & \texttt{\textbackslash{}caption\{Caption\}} \\
+設定標籤 / Set label & \texttt{\textbackslash{}label\{fig:example\}} \\
+引用圖表／章節 / Reference & \texttt{\textbackslash{}ref\{fig:example\}} \\
+引用所在頁 / Page reference & \texttt{\textbackslash{}pageref\{fig:example\}} \\
+表格水平線 / Table rules & \texttt{\textbackslash{}toprule} / \texttt{\textbackslash{}midrule} / \texttt{\textbackslash{}bottomrule} \\
+分隔欄／結束列 / Column / row & \texttt{\&} / \texttt{\textbackslash{}\textbackslash{}} \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+\noindent\textbf{文獻與公式 / Citations and Equations}
+
+\noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.30\linewidth}X@{}}
+\toprule
+用途 / Purpose & 指令 / Command \\
+\midrule
+作者式引用 / Narrative citation & \texttt{\textbackslash{}textcite\{cox1987\}} \\
+括號式引用 / Parenthetical citation & \texttt{\textbackslash{}parencite\{cox1987\}} \\
+附頁碼引用 / Cite pages & \texttt{\textbackslash{}parencite[23--25]\{cox1987\}} \\
+多篇引用 / Multiple sources & \texttt{\textbackslash{}parencite\{cox1987,carey2009\}} \\
+行內公式 / Inline math & \texttt{\$r\_i = d\_i/n\_i\$} \\
+分數／上下標 / Fraction / scripts & \texttt{\textbackslash{}frac\{a\}\{b\}} / \texttt{x\_i} / \texttt{x\textasciicircum{}2} \\
+公式引用 / Equation reference & \texttt{\textbackslash{}eqref\{eq:example\}} \\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\subsection*{常用環境 / Common Environments}
+下列區塊可直接複製。 / Copy and adapt the blocks below.
+
+\noindent\textbf{條列與編號 / Bulleted and Numbered Lists}
+\begin{verbatim}
+\begin{itemize}          % 條列 / Bullets
+  \item First point
+  \item Second point
+\end{itemize}
+
+\begin{enumerate}        % 編號 / Numbers
+  \item First step
+  \item Second step
+\end{enumerate}
+\end{verbatim}
+
+\noindent\textbf{圖片 / Figure}
+\begin{verbatim}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.7\linewidth]{example-image.pdf}
+  \caption{圖說 / Figure caption}
+  \label{fig:example}
+\end{figure}
+\end{verbatim}
+
+\noindent\textbf{表格 / Table}
+\begin{verbatim}
+\begin{table}[htbp]
+  \centering
+  \caption{表格標題 / Table caption}
+  \label{tab:example}
+  \begin{tabular}{lr}
+    \toprule
+    Item & Value \\
+    \midrule
+    A & 10 \\
+    B & 20 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\end{verbatim}
+
+\noindent\textbf{編號公式 / Numbered Equation}
+\begin{verbatim}
+\begin{equation}
+  r_i = \frac{d_i}{n_i}
+  \label{eq:example}
+\end{equation}
+\end{verbatim}
+
+\noindent\textbf{新增文獻 / Adding a Reference}
+將下列格式加入 \texttt{reference.bib}，填入真實文獻資訊，再於內文使用相同的 key 引用。
+
+Add an entry to \texttt{reference.bib}, replace the placeholder metadata with the actual source details, and cite the same key in the text.
+\begin{verbatim}
+@book{author2026,
+  author    = {Surname, Given Name},
+  title     = {Book Title},
+  year      = {2026},
+  publisher = {Publisher}
+}
+\end{verbatim}
+
+\noindent\textbf{提醒 / Reminders}
+\begin{itemize}
+  \item 圖表的標籤放在圖說之後；文獻 key 須與資料庫一致。\par
+  Put figure and table labels after captions; citation keys must match the bibliography.
+  \item 範例頁碼須核對原文；圖片放在 \texttt{images/}。\par
+  Verify citation pages against the source; store images in \texttt{images/}.
+  \item 新增引用後重新編譯。\par
+  Recompile after adding references.
+\end{itemize}
+% 預設只列出已引用的文獻；若要列出 bib 中全部文獻，可啟用下一行。
+% Only cited works are listed by default; uncomment the next line to list all entries.
+% \nocite{*}
+\end{document}
