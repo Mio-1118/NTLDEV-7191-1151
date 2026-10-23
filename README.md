@@ -32,7 +32,7 @@ For Week 7, we follow the **Lab HTML** and run the matching **R script**. Each o
 
 [Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
 
-[Assignment template / 作業模板 (LaTeX)](templalte-assinment) · [Preview PDF](templalte-assinment/assignment-template-preview.pdf) · [Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/templalte-assinment/templalte-assinment.zip). Upload the ZIP to Overleaf to create a project. It contains `main-template.tex`, `reference.bib`, and the `images` folder.
+[Assignment template / 作業模板 (LaTeX)](templalte-assinment) · [Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/402046dd43e6ea317bc7b5e58a9e102820faf3d9/templalte-assinment/assignment-template-preview.pdf) · [Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/402046dd43e6ea317bc7b5e58a9e102820faf3d9/templalte-assinment/templalte-assinment.zip). Upload the ZIP to Overleaf to create a project. It contains `main-template.tex`, `reference.bib`, and the `images` folder.
 
 
 ## Slides and Lab Sessions
