@@ -4,12 +4,12 @@
 
 We use this bilingual template for course reports and research notes in NTLDEV 7191 and NTLDEV 7192.
 
-[PDF 預覽 / Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/main/templalte-assinment/assignment-template-preview.pdf) · [下載完整 ZIP / Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/templalte-assinment/templalte-assinment.zip)
+[PDF 預覽 / Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/main/resource/assignment-template/assignment-template-preview.pdf) · [下載完整 ZIP / Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/resource/assignment-template/assignment-template.zip)
 
 ## 1. 上傳 Overleaf / Upload to Overleaf
 
-1. 下載上方的 `templalte-assinment.zip`，不需要先解壓縮。
-   We download `templalte-assinment.zip` without extracting it.
+1. 下載上方的 `assignment-template.zip`，不需要先解壓縮。
+   We download `assignment-template.zip` without extracting it.
 2. 登入 [Overleaf](https://www.overleaf.com/)，在專案首頁選擇 **New project → Existing project (.zip)**；舊版介面可能顯示 **Upload project**。
    We sign in and select **New project → Existing project (.zip)**, or **Upload project** in the older interface.
 3. 選取或拖入 ZIP，等待專案開啟。
