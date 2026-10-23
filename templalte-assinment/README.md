@@ -80,6 +80,16 @@ We replace the sample abstract and sections with our research and remove unused 
 
 We recompile and check the PDF's name, student ID, title, figures, and citations. For undefined citations, we check the citation keys against `reference.bib` and recompile.
 
+## 5. 引用指令範例 / Citation examples
+
+`main-template.tex` 的「文獻引用指令與實例」提供七個指令的程式碼、實際輸出與句子範例：`\citet`、`\citep`、`\citet*`、`\citep*`、`\citeauthor`、`\citeyear` 與附頁碼的 `\citep[p.~12]{key}`。
+
+We compare seven citation forms, including full author lists and page numbers, using code and actual output in the template's “Citation Commands and Examples” subsection.
+
+模板已設定 `natbib=true`，使用 biblatex 的相容指令，繼續以 Biber 處理文獻。一般引用在三位以上作者時顯示 `et al.`，星號版本列出全部作者。`reference.bib` 中的 `smith2020` 是明確標註的虛構示範，正式報告請移除並替換為真實來源。
+
+We retain biblatex and Biber with `natbib=true`. We use starred commands for full author lists and replace the fictional `smith2020` entry with a verified source before submission.
+
 ## 官方操作說明 / Official guides
 
 - [上傳 ZIP / Uploading a project](https://docs.overleaf.com/managing-projects-and-files/uploading-a-project)

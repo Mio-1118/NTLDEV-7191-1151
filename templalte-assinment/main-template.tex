@@ -33,7 +33,9 @@
 \newcommand{\david}[1]{{\color{codegreen}#1}}
 \newcommand{\change}[1]{{\color{stefan_green}#1}}
 \newcommand{\notice}[1]{{\color{darkred}#1}}
-\usepackage[backend=biber,style=authoryear,sorting=nyt]{biblatex}
+% natbib=true enables \citet, \citep, and their starred variants.
+% Short citations abbreviate three or more authors; starred citations list all.
+\usepackage[backend=biber,style=authoryear,sorting=nyt,natbib=true,maxcitenames=2,mincitenames=1,maxbibnames=99]{biblatex}
 \addbibresource{reference.bib}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=darkblue,citecolor=darkblue,urlcolor=darkblue}
@@ -380,4 +382,53 @@ Add an entry to \texttt{reference.bib}, replace the placeholder metadata with th
 % 預設只列出已引用的文獻；若要列出 bib 中全部文獻，可啟用下一行。
 % Only cited works are listed by default; uncomment the next line to list all entries.
 % \nocite{*}
+\clearpage
+\subsection{文獻引用指令與實例 / Citation Commands and Examples}
+\label{sec:citation-examples}
+本模板已啟用 \texttt{natbib=true}，可使用下列指令；保留現有的
+\texttt{biblatex} 與 Biber 設定，不需另外載入 \texttt{natbib} 套件。
+
+We use the commands below through \texttt{biblatex}'s natbib compatibility option and retain Biber. We do not load the separate \texttt{natbib} package.
+
+下表以 \texttt{reference.bib} 中的 \texttt{smith2020} 為例，右欄直接呈現編譯結果。
+Smith、Jones 與 Lee（2020）是虛構文獻，頁碼也僅供語法示範；正式報告請改用經核對的真實來源。
+
+We use the fictional entry \texttt{smith2020} to compare the actual outputs. We replace the sample source and page number with verified references in a report.
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.3}
+\noindent\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.43\linewidth}X@{}}
+\toprule
+指令 / Command & 顯示效果與用途 / Output and Use \\
+\midrule
+\texttt{\textbackslash{}citet\{smith2020\}} & \citet{smith2020}\newline 句中主詞 / Narrative citation \\
+\texttt{\textbackslash{}citep\{smith2020\}} & \citep{smith2020}\newline 括號引用 / Parenthetical citation \\
+\texttt{\textbackslash{}citet*\{smith2020\}} & \citet*{smith2020}\newline 列出全部作者 / All authors \\
+\texttt{\textbackslash{}citep*\{smith2020\}} & \citep*{smith2020}\newline 括號內列出全部作者 / All authors in parentheses \\
+\texttt{\textbackslash{}citeauthor\{smith2020\}} & \citeauthor{smith2020}\newline 只顯示作者 / Author only \\
+\texttt{\textbackslash{}citeyear\{smith2020\}} & \citeyear{smith2020}\newline 只顯示年份 / Year only \\
+\texttt{\textbackslash{}citep[p.\textasciitilde{}12]\{smith2020\}} & \citep[p.~12]{smith2020}\newline 附頁碼引用 / Citation with a page number \\
+\bottomrule
+\end{tabularx}
+\endgroup
+
+\medskip
+\noindent\textbf{句子範例 / Sentence Examples}
+
+\begin{verbatim}
+\citet{smith2020} illustrate the citation format.
+We illustrate a parenthetical citation \citep{smith2020}.
+\end{verbatim}
+
+\noindent\textbf{實際輸出 / Actual Output}
+
+\noindent\citet{smith2020} illustrate the citation format.\\
+We illustrate a parenthetical citation \citep{smith2020}.
+
+\medskip
+星號版本會完整列出作者；一般版本在三位以上作者時縮寫為 \emph{et al.}。
+原本的 \texttt{\textbackslash{}textcite} 與 \texttt{\textbackslash{}parencite} 仍可使用。
+
+We use starred versions for full author lists; ordinary citations abbreviate lists of three or more authors. We can also use \texttt{\textbackslash{}textcite} and \texttt{\textbackslash{}parencite}.
 \end{document}
