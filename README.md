@@ -22,6 +22,8 @@
 
 5. **Call for Papers: [EPSS 2027 Conference (Copenhagen)](https://epssnet.org/2027-copenhagen/call-for-papers-2/).** **Submission deadline: November 13, 2026, 23:59 CET** (November 14, 2026, 06:59 Taipei time).
 
+6. **Call for Papers: [22nd TASPAA Annual Conference (2027)](https://www.taspaa.org/news_info.aspx?ID=258).** **Abstract and panel proposal deadline: December 1, 2026.** Conference: May 14–15, 2027, at National Taipei University, Sanxia Campus.
+
 Use **HTML** to view slides in your browser, **PDF** for a downloadable copy, and **Source ZIP** for editable slide files. The **Week 4, Week 6, and Week 7 Source ZIPs** also include the classroom R scripts and required data; one download per week is enough.
 
 If the HTML link shows an external-content notice, select **Open the page** to view the slides.
