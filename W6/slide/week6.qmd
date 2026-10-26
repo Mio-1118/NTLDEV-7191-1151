@@ -8,7 +8,7 @@ format:
   revealjs:
     output-file: week6.html
     theme: default
-    css: [../../styles/text-preparation.css, ../assets/week6.css]
+    css: [../assets/text-preparation.css, ../assets/week6.css]
     width: 1050
     height: 700
     margin: 0.04

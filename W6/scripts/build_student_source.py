@@ -14,8 +14,8 @@ paths = {
     W6 / "slide/week6.html",
     W6 / "slide/week6.pdf",
     W6 / "assets/week6.css",
-    ROOT / "styles/text-preparation.css",
-    ROOT / "image/ntu-logo.png",
+    W6 / "assets/text-preparation.css",
+    W6 / "assets/ntu-logo.png",
     W6 / "downloads/week6-classroom.zip",
     W6 / "downloads/week6-lab.zip",
 }
@@ -94,7 +94,7 @@ installed, run this command from the extracted `week6-student-source` folder:
 quarto render W6/slide/week6.qmd
 ```
 
-Keep `styles/`, `image/`, and `W6/assets/` in their supplied locations. The slide
+Keep `W6/assets/` in its supplied location; it contains the lecture styles and images. The slide
 build displays the R examples without executing them. This command builds the
 HTML; the supplied PDF is typeset separately.
 """

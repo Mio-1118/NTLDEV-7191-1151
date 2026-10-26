@@ -8,8 +8,8 @@ format:
   revealjs:
     output-file: week1.html
     theme: default
-    css: [../../styles/text-preparation.css, ../../styles/tokenization-comparison.css]
-    include-after-body: ../../styles/slide-fit.html
+    css: [../styles/text-preparation.css, ../styles/tokenization-comparison.css]
+    include-after-body: ../styles/slide-fit.html
     width: 1050
     height: 700
     margin: 0.04
@@ -226,7 +226,7 @@ Sources: Laver et al. (2003); Slapin & Proksch (2008); Grimmer (2010)[; Grimmer 
 ::::::::: {.column width="64%"}
 
 ```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("../../image/catalinac-2016-abstract.png")
+knitr::include_graphics("../image/catalinac-2016-abstract.png")
 ```
 
 :::::::::
@@ -295,7 +295,7 @@ Catalinac (2016), *The Journal of Politics* 78(1): 1–18
 ::::::::: {.column width="58%"}
 
 ```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("../../image/folk-theory-dags.png")
+knitr::include_graphics("../image/folk-theory-dags.png")
 ```
 
 :::::::::: {.fine-print style="text-align:center;"}
@@ -350,7 +350,7 @@ knitr::include_graphics("../../image/folk-theory-dags.png")
 ::::::::: {.column width="48%"}
 
 ```{r echo=FALSE, out.width="58%"}
-knitr::include_graphics("../../image/text-as-data-book.png")
+knitr::include_graphics("../image/text-as-data-book.png")
 ```
 
 :::::::::
@@ -378,7 +378,7 @@ knitr::include_graphics("../../image/text-as-data-book.png")
 :::::::::::: {.slide-body}
 
 ```{r echo=FALSE, out.width="44%"}
-knitr::include_graphics("../../image/schedule-table.png")
+knitr::include_graphics("../image/schedule-table.png")
 ```
 
 ::::::::::::
@@ -558,19 +558,19 @@ Posters should follow **PolMeth poster guidelines** ([polmeth.emory.edu/instruct
 ```{=html}
 <div class="poster-grid">
   <figure class="poster-card">
-    <img src="../../image/poster-polmeth2025-diana-lee.png" alt="Quantifying Electoral Competitiveness in Multi-Racial Elections, by Yuki Atsusaka, Diana Da In Lee, and Hane Lee.">
+    <img src="../image/poster-polmeth2025-diana-lee.png" alt="Quantifying Electoral Competitiveness in Multi-Racial Elections, by Yuki Atsusaka, Diana Da In Lee, and Hane Lee.">
     <figcaption>Atsusaka, Lee &amp; Lee (2025)</figcaption>
   </figure>
   <figure class="poster-card">
-    <img src="../../image/poster-polmeth2025-soyeon-jeon.png" alt="Transforming Political Image Analysis: Vision Language Models as Accessible, Efficient, and High-Performing Tools, by Soyeon Jeon.">
+    <img src="../image/poster-polmeth2025-soyeon-jeon.png" alt="Transforming Political Image Analysis: Vision Language Models as Accessible, Efficient, and High-Performing Tools, by Soyeon Jeon.">
     <figcaption>Jeon (2025)</figcaption>
   </figure>
   <figure class="poster-card">
-    <img src="../../image/poster-polmeth2025-david-liao.png" alt="Embedding Regression in Multilingual Political Text: An Application, by Winnie Xia, Chen Zeng, Yen-Chieh Liao, and Slava Jankin.">
+    <img src="../image/poster-polmeth2025-david-liao.png" alt="Embedding Regression in Multilingual Political Text: An Application, by Winnie Xia, Chen Zeng, Yen-Chieh Liao, and Slava Jankin.">
     <figcaption>Xia, Zeng, Liao &amp; Jankin (2025)</figcaption>
   </figure>
   <figure class="poster-card">
-    <img src="../../image/poster-polmeth2025-zikai-li.png" alt="Unrequited Love: Estimating the Electoral Effect of a Place-based Green Subsidy with a 2D Regression Discontinuity Design, by Zikai Li.">
+    <img src="../image/poster-polmeth2025-zikai-li.png" alt="Unrequited Love: Estimating the Electoral Effect of a Place-based Green Subsidy with a 2D Regression Discontinuity Design, by Zikai Li.">
     <figcaption>Li (2025)</figcaption>
   </figure>
 </div>
@@ -680,7 +680,7 @@ The syllabus lists these as suggested topics, if you do not already have a corpu
 ::::::::: {.column width="60%"}
 
 ```{r echo=FALSE, out.width="100%"}
-knitr::include_graphics("../../image/grading-table.png")
+knitr::include_graphics("../image/grading-table.png")
 ```
 
 :::::::::
@@ -887,7 +887,7 @@ Free national hotlines, 24 hours: Mental Health Care Line **1925**; Lifeline **1
 ::::::::: {.column width="48%"}
 
 ```{r echo=FALSE, out.width="78%"}
-knitr::include_graphics("../../image/survey-qr.png")
+knitr::include_graphics("../image/survey-qr.png")
 ```
 
 :::::::::

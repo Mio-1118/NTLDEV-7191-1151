@@ -4,7 +4,7 @@
 
 ## Start here
 
-1. Extract the [lab ZIP](../downloads/week2-lab.zip).
+1. Extract the complete lab ZIP and keep its folder structure intact.
 2. Open **[Lab_Session_W2.R](Lab_Session_W2.R)** in RStudio or Positron and read [the HTML handout](Lab_Session_W2.html) alongside it.
 3. Install the packages once using the commented `install.packages()` command in the setup block. Use R 4.1 or newer.
 4. Run the package and data setup blocks. They locate the data or ask you to select `hc_sample_1945_2025.rds` inside `W2/lab/Data`.

@@ -4,7 +4,7 @@ In this lab, we'll read a dictionary, change one of its rules, and check which s
 
 ## Start here
 
-1. Extract the [lab ZIP](../downloads/week4-lab.zip).
+1. Extract the complete lab ZIP and keep its folder structure intact.
 2. Open **[Lab_Session_W4.R](Lab_Session_W4.R)** in RStudio and read [the handout](Lab_Session_W4.html) alongside it.
 3. First use only: run `install.packages("quanteda")`. Use R 4.1 or newer.
 4. Run the entire setup block once. It finds the lab folder or asks you to select `workflow.R` inside the extracted `W4/lab` folder.
@@ -29,7 +29,7 @@ We'll use 5,000 parliamentary speeches to inspect words in context and 24 exampl
 
 - **Party comparison:** an optional section after the core tasks.
 - **W6 preview:** read five development speeches and bring one difficult labeling decision (about 10 minutes). W5 is a holiday; W6 is October 16.
-- **POS and TextRank:** use the separate [classroom materials](../classroom/README.md), not the take-home lab. Lecture scripts are kept outside this lab folder.
+- **POS and TextRank:** use the separate [classroom materials](https://github.com/davidycliao/NTLDEV-7191-1151/blob/main/W4/classroom/README.md), not the take-home lab. Lecture scripts are kept outside this lab folder.
 - **Full real-text validation:** deferred to W6.
 
 ## Files and sources
