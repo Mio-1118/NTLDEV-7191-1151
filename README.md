@@ -18,7 +18,7 @@
 
 3. ~~**Research title + abstract due: October 23, 2026 (Week 7).** You are welcome to book [instructor office hours](https://calendly.com/ycliao/text-as-data-instructor) to discuss your research ideas, title, or abstract before the deadline.~~
 
-4. **Call for Proposals: [84th Annual MPSA Conference (2027)](https://www.mpsanet.org/conference/).** **Paper proposal deadline: October 27, 2026.**
+4. ~~**Call for Proposals: [84th Annual MPSA Conference (2027)](https://www.mpsanet.org/conference/).** **Paper proposal deadline: October 27, 2026.**~~
 
 5. **Call for Papers: [EPSS 2027 Conference (Copenhagen)](https://epssnet.org/2027-copenhagen/call-for-papers-2/).** **Submission deadline: November 13, 2026, 23:59 CET** (November 14, 2026, 06:59 Taipei time).
 
@@ -27,10 +27,6 @@
 Use **HTML** to view slides in your browser, **PDF** for a downloadable copy, and **Source ZIP** for editable slide files. The **Week 4, Week 6, and Week 7 Source ZIPs** also include the classroom R scripts and required data; one download per week is enough.
 
 If the HTML link shows an external-content notice, select **Open the page** to view the slides.
-
-For self-study, read the **Lab HTML** and run the accompanying **R script** one section at a time. Download the complete **Lab ZIP** to get the data and all required files. Worked answers, where provided, are linked from the handout; no Quarto rendering is required.
-
-For Week 7, we follow the **Lab HTML** and run the matching **R script**. Each of the seventeen steps includes its actual output and a discussion question. The **Lab ZIP** contains the handout, script, editable source and speech data.
 
 [Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
 
