@@ -20,17 +20,20 @@
 
 4. ~~**Call for Proposals: [84th Annual MPSA Conference (2027)](https://www.mpsanet.org/conference/).** **Paper proposal deadline: October 27, 2026.**~~
 
-5. **Call for Papers: [EPSS 2027 Conference (Copenhagen)](https://epssnet.org/2027-copenhagen/call-for-papers-2/).** **Submission deadline: November 13, 2026, 23:59 CET** (November 14, 2026, 06:59 Taipei time).
+5. **Call for Abstracts: IPSA World Congress of Political Science 2027 (Rome), panel “[Special Interest Influence and the Quality of Democratic Representation](https://wc2027.ipsa.org/wc/panel/special-interest-influence-and-quality-democratic-representation).”** **Abstract submission deadline: November 4, 2026.** The panel welcomes theoretical, empirical, and comparative research from different approaches and areas. Follow the link for panel details and abstract submission.
 
-6. **Call for Papers: [22nd TASPAA Annual Conference (2027)](https://www.taspaa.org/news_info.aspx?ID=258).** **Abstract and panel proposal deadline: December 1, 2026.** Conference: May 14–15, 2027, at National Taipei University, Sanxia Campus.
+6. **Call for Papers: [EPSS 2027 Conference (Copenhagen)](https://epssnet.org/2027-copenhagen/call-for-papers-2/).** **Submission deadline: November 13, 2026, 23:59 CET** (November 14, 2026, 06:59 Taipei time).
+
+7. **Call for Papers: [22nd TASPAA Annual Conference (2027)](https://www.taspaa.org/news_info.aspx?ID=258).** **Abstract and panel proposal deadline: December 1, 2026.** Conference: May 14–15, 2027, at National Taipei University, Sanxia Campus.
 
 Use **HTML** to view slides in your browser, **PDF** for a downloadable copy, and **Source ZIP** for editable slide files. The **Week 4, Week 6, and Week 7 Source ZIPs** also include the classroom R scripts and required data; one download per week is enough.
 
 If the HTML link shows an external-content notice, select **Open the page** to view the slides.
 
-[Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
+## Resources
 
-[Assignment template / 作業模板 (LaTeX)](Ｗ1/resource/assignment-template) · [Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/main/%EF%BC%B71/resource/assignment-template/assignment-template-preview.pdf) · [Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/%EF%BC%B71/resource/assignment-template/assignment-template.zip). Upload the ZIP to Overleaf to create a project. It contains `main-template.tex`, `reference.bib`, and the `images` folder.
+- [Course syllabus (PDF)](https://raw.githack.com/davidycliao/NTLDEV-7191-1151/main/NTLDEV_7191_1151.pdf)
+- [Assignment template / 作業模板 (LaTeX)](Ｗ1/resource/assignment-template) · [Preview PDF](https://github.com/davidycliao/NTLDEV-7191-1151/blob/main/%EF%BC%B71/resource/assignment-template/assignment-template-preview.pdf) · [Download ZIP](https://github.com/davidycliao/NTLDEV-7191-1151/raw/refs/heads/main/%EF%BC%B71/resource/assignment-template/assignment-template.zip). Upload the ZIP to Overleaf to create a project. It contains `main-template.tex`, `reference.bib`, and the `images` folder.
 
 
 ## Slides and Lab Sessions
